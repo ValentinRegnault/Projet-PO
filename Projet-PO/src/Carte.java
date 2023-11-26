@@ -34,8 +34,8 @@ public class Carte {
             effetsLanceur.get(i).appliquerEffet(lanceur);
         }
 
-        for(int i = 0; i < effetsLanceur.size(); i++){
-            effetsLanceur.get(i).appliquerEffet(cible);
+        for(int i = 0; i < effetsCible.size(); i++){
+            effetsCible.get(i).appliquerEffet(cible);
         }
         
     }

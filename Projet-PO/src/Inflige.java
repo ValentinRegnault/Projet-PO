@@ -12,7 +12,7 @@ public class Inflige extends Effet {
 
         cible.setPointBlocage(pointBlocageCible - this.pointEffet);
 
-        int degatInflige = pointBlocageCible - this.pointEffet;
+        int degatInflige = Math.abs(pointBlocageCible - this.pointEffet);
 
         cible.setPv(cible.getPv() - degatInflige);
     }

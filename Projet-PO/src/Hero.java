@@ -13,7 +13,7 @@ public class Hero extends Entite {
 
     @Override
     public String toString() {
-        return "Hero: " + super.toString() +  " pointEnergieMax=" + pointEnergieMax + ", pointEnergie=" + pointEnergie + "]";
+        return "Hero: [" + super.toString() +  " pointEnergieMax=" + pointEnergieMax + ", pointEnergie=" + pointEnergie + "]";
     }
 
     public int getPointEnergieMax() {

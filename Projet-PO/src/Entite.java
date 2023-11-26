@@ -17,13 +17,14 @@ public abstract class Entite{
     public Entite(String nom, int pvMax, int pointBlocage){
         this.nom = nom;
         this.pvMax = pvMax;
+        this.pv = pvMax;
         this.pointBlocage = pointBlocage;
     }
 
     @Override
     public String toString() {
         return "nom=" + nom + ", pvMax=" + pvMax + ", pv=" + pv + ", pointBlocage=" + pointBlocage + ", status="
-                + status;
+                + status +",";
     }
 
     public int getPvMax() {
@@ -40,6 +41,8 @@ public abstract class Entite{
 
     public void setPv(int pv) {
         this.pv = pv;
+
+  
     }
 
     public int getPointBlocage() {
