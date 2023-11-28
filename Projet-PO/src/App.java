@@ -5,7 +5,7 @@ public class App {
         
         Hero Bob = new Hero("Bob");
 
-        Effet inflige5 = new Inflige(5);
+        Effet inflige5 = new AppliqueDegat(5);
         ArrayList<Effet> c = new ArrayList<>();
         c.add(inflige5);
 
@@ -21,7 +21,7 @@ public class App {
         System.out.println(Bob);
         System.out.println(petitSlime);
 
-        Inflige inflige = new Inflige(6);
+        AppliqueDegat inflige = new AppliqueDegat(6);
         Blocage blocage = new Blocage(5);
         ArrayList<Effet> effetAttaque = new ArrayList<>();
         effetAttaque.add(inflige);

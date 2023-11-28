@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.ArrayList;
 
 public class Action {
@@ -14,14 +15,14 @@ public class Action {
 
 
 
-    public void jouerAction(Entite lanceur, Entite cible){
+    public void jouerAction(Entite lanceur, ArrayList<Entite> listeCible){
 
         for(int i = 0; i < effetsLanceur.size(); i++){
-            effetsLanceur.get(i).appliquerEffet(lanceur);
+            effetsLanceur.get(i).appliquerEffet(lanceur, null);
         }
 
         for(int i = 0; i < effetsCible.size(); i++){
-            effetsCible.get(i).appliquerEffet(cible);
+            effetsCible.get(i).appliquerEffet(lanceur,listeCible);
         }
         
     }

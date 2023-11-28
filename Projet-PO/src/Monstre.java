@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Monstre extends Entite{
     
     Pattern pattern;
@@ -8,8 +10,8 @@ public class Monstre extends Entite{
         this.pattern = pattern;
     }
 
-    public void jouerAction(Entite cible){
-        this.pattern.jouerAction(this, cible);
+    public void jouerAction(ArrayList<Entite> listeCible){
+        this.pattern.jouerAction(this, listeCible);
     }
 
     @Override

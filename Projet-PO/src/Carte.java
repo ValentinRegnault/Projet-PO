@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class Carte {
     enum Rarete {
@@ -24,18 +26,18 @@ public class Carte {
         this.exile = exile;
     }
 
-    public void jouerCarte(Entite lanceur, Entite cible){
+    public void jouerCarte(Entite lanceur, ArrayList<Entite> listeCible){
 
         if(lanceur instanceof Hero hero){
             hero.setPointEnergie(hero.getPointEnergie() - this.cout);
         }
 
         for(int i = 0; i < effetsLanceur.size(); i++){
-            effetsLanceur.get(i).appliquerEffet(lanceur);
+            effetsLanceur.get(i).appliquerEffet(lanceur, null);
         }
 
         for(int i = 0; i < effetsCible.size(); i++){
-            effetsCible.get(i).appliquerEffet(cible);
+            effetsCible.get(i).appliquerEffet(lanceur, listeCible);
         }
         
     }

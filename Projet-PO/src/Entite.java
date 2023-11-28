@@ -6,7 +6,7 @@ public abstract class Entite{
         Force,
         Faiblesse,
         Vulnérable,
-        Fragie
+        Fragile
     }
     protected String nom;
     protected int pvMax;
@@ -19,12 +19,29 @@ public abstract class Entite{
         this.pvMax = pvMax;
         this.pv = pvMax;
         this.pointBlocage = pointBlocage;
+        
+        this.status = new HashMap<>();
+        this.status.put(Status.Faiblesse, 0);
+        this.status.put(Status.Force, 0);
+        this.status.put(Status.Vulnérable, 0);
+        this.status.put(Status.Fragile, 0);
+
+
     }
 
     @Override
     public String toString() {
         return "nom=" + nom + ", pvMax=" + pvMax + ", pv=" + pv + ", pointBlocage=" + pointBlocage + ", status="
                 + status +",";
+    }
+
+    public void setStatusPoint(Status s, Integer point){
+        this.status.replace(s,point);
+
+    }
+
+    public Integer getStatusPoint(Status s){
+        return this.status.get(s);
     }
 
     public int getPvMax() {

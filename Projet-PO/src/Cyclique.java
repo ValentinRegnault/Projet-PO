@@ -10,8 +10,8 @@ public class Cyclique implements Pattern {
         this.indice = 0;
     }
     
-    public void jouerAction(Monstre lanceur, Entite cible){
-        this.actionActuelle().jouerAction(lanceur, cible);
+    public void jouerAction(Monstre lanceur, ArrayList<Entite> listeCible){
+        this.actionActuelle().jouerAction(lanceur, listeCible);
         this.actionSuivante();
     }
 
