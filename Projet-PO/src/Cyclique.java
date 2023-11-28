@@ -26,8 +26,7 @@ public class Cyclique implements Pattern {
     }
 
     public void afficherIntention(){
-        Action actionActuelle = this.actionActuelle();
-        System.out.println(actionActuelle);
+        System.out.println(this.actionActuelle());
 
     }
 
