@@ -19,6 +19,38 @@ public class Carte {
     private boolean aCible;
 
 
+    public String getNom() {
+        return nom;
+    }
+
+    public Rarete getRarete() {
+        return rarete;
+    }
+
+    public int getCout() {
+        return cout;
+    }
+
+    public ArrayList<Effet> getEffetsLanceur() {
+        return effetsLanceur;
+    }
+
+    public ArrayList<Effet> getEffetsCible() {
+        return effetsCible;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isExile() {
+        return exile;
+    }
+
+    public boolean isaCible() {
+        return aCible;
+    }
+
     public Carte(String nom, Carte.Rarete rarete, int cout, ArrayList<Effet> effetsLanceur, ArrayList<Effet> effetsCible, boolean exile, boolean aCible,String description) {
         this.nom = nom;
         this.rarete = rarete;
