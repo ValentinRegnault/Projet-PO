@@ -34,6 +34,7 @@ public class AppliqueDegat extends Effet {
             cible.setPointBlocage(pointBlocageCible - this.pointEffet);
             int degatInflige = Math.abs(pointBlocageCible - this.pointEffet);
             cible.setPv(cible.getPv() - degatInflige);
+            System.out.println(lanceur.getNom() + " inflige " + degatInflige + " dégats à " + cible.getNom());
         }
 
        
@@ -43,7 +44,7 @@ public class AppliqueDegat extends Effet {
 
     @Override
     public String toString() {
-        return "Inflige " + this.pointEffet;
+        return "Inflige " + this.pointEffet + " points de dégats à la cible.";
     }
 
     

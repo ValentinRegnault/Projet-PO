@@ -31,8 +31,7 @@ public abstract class Entite{
 
     @Override
     public String toString() {
-        return "nom=" + nom + ", pvMax=" + pvMax + ", pv=" + pv + ", pointBlocage=" + pointBlocage + ", status="
-                + status +",";
+        return "nom=" + nom + ", pvMax=" + pvMax + ", pv=" + pv + ", pointBlocage=" + pointBlocage;
     }
 
     public void setStatusPoint(Status s, Integer point){
@@ -54,6 +53,10 @@ public abstract class Entite{
 
     public int getPv() {
         return pv;
+    }
+
+    public String getNom() {
+        return nom;
     }
 
     public void setPv(int pv) {

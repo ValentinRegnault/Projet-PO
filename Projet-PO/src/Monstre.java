@@ -16,7 +16,7 @@ public class Monstre extends Entite{
 
     @Override
     public String toString() {
-        return "Monstre [" + super.toString() + "pattern=" + pattern + "]";
+        return "Monstre [" + super.toString() +  "]";
     }
 
     

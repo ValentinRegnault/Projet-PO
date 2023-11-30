@@ -49,24 +49,25 @@ public class Carte {
         String StringEffetsLanceur = "";
 
         if(effetsLanceur.size() != 0){
-            StringEffetsLanceur +=  "effetsLanceur=";
 
             for(int i = 0; i < effetsLanceur.size(); i++){
-            StringEffetsLanceur += effetsLanceur.get(i).toString() + ",";
+            StringEffetsLanceur += "\n - " + effetsLanceur.get(i).toString();
         }
         }
         
 
         if(effetsCible.size() != 0){
-            StringEffetsCible +=  "effetsCible=";
             for(int i = 0; i < effetsCible.size(); i++){
-                        StringEffetsCible += effetsCible.get(i).toString() + ",";
+                        StringEffetsCible += "\n - " + effetsCible.get(i).toString();
             }
         }
         
 
-        return "Carte [nom=" + nom + ", rarete=" + rarete + ", cout=" + cout + ", " + StringEffetsLanceur
-                + " " + StringEffetsCible + " exile=" + exile + "]";
+        return String.format("""
+                Carte: %s
+                Rareté: %s
+                Cout: %d
+                """,this.nom, this.rarete, this.cout) + "Effets: " + StringEffetsLanceur + StringEffetsCible + "\nExile: " + this.exile;
     }
 
     

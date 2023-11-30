@@ -9,16 +9,33 @@ public class Action {
 
     public Action(String nom, ArrayList<Effet> effetsLanceur, ArrayList<Effet> effetsCible) {
         this.nom = nom;
-        this.effetsLanceur = effetsLanceur;
-        this.effetsCible = effetsCible;
+        
+        if ( effetsLanceur == null){
+            this.effetsLanceur = new ArrayList<Effet>();
+        } else {
+            this.effetsLanceur = effetsLanceur;
+        }
+
+        if (effetsCible == null){
+            this.effetsCible = new ArrayList<Effet>();
+        } else {
+            this.effetsCible = effetsCible;
+        }
+
+
+        
     }
 
 
 
     public void jouerAction(Entite lanceur, ArrayList<Entite> listeCible){
 
+        if (listeCible == null){
+            listeCible = new ArrayList<Entite>();
+        }
+
         for(int i = 0; i < effetsLanceur.size(); i++){
-            effetsLanceur.get(i).appliquerEffet(lanceur, null);
+            effetsLanceur.get(i).appliquerEffet(lanceur, listeCible);
         }
 
         for(int i = 0; i < effetsCible.size(); i++){

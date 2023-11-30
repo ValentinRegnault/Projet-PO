@@ -11,6 +11,7 @@ public class Vulnerable extends Effet {
         // Inflige prends en compte les points de blocage
         for (Entite cible : ListeCible) {
             cible.setStatusPoint(Entite.Status.Vulnérable, cible.getStatusPoint(Entite.Status.Vulnérable) + this.pointEffet);
+            System.out.println(lanceur.getNom() + " donne " + this.pointEffet + " points de vulnérabilité à " + cible.getNom());
         }
 
        
@@ -20,7 +21,7 @@ public class Vulnerable extends Effet {
 
     @Override
     public String toString() {
-        return "Vulnerabilité " + this.pointEffet;
+        return "Ajoute " + this.pointEffet + " points de vulnérabilité à la cible.";
     }
 
     

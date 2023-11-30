@@ -11,7 +11,7 @@ public class Blocage extends Effet {
 
         // Inflige prends en compte les points de blocage
 
-        for (Entite cible : ListeCible) {
+        Entite cible = lanceur;
 
             // Fragile : 75% des points de blocage
             if(cible.getStatusPoint(Entite.Status.Fragile) > 0){
@@ -19,9 +19,10 @@ public class Blocage extends Effet {
             }
 
             cible.setPointBlocage(cible.getPointBlocage()+ pointEffet);
+            System.out.println(cible.getNom() + " gagne " + pointEffet + " points de blocage");
 
 
-        }
+        
 
        
     }
@@ -29,7 +30,7 @@ public class Blocage extends Effet {
 
     @Override
     public String toString() {
-        return "Blocage " + this.pointEffet;
+        return "Donne " + this.pointEffet + " points de blocage au propriétaire de la carte."; 
     }
 
     

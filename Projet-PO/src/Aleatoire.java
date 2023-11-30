@@ -4,7 +4,7 @@ import java.util.TreeMap;
 
 public class Aleatoire implements Pattern {
     
-    private TreeMap<Double, Action> actionsPossible;
+    private TreeMap<Double, Action> actionsPossible = new TreeMap<Double, Action>();
 
     private Double indice = Math.random();
 
@@ -25,6 +25,8 @@ public class Aleatoire implements Pattern {
 
 
     }
+
+ 
 
     public Action actionActuelle(){
 
@@ -51,6 +53,16 @@ public class Aleatoire implements Pattern {
     public void afficherIntention(){
         System.out.println(this.actionActuelle());
 
+    }
+
+    @Override
+    public String toString() {
+        String output = "";
+        for(Double proba : this.actionsPossible.keySet()){
+            output += proba + " - " + this.actionsPossible.get(proba) + "\n";
+        }
+
+        return output;
     }
 
 
