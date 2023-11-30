@@ -12,6 +12,7 @@ public class PerdrePV extends Effet {
         for (Entite cible : ListeCible) {
 
             cible.setPv(cible.getPv() - pointEffet);
+            System.out.println(lanceur.getNom() + " fait perdre " + this.pointEffet + " points de vie à " + cible.getNom());
         }
 
        
@@ -21,7 +22,7 @@ public class PerdrePV extends Effet {
 
     @Override
     public String toString() {
-        return "Inflige " + this.pointEffet;
+        return "Fait perdre " + this.pointEffet + " points de vie à la cible.";
     }
 
     

@@ -1,0 +1,10 @@
+Effets :
+Blocage -> Gestion des points de Blocage
+AppliqueDegat -> Inflige des dégats (avec blocage, status en compte)
+PerdsPV -> Fait perdre des dégats( blocage et status pas en compte)
+Energie -> Fait gagner des points d'énergie
+Vulnérable -> Applque le status Vulnérable
+Fragile -> Applique le status Fragile
+Faiblesse -> Applique le status Faiblesse
+Force -> Applique le status Force
+AppliqueTous -> Applique des dégats à tous les ennemis

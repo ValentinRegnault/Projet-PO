@@ -11,6 +11,7 @@ public class Faiblesse extends Effet {
         // Inflige prends en compte les points de blocage
         for (Entite cible : ListeCible) {
             cible.setStatusPoint(Entite.Status.Faiblesse, cible.getStatusPoint(Entite.Status.Faiblesse) + this.pointEffet);
+            System.out.println(lanceur.getNom() + " donne " + this.pointEffet + " points de faiblesse à " + cible.getNom());
         }
 
        
@@ -20,7 +21,7 @@ public class Faiblesse extends Effet {
 
     @Override
     public String toString() {
-        return "Vulnerabilité " + this.pointEffet;
+        return "Faiblesse " + this.pointEffet;
     }
 
     

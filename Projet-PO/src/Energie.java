@@ -11,6 +11,7 @@ public class Energie extends Effet {
         // Inflige prends en compte les points de blocage
         if(lanceur instanceof Hero hero){
                 hero.setPointEnergie(hero.getPointEnergie() + pointEffet);
+                System.out.println(lanceur.getNom() + " gagne " + pointEffet + " points d'énergie");
         }
 
        
@@ -20,7 +21,7 @@ public class Energie extends Effet {
 
     @Override
     public String toString() {
-        return "Vulnerabilité " + this.pointEffet;
+        return "Le lanceur gagne " + this.pointEffet + " points d'énergie.";
     }
 
     

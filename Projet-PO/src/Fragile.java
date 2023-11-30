@@ -11,6 +11,7 @@ public class Fragile extends Effet {
         // Inflige prends en compte les points de blocage
         for (Entite cible : ListeCible) {
             cible.setStatusPoint(Entite.Status.Fragile, cible.getStatusPoint(Entite.Status.Fragile) + this.pointEffet);
+            System.out.println(lanceur.getNom() + " donne " + this.pointEffet + " points de fragilité à " + cible.getNom());
         }
 
        
@@ -20,7 +21,7 @@ public class Fragile extends Effet {
 
     @Override
     public String toString() {
-        return "Vulnerabilité " + this.pointEffet;
+        return "Fragile " + this.pointEffet;
     }
 
     

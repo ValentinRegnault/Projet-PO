@@ -7,7 +7,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         
         Hero Bob = new Hero("Bob");
-        System.out.println(jeuCartes.vagueDeFer);
+        System.out.println(jeuCartes.saignee);
         
 
 

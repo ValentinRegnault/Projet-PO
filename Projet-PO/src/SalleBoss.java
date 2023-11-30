@@ -1,3 +1,9 @@
+import java.util.ArrayList;
+
+
 public class SalleBoss extends SalleCombat {
-    private Monstre boss;    
+
+    public SalleBoss(ArrayList<Monstre> equipeMonstre) {
+        super(equipeMonstre);
+    }
 }

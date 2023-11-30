@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
 public class SalleMonstre extends SalleCombat {
-    private ArrayList<Monstre> equipeMonstre;
+
+    public SalleMonstre(ArrayList<Monstre> equipeMonstre) {
+        super(equipeMonstre);
+    }
 }

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Scanner; 
 
 public class Carte {
     enum Rarete {
@@ -14,19 +14,42 @@ public class Carte {
     private int cout;
     private ArrayList<Effet> effetsLanceur;
     private ArrayList<Effet> effetsCible;
+    private String description;
     private boolean exile;
+    private boolean aCible;
 
 
-    public Carte(String nom, Carte.Rarete rarete, int cout, ArrayList<Effet> effetsLanceur, ArrayList<Effet> effetsCible, boolean exile) {
+    public Carte(String nom, Carte.Rarete rarete, int cout, ArrayList<Effet> effetsLanceur, ArrayList<Effet> effetsCible, boolean exile, boolean aCible,String description) {
         this.nom = nom;
         this.rarete = rarete;
         this.cout = cout;
         this.effetsCible = effetsCible;
         this.effetsLanceur = effetsLanceur;
         this.exile = exile;
-    }
+        this.aCible = aCible;
+        this.description = description;
+    }   
 
-    public void jouerCarte(Entite lanceur, ArrayList<Entite> listeCible){
+    public void jouerCarte(Entite lanceur){
+        Monstre cible = null;
+
+        if(this.aCible){
+            System.out.println("Choisissez une cible");
+            SalleCombat salle = (SalleCombat) Partie.partie.getSalleActuelle();
+            ArrayList<Monstre> listeMonstre = salle.getEquipeMonstre();
+            int index = -1;
+            Scanner myObj = new Scanner(System.in);
+
+            while(index < 0 || index >= listeMonstre.size()){
+                for(int i = 0; i < listeMonstre.size(); i++){
+                    System.out.println(i + " - " + listeMonstre.get(i).getNom());
+                }
+                index = myObj.nextInt();
+            }
+
+            cible = listeMonstre.get(index);
+
+        }
 
         if(lanceur instanceof Hero hero){
             hero.setPointEnergie(hero.getPointEnergie() - this.cout);
@@ -37,7 +60,7 @@ public class Carte {
         }
 
         for(int i = 0; i < effetsCible.size(); i++){
-            effetsCible.get(i).appliquerEffet(lanceur, listeCible);
+            effetsCible.get(i).appliquerEffet(lanceur, new ArrayList<Entite>(Arrays.asList(cible)));
         }
         
     }
@@ -45,29 +68,14 @@ public class Carte {
     @Override
     public String toString() {
 
-        String StringEffetsCible = "";
-        String StringEffetsLanceur = "";
-
-        if(effetsLanceur.size() != 0){
-
-            for(int i = 0; i < effetsLanceur.size(); i++){
-            StringEffetsLanceur += "\n - " + effetsLanceur.get(i).toString();
-        }
-        }
         
-
-        if(effetsCible.size() != 0){
-            for(int i = 0; i < effetsCible.size(); i++){
-                        StringEffetsCible += "\n - " + effetsCible.get(i).toString();
-            }
-        }
         
 
         return String.format("""
                 Carte: %s
                 Rareté: %s
                 Cout: %d
-                """,this.nom, this.rarete, this.cout) + "Effets: " + StringEffetsLanceur + StringEffetsCible + "\nExile: " + this.exile;
+                """,this.nom, this.rarete, this.cout) + "Description: " + this.description + "\nExile: " + this.exile;
     }
 
     

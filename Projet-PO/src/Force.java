@@ -11,6 +11,7 @@ public class Force extends Effet {
         // Inflige prends en compte les points de blocage
         for (Entite cible : ListeCible) {
             cible.setStatusPoint(Entite.Status.Force, cible.getStatusPoint(Entite.Status.Force) + this.pointEffet);
+            System.out.println(lanceur.getNom() + " donne " + this.pointEffet + " points de force à " + cible.getNom());
         }
 
        
@@ -20,7 +21,7 @@ public class Force extends Effet {
 
     @Override
     public String toString() {
-        return "Vulnerabilité " + this.pointEffet;
+        return "Force " + this.pointEffet;
     }
 
     
