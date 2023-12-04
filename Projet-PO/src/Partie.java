@@ -1,41 +1,6 @@
 import java.util.ArrayList;
 
 public class Partie {
-
-    static Partie partie = new Partie();
-
-    protected Hero hero;
-
-    public Hero getHero(){
-        return hero;
-    }
-
-    public ArrayList<Salle> getSalles() {
-        return salles;
-    }
-    public int getIndiceSalle() {
-        return indiceSalle;
-    }
-
-    public Salle getSalleActuelle() {
-        return salles.get(indiceSalle);
-    }
-    public ArrayList<Carte> getDeck() {
-        return deck;
-    }
-    public ArrayList<Carte> getDefausse() {
-        return defausse;
-    }
-    public ArrayList<Carte> getExile() {
-        return exile;
-    }
-    public ArrayList<Carte> getPioche() {
-        return pioche;
-    }
-
-    public ArrayList<Carte> getMain(){
-        return main;
-    }
     private ArrayList<Salle> salles;
     private int indiceSalle;
 
@@ -54,10 +19,50 @@ public class Partie {
     // Pioche : Carte dans laquelle le joueur peut piocher
     private ArrayList<Carte> pioche;
 
-    public void jouerPartie(){
+    protected Hero hero;
 
-        for(Salle salle : salles){
-            if(!salle.jouerSalle()){
+    static Partie partie = new Partie();
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public ArrayList<Salle> getSalles() {
+        return salles;
+    }
+
+    public int getIndiceSalle() {
+        return indiceSalle;
+    }
+
+    public Salle getSalleActuelle() {
+        return salles.get(indiceSalle);
+    }
+
+    public ArrayList<Carte> getDeck() {
+        return deck;
+    }
+
+    public ArrayList<Carte> getDefausse() {
+        return defausse;
+    }
+
+    public ArrayList<Carte> getExile() {
+        return exile;
+    }
+
+    public ArrayList<Carte> getPioche() {
+        return pioche;
+    }
+
+    public ArrayList<Carte> getMain() {
+        return main;
+    }
+
+    public void jouerPartie() {
+
+        for (Salle salle : salles) {
+            if (!salle.jouerSalle()) {
                 System.out.println("Vous avez perdu");
                 return;
             }
@@ -70,45 +75,44 @@ public class Partie {
 
     }
 
-    public void piocheCarte(){
+    public void piocheCarte() {
 
-        Carte carte = pioche.get(pioche.size()-1);
+        Carte carte = pioche.get(pioche.size() - 1);
         // On prends la carte au dessus de la pioche
 
-        pioche.remove(pioche.size()-1);
+        pioche.remove(pioche.size() - 1);
 
         // On ajoute cette carte à la main
         main.add(carte);
 
     }
 
-    public void defausseCarte(int index){
+    public void defausseCarte(int index) {
         // index de la carte dans la main
 
         Carte carteUtilise = this.main.get(index);
         this.main.remove(index);
 
-        if(carteUtilise.isExile()){
+        if (carteUtilise.isExile()) {
             exile.add(carteUtilise);
-        }
-        else{
+        } else {
             defausse.add(carteUtilise);
         }
     }
 
-    public void obtenirRecompense(){
+    public void obtenirRecompense() {
         // TODO
     }
 
-    public void videDefausse(){
+    public void videDefausse() {
         this.defausse = new ArrayList<Carte>();
     }
 
-    public void videExile(){
+    public void videExile() {
         this.exile = new ArrayList<Carte>();
     }
 
-    public void videMain(){
+    public void videMain() {
         this.main = new ArrayList<Carte>();
     }
 }
