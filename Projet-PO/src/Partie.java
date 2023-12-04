@@ -23,6 +23,15 @@ public class Partie {
 
     static Partie partie = new Partie();
 
+    private Partie () {
+        this.salles = new ArrayList<Salle>();
+        
+        ArrayList<Monstre> monstres = new ArrayList<Monstre>();
+        monstres.add(new Monstre("Gobelin", 10, new Aleatoire(null)));
+        this.salles.add(new SalleMonstre(monstres));
+    
+    }
+
     public Hero getHero() {
         return hero;
     }
@@ -60,7 +69,6 @@ public class Partie {
     }
 
     public void jouerPartie() {
-
         for (Salle salle : salles) {
             if (!salle.jouerSalle()) {
                 System.out.println("Vous avez perdu");
