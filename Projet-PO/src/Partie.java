@@ -23,13 +23,20 @@ public class Partie {
 
     static Partie partie = new Partie();
 
-    private Partie () {
+    private Partie() {
         this.salles = new ArrayList<Salle>();
-        
-        ArrayList<Monstre> monstres = new ArrayList<Monstre>();
-        monstres.add(new Monstre("Gobelin", 10, new Aleatoire(null)));
-        this.salles.add(new SalleMonstre(monstres));
-    
+
+        this.deck = new ArrayList<Carte>();
+        try {
+            Carte frappe = (Carte) jeuCartes.frappe.clone();
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        this.main = new ArrayList<Carte>();
+        this.defausse = new ArrayList<Carte>();
+        this.exile = new ArrayList<Carte>();
+        this.pioche = new ArrayList<Carte>();
     }
 
     public Hero getHero() {

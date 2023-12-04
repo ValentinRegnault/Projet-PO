@@ -1,12 +1,39 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner; 
+import java.util.Scanner;
 
-public class Carte {
+public class Carte implements Cloneable {
     enum Rarete {
         Commun,
         NonCommun,
         Rare
+    }
+
+    enum CarteExistante {
+        Frappe,
+        Defense,
+        Heurt,
+        MemePasMal,
+        VagueDeFer,
+        FrappeDuPommeau,
+        FrappeDouble,
+        Enchainement,
+        EpeeBoomerang,
+        Manchette,
+        Plaquage,
+        Saignee,
+        Hemokinesie,
+        Uppercut,
+        VoleeDeCoups,
+        VoirRouge,
+        Enflammer,
+        Desarmement,
+        OndeDeChoc,
+        Tenacite,
+        Gourdin,
+        Invincible,
+        Offrande,
+        FormeDemoniaque
     }
 
     private String nom;
@@ -18,6 +45,9 @@ public class Carte {
     private boolean exile;
     private boolean aCible;
 
+    public Carte genCarte(CarteExistante carte) {
+        // TODO
+    }
 
     public String getNom() {
         return nom;
@@ -51,7 +81,8 @@ public class Carte {
         return aCible;
     }
 
-    public Carte(String nom, Carte.Rarete rarete, int cout, ArrayList<Effet> effetsLanceur, ArrayList<Effet> effetsCible, boolean exile, boolean aCible,String description) {
+    public Carte(String nom, Carte.Rarete rarete, int cout, ArrayList<Effet> effetsLanceur,
+            ArrayList<Effet> effetsCible, boolean exile, boolean aCible, String description) {
         this.nom = nom;
         this.rarete = rarete;
         this.cout = cout;
@@ -60,20 +91,20 @@ public class Carte {
         this.exile = exile;
         this.aCible = aCible;
         this.description = description;
-    }   
+    }
 
-    public void jouerCarte(Entite lanceur){
+    public void jouerCarte(Entite lanceur) {
         Monstre cible = null;
 
-        if(this.aCible){
+        if (this.aCible) {
             System.out.println("Choisissez une cible");
             SalleCombat salle = (SalleCombat) Partie.partie.getSalleActuelle();
             ArrayList<Monstre> listeMonstre = salle.getEquipeMonstre();
             int index = -1;
             Scanner myObj = new Scanner(System.in);
 
-            while(index < 0 || index >= listeMonstre.size()){
-                for(int i = 0; i < listeMonstre.size(); i++){
+            while (index < 0 || index >= listeMonstre.size()) {
+                for (int i = 0; i < listeMonstre.size(); i++) {
                     System.out.println(i + " - " + listeMonstre.get(i).getNom());
                 }
                 index = myObj.nextInt();
@@ -83,32 +114,33 @@ public class Carte {
 
         }
 
-        if(lanceur instanceof Hero hero){
+        if (lanceur instanceof Hero hero) {
             hero.setPointEnergie(hero.getPointEnergie() - this.cout);
         }
 
-        for(int i = 0; i < effetsLanceur.size(); i++){
+        for (int i = 0; i < effetsLanceur.size(); i++) {
             effetsLanceur.get(i).appliquerEffet(lanceur, null);
         }
 
-        for(int i = 0; i < effetsCible.size(); i++){
+        for (int i = 0; i < effetsCible.size(); i++) {
             effetsCible.get(i).appliquerEffet(lanceur, new ArrayList<Entite>(Arrays.asList(cible)));
         }
-        
+
     }
 
     @Override
     public String toString() {
 
-        
-        
-
         return String.format("""
                 Carte: %s
                 Rareté: %s
                 Cout: %d
-                """,this.nom, this.rarete, this.cout) + "Description: " + this.description + "\nExile: " + this.exile;
+                """, this.nom, this.rarete, this.cout) + "Description: " + this.description + "\nExile: " + this.exile;
     }
 
-    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

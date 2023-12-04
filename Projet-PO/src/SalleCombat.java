@@ -13,68 +13,62 @@ public abstract class SalleCombat extends Salle {
                 return equipeMonstre;
         }
 
-        public boolean combatTermine(){
+        public boolean combatTermine() {
 
-                if(hero.getPv() == 0){
+                if (hero.getPv() == 0) {
                         return true;
-                }
-                else {
-                        for(Monstre monstre : equipeMonstre){
-                        if(monstre.getPv() != 0){
-                                return false;
+                } else {
+                        for (Monstre monstre : equipeMonstre) {
+                                if (monstre.getPv() != 0) {
+                                        return false;
+                                }
                         }
-                }
                 }
 
                 return true;
 
-                
-
         }
 
-        public boolean jouerSalle(){
+        public boolean jouerSalle() {
                 lancerCombat();
-                
-                 if(hero.getPv() == 0){
+
+                if (hero.getPv() == 0) {
                         return false;
-                }
-                else {
+                } else {
                         return true;
                 }
-                
+
         }
 
-        public void lancerCombat(){
+        public void lancerCombat() {
                 // False -> Hero mort
                 // True -> Victoire du hero
-                while(!combatTermine()){
+                while (!combatTermine()) {
 
                         // Tour Joueur
                         // Affichage des cartes
                         System.out.println("Cartes en main : ");
-                        for(int i = 0; i < Partie.partie.getMain().size(); i++){
+                        for (int i = 0; i < Partie.partie.getMain().size(); i++) {
                                 System.out.println(i + " - " + Partie.partie.getMain().get(i).getNom());
                         }
 
-                        // Choix de la carte
-                        System.out.println("Choisissez une carte");
                         Scanner myObj = new Scanner(System.in);
-                        int index = myObj.nextInt();
+                        int index = -1;
+                        // Choix de la carte
+                        while (index < 0 || index >= Partie.partie.getMain().size()) {
+                                System.out.println("Choisissez une carte");
+                                index = myObj.nextInt();
+                        }
 
                         // On joue la carte
                         Partie.partie.getMain().get(index).jouerCarte(hero);
-                        
-
 
                         // Tour monstre
-                        for(Monstre monstre: equipeMonstre){
+                        for (Monstre monstre : equipeMonstre) {
                                 monstre.jouerAction(new ArrayList<Entite>(Arrays.asList(hero)));
                         }
 
-
                 }
-
-               
 
         }
 }
