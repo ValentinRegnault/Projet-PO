@@ -140,7 +140,19 @@ public class Carte implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+        Carte cloned = (Carte) super.clone();
+
+        cloned.effetsLanceur = new ArrayList<>();
+        for (Effet effet : this.effetsLanceur) {
+            cloned.effetsLanceur.add((Effet) effet.clone());
+        }
+
+        cloned.effetsCible = new ArrayList<>();
+        for (Effet effet : this.effetsCible) {
+            cloned.effetsCible.add((Effet) effet.clone());
+        }
+
+        return cloned;
+}
 
 }
