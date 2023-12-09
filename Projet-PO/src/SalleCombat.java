@@ -60,6 +60,8 @@ public abstract class SalleCombat extends Salle {
                                 index = myObj.nextInt();
                         }
 
+                        myObj.close();
+
                         // On joue la carte
                         Partie.partie.getMain().get(index).jouerCarte(hero);
 
