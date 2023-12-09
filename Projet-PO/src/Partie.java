@@ -40,11 +40,15 @@ public class Partie {
     public void jouerPartie() {
         for (Salle salle : salles) {
             genererPioche();
+            creerMain();
+
 
             if (!salle.jouerSalle()) {
                 System.out.println("Vous avez perdu");
                 return;
             }
+            main.clear();
+            defausse.clear();
 
             indiceSalle++;
             obtenirRecompense();
