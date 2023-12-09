@@ -65,5 +65,9 @@ public class Aleatoire implements Pattern {
         return output;
     }
 
+    public String getIntention(){
+        return this.actionActuelle().toString();
+    }
+
 
 }
