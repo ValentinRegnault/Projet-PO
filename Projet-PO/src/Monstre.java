@@ -23,6 +23,10 @@ public class Monstre extends Entite {
         this.pattern.jouerAction(this, listeCible);
     }
 
+    public String getIntention() {
+        return this.pattern.getIntention();
+    }
+
     @Override
     public String toString() {
         return "Monstre [" + super.toString() + "]";
