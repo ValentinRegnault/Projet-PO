@@ -45,9 +45,7 @@ public class Carte implements Cloneable {
     private boolean exile;
     private boolean aCible;
 
-    public Carte genCarte(CarteExistante carte) {
-        // TODO
-    }
+    
 
     public String getNom() {
         return nom;
@@ -109,6 +107,8 @@ public class Carte implements Cloneable {
                 }
                 index = myObj.nextInt();
             }
+
+            myObj.close();
 
             cible = listeMonstre.get(index);
 
