@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+
 
 public class Partie {
     private ArrayList<Salle> salles;
@@ -17,7 +20,7 @@ public class Partie {
     private ArrayList<Carte> exile;
 
     // Pioche : Carte dans laquelle le joueur peut piocher
-    private ArrayList<Carte> pioche;
+    private LinkedList<Carte> pioche;
 
     protected Hero hero;
 
@@ -29,13 +32,15 @@ public class Partie {
         this.main = new ArrayList<Carte>();
         this.defausse = new ArrayList<Carte>();
         this.exile = new ArrayList<Carte>();
-        this.pioche = new ArrayList<Carte>();
+        this.pioche = new LinkedList<Carte>();
     }
 
     
 
     public void jouerPartie() {
         for (Salle salle : salles) {
+            genererPioche();
+
             if (!salle.jouerSalle()) {
                 System.out.println("Vous avez perdu");
                 return;
@@ -50,15 +55,13 @@ public class Partie {
     }
 
     public void piocheCarte() {
-
-        Carte carte = pioche.get(pioche.size() - 1);
-        // On prends la carte au dessus de la pioche
-
-        pioche.remove(pioche.size() - 1);
-
-        // On ajoute cette carte à la main
-        main.add(carte);
-
+        if (!pioche.isEmpty()) {
+            Carte carte = pioche.pop();
+            // On prends la carte au dessus de la pioche
+    
+            // On ajoute cette carte à la main
+            main.add(carte);
+        }
     }
 
     public void defausseCarte(int index) {
@@ -71,6 +74,41 @@ public class Partie {
             exile.add(carteUtilise);
         } else {
             defausse.add(carteUtilise);
+        }
+    }
+
+    public void exileCarte(int index) {
+        // index de la carte dans la main
+
+        Carte carteUtilise = this.main.get(index);
+        this.main.remove(index);
+
+        exile.add(carteUtilise);
+    }
+
+    public void ajouterCarte(Carte carte) {
+        this.deck.add(carte);
+    }
+
+    public void genererPioche() {
+
+        pioche.clear();
+        for (Carte carte : deck) {
+            try {
+                pioche.push((Carte) carte.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.shuffle(pioche);
+    }
+
+    public void creerMain() {
+        main.clear();
+        for (int i = 0; i < 5; i++) {
+            if (!pioche.isEmpty()) {
+                main.add(pioche.pop());
+            }
         }
     }
 
@@ -118,7 +156,7 @@ public class Partie {
         return exile;
     }
 
-    public ArrayList<Carte> getPioche() {
+    public LinkedList<Carte> getPioche() {
         return pioche;
     }
 
