@@ -9,4 +9,5 @@ public interface Pattern {
 
     public abstract void afficherIntention();
 
+    public abstract String getIntention();
 }
