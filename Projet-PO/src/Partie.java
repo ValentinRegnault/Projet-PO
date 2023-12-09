@@ -25,55 +25,14 @@ public class Partie {
 
     private Partie() {
         this.salles = new ArrayList<Salle>();
-
         this.deck = new ArrayList<Carte>();
-        try {
-            Carte frappe = (Carte) jeuCartes.frappe.clone();
-        } catch (CloneNotSupportedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         this.main = new ArrayList<Carte>();
         this.defausse = new ArrayList<Carte>();
         this.exile = new ArrayList<Carte>();
         this.pioche = new ArrayList<Carte>();
     }
 
-    public Hero getHero() {
-        return hero;
-    }
-
-    public ArrayList<Salle> getSalles() {
-        return salles;
-    }
-
-    public int getIndiceSalle() {
-        return indiceSalle;
-    }
-
-    public Salle getSalleActuelle() {
-        return salles.get(indiceSalle);
-    }
-
-    public ArrayList<Carte> getDeck() {
-        return deck;
-    }
-
-    public ArrayList<Carte> getDefausse() {
-        return defausse;
-    }
-
-    public ArrayList<Carte> getExile() {
-        return exile;
-    }
-
-    public ArrayList<Carte> getPioche() {
-        return pioche;
-    }
-
-    public ArrayList<Carte> getMain() {
-        return main;
-    }
+    
 
     public void jouerPartie() {
         for (Salle salle : salles) {
@@ -129,5 +88,41 @@ public class Partie {
 
     public void videMain() {
         this.main = new ArrayList<Carte>();
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public ArrayList<Salle> getSalles() {
+        return salles;
+    }
+
+    public int getIndiceSalle() {
+        return indiceSalle;
+    }
+
+    public Salle getSalleActuelle() {
+        return salles.get(indiceSalle);
+    }
+
+    public ArrayList<Carte> getDeck() {
+        return deck;
+    }
+
+    public ArrayList<Carte> getDefausse() {
+        return defausse;
+    }
+
+    public ArrayList<Carte> getExile() {
+        return exile;
+    }
+
+    public ArrayList<Carte> getPioche() {
+        return pioche;
+    }
+
+    public ArrayList<Carte> getMain() {
+        return main;
     }
 }
