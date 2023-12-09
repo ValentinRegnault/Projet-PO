@@ -44,33 +44,91 @@ public abstract class SalleCombat extends Salle {
                 // False -> Hero mort
                 // True -> Victoire du hero
                 while (!combatTermine()) {
+                        // Régénération de l'énergie du hero
+                        hero.setPointEnergie(hero.getPointEnergieMax());
+                        // Disparition des points de blocages du hero
+                        hero.setPointBlocage(0);
 
-                        // Tour Joueur
+
+                        // Affichage des PV
+                        System.out.println("PV Hero : " + hero.getPv()+"/"+hero.getPvMax());
+                        // Affichage des status
+                        hero.afficheStatus();
+
+
+                        // Affichage des PV des monstres et leurs status
+                        for (Monstre monstre : equipeMonstre) {
+                                System.out.println(monstre.getNom() + " : " + monstre.getPv()+"/"+monstre.getPvMax());
+                                monstre.afficheStatus();
+                        }
+
+                        // Affichage de l'intention des monstres
+                        for (int i = 0; i < equipeMonstre.size(); i++) {
+                                System.out.println(i + ": " + equipeMonstre.get(i).getNom() + " - " + equipeMonstre.get(i).getIntention());
+                        }
+
+                        // Affichage du nombre de carte dans la pioche
+                        System.out.println("Cartes dans la pioche : " + Partie.partie.getPioche().size());
+
+                        // Affichage du nombre de carte dans la défausse
+                        System.out.println("Cartes dans la défausse : " + Partie.partie.getDefausse().size());
+
+                        // Affichage du nombre de carte dans l'exile
+                        System.out.println("Cartes dans l'exile : " + Partie.partie.getExile().size());
+
+
+
+                        /// TOUR DU HERO ///
+
+
+                        boolean finTour = false;
+                        while (!finTour) {
+                        // Affichage de l'énergie du héros
+                        System.out.println("Énergie: " + hero.getPointEnergie());
+
                         // Affichage des cartes
-                        System.out.println("Cartes en main : ");
                         for (int i = 0; i < Partie.partie.getMain().size(); i++) {
                                 System.out.println(i + " - " + Partie.partie.getMain().get(i).getNom());
                         }
 
+                        // Demander au héros de choisir une carte ou de terminer le tour
+                        System.out.println("Choisissez une carte ou entrez -1 pour terminer votre tour");
                         Scanner myObj = new Scanner(System.in);
-                        int index = -1;
-                        // Choix de la carte
-                        while (index < 0 || index >= Partie.partie.getMain().size()) {
-                                System.out.println("Choisissez une carte");
-                                index = myObj.nextInt();
-                        }
+                        int index = myObj.nextInt();
 
+                        // Si le héros a choisi de terminer son tour
+                        if (index == -1) {
+                                finTour = true;
+                        } 
+                        
+                        else if (index >= 0 && index < Partie.partie.getMain().size()) {
+                                // Si le héros a choisi une carte valide
+                                Carte carteChoisie = Partie.partie.getMain().get(index);
+
+                                // Si le héros a assez d'énergie pour jouer la carte
+                                if (hero.getPointEnergie() >= carteChoisie.getCout()) {
+                                // Jouer la carte
+                                carteChoisie.jouerCarte(hero);
+                                } else {
+                                // Si le héros n'a pas assez d'énergie
+                                System.out.println("Vous n'avez pas assez d'énergie pour jouer cette carte");
+                                }
+                        } 
+
+                        
                         myObj.close();
 
-                        // On joue la carte
-                        Partie.partie.getMain().get(index).jouerCarte(hero);
-
-                        // Tour monstre
+                        /// TOUR DES MONSTRES ///
                         for (Monstre monstre : equipeMonstre) {
+                                // Remise a zéro des points de blocage du monstre
+                                monstre.setPointBlocage(0);
                                 monstre.jouerAction(new ArrayList<Entite>(Arrays.asList(hero)));
                         }
+
+                        /// TODO : Faire baisser les status
 
                 }
 
         }
+}
 }
