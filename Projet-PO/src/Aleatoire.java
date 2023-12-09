@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-
+//TODO : Changer le nom ou le mettre dans un package parceque la c'est pas clair "Aleatoire"
 public class Aleatoire implements Pattern {
     
     private TreeMap<Double, Action> actionsPossible = new TreeMap<Double, Action>();
