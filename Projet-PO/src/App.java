@@ -9,7 +9,7 @@ public class App {
         Hero Bob = new Hero("Bob");
         System.out.println(jeuCartes.saignee);
         
-
+        Partie.partie.jouerPartie();
 
     }
 }
