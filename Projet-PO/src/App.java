@@ -1,11 +1,13 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.TreeMap;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -22,7 +24,12 @@ public class App {
         Pattern pat = new Cyclique(actions);
         Monstre monstre = new Monstre("Test", 10, pat);
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper =  new ObjectMapper();
+        mapper.writeValue(new File("./assets/monstres/test.json"), monstre);
+
+        Monstre m = mapper.readValue(new File("./assets/monstres/test.json"), Monstre.class);
+
+        System.out.println(m);
 
         Partie.partie.jouerPartie();
 

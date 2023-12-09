@@ -1,19 +1,16 @@
 import java.util.Arrays;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-enum TypeMontre {
-    PetitSlimePiquant,
-    PetitSlimeAcide,
-    Machouilleur,
-    Cultiste,
-    SlimePiquant,
-    SlimeAcide,
-    Hexaghost,
-}
 
-public class Monstre extends Entite {
+public class Monstre extends Entite implements Serializable {
     Pattern pattern;
+
+
+    public Monstre() {
+        super("", 0, 0); // Call to superclass constructor with required arguments
+    }
 
     public Monstre(String nom, int pvMax, Pattern pattern) {
         super(nom, pvMax, 0);
@@ -29,37 +26,11 @@ public class Monstre extends Entite {
         return "Monstre [" + super.toString() + "]";
     }
 
-    public static Monstre creerPetitSlimePiquant () {
-        ArrayList<Effet> effets = new ArrayList<>();
-        effets.add(new AppliqueDegat(5));
-
-        Action charge = new Action("Charge", new ArrayList< >(), effets);
-        
-        ArrayList<Action> listeActions = new ArrayList<>();
-        listeActions.add(charge);
-
-        Cyclique pattern = new Cyclique(listeActions);
-        
-        return new Monstre("Petit Slime Piquant", 12, pattern);
+    public Pattern getPattern() {
+        return pattern;
     }
 
-    public static Monstre creerPetitSlimeAcide () {
-        ArrayList<Effet> effetsCharge = new ArrayList<>();
-        effetsCharge.add(new AppliqueDegat(5));
-
-        ArrayList<Effet> effetsAcide = new ArrayList<>();
-        effetsAcide.add(new Faiblesse(1));
-
-
-        Action charge = new Action("Charge", new ArrayList< >(), effetsCharge);
-        Action lecher = new Action("Lêcher", new ArrayList< >(), effetsAcide);
-
-        ArrayList<Action> listeActions = new ArrayList<>();
-        listeActions.add(charge);
-
-
-        Cyclique pattern = new Cyclique(listeActions);
-        
-        return new Monstre("Petit Slime Piquant", 12, pattern);
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 }

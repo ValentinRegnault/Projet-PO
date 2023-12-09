@@ -1,11 +1,17 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class Action {
+public class Action implements java.io.Serializable {
 
     private String nom;
     private ArrayList<Effet> effetsLanceur;
     private ArrayList<Effet> effetsCible;
+
+    public Action () {
+        this.nom = "";
+        this.effetsLanceur = new ArrayList<Effet>();
+        this.effetsCible = new ArrayList<Effet>();
+    }
 
     public Action(String nom, ArrayList<Effet> effetsLanceur, ArrayList<Effet> effetsCible) {
         this.nom = nom;
@@ -51,5 +57,29 @@ public class Action {
         return "Action [nom=" + nom + ", effetsLanceur=" + effetsLanceur + ", effetsCible=" + effetsCible + "]";
     }
 
+    public String getNom() {
+        return nom;
+    }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public ArrayList<Effet> getEffetsLanceur() {
+        return effetsLanceur;
+    }
+
+    public void setEffetsLanceur(ArrayList<Effet> effetsLanceur) {
+        this.effetsLanceur = effetsLanceur;
+    }
+
+    public ArrayList<Effet> getEffetsCible() {
+        return effetsCible;
+    }
+
+    public void setEffetsCible(ArrayList<Effet> effetsCible) {
+        this.effetsCible = effetsCible;
+    }
+
+    
 }

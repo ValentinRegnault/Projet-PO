@@ -5,6 +5,11 @@ public class Cyclique implements Pattern {
     private ArrayList<Action> listeAction;
     private int indice;
 
+    public Cyclique(){
+        this.listeAction = new ArrayList<Action>();
+        this.indice = 0;
+    }
+
     public Cyclique(ArrayList<Action> listAction){
         this.listeAction = listAction;
         this.indice = 0;
@@ -36,5 +41,19 @@ public class Cyclique implements Pattern {
     }
 
 
-    
+    public ArrayList<Action> getListeAction() {
+        return listeAction;
+    }
+
+    public void setListeAction(ArrayList<Action> listeAction) {
+        this.listeAction = listeAction;
+    }
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
 }
