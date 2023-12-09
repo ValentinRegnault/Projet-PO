@@ -102,10 +102,7 @@ public class Carte implements Cloneable {
             Scanner myObj = new Scanner(System.in);
 
             while (index < 0 || index >= listeMonstre.size()) {
-                if(Partie.partie.getMain().get(index).getCout() > lanceur.getPointEnergie()){
-                    System.out.println("Vous n'avez pas assez d'énergie pour jouer cette carte");
-                    continue;
-                }
+
                 for (int i = 0; i < listeMonstre.size(); i++) {
                     System.out.println(i + " - " + listeMonstre.get(i).getNom());
                 }
