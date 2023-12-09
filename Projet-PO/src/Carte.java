@@ -91,7 +91,7 @@ public class Carte implements Cloneable {
         this.description = description;
     }
 
-    public void jouerCarte(Entite lanceur) {
+    public void jouerCarte(Hero lanceur) {
         Monstre cible = null;
 
         if (this.aCible) {
@@ -102,6 +102,10 @@ public class Carte implements Cloneable {
             Scanner myObj = new Scanner(System.in);
 
             while (index < 0 || index >= listeMonstre.size()) {
+                if(Partie.partie.getMain().get(index).getCout() > lanceur.getPointEnergie()){
+                    System.out.println("Vous n'avez pas assez d'énergie pour jouer cette carte");
+                    continue;
+                }
                 for (int i = 0; i < listeMonstre.size(); i++) {
                     System.out.println(i + " - " + listeMonstre.get(i).getNom());
                 }
@@ -125,6 +129,8 @@ public class Carte implements Cloneable {
         for (int i = 0; i < effetsCible.size(); i++) {
             effetsCible.get(i).appliquerEffet(lanceur, new ArrayList<Entite>(Arrays.asList(cible)));
         }
+
+        Partie.partie.defausseCarte(Partie.partie.getMain().indexOf(this));
 
     }
 
