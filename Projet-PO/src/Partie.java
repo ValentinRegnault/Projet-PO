@@ -50,8 +50,13 @@ public class Partie {
             main.clear();
             defausse.clear();
 
+            
+            if (salles.get(indiceSalle) instanceof SalleCombat){
+                obtenirRecompense();
+
+            }
             indiceSalle++;
-            obtenirRecompense();
+
         }
 
         System.out.println("Vous avez gagné");
