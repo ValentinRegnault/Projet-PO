@@ -64,11 +64,23 @@ public class Partie {
     }
 
     public void piocheCarte() {
-        if (!pioche.isEmpty()) {
-            Carte carte = pioche.pop();
-            // On prends la carte au dessus de la pioche
+        // Si la pioche est vide
+        if (pioche.isEmpty()) {
+            // Remettre toutes les cartes de la défausse dans la pioche
+            while (!defausse.isEmpty()) {
+                pioche.push(defausse.pop());
+            }
     
-            // On ajoute cette carte à la main
+            // Mélanger la pioche
+            Collections.shuffle(pioche);
+        }
+    
+        // Si la pioche n'est pas vide après avoir remis les cartes de la défausse
+        if (!pioche.isEmpty()) {
+            // Prendre la carte du dessus de la pioche
+            Carte carte = pioche.pop();
+    
+            // Ajouter cette carte à la main
             main.add(carte);
         }
     }
