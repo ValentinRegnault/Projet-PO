@@ -19,19 +19,19 @@ public class Partie {
     private final TreeMap<String, File> cartesAssetParNom;
 
     // Deck : Ensemble des cartes du joueur
-    private ArrayList<Carte> deck;
+    private LinkedList<Carte> deck = new LinkedList<Carte>();
 
     // Main : Cartes actuellement dans la main du joueur
-    private ArrayList<Carte> main;
+    private ArrayList<Carte> main = new ArrayList<Carte>();
 
     // Defausse : Pile de cartes utilisées
-    private LinkedList<Carte> defausse;
+    private LinkedList<Carte> defausse = new LinkedList<Carte>();
 
     // Exile : Pile de cartes utilisées ayant le statut Exile
-    private LinkedList<Carte> exile;
+    private LinkedList<Carte> exile = new LinkedList<Carte>();
 
     // Pioche : Carte dans laquelle le joueur peut piocher
-    private LinkedList<Carte> pioche;
+    private LinkedList<Carte> pioche = new LinkedList<Carte>();
 
     protected Hero hero;
 
@@ -40,7 +40,7 @@ public class Partie {
     private Partie() {
         this.monstresAssetParNom = new TreeMap<String, File>();
 
-        File dir = new File("Projet-PO/assets/monstres");
+        File dir = new File("assets/monstres");
 
         if (!dir.exists() || !dir.isDirectory()) {
             System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
@@ -58,10 +58,12 @@ public class Partie {
                     ioe.printStackTrace();
                 }
             }
+
+            
         }
 
         this.cartesAssetParNom = new TreeMap<String, File>();
-        dir = new File("Projet-PO/assets/cartes");
+        dir = new File("assets/cartes");
         if (!dir.exists() || !dir.isDirectory()) {
             System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
         } else {
@@ -73,6 +75,7 @@ public class Partie {
                 try {
                     Carte c = mapper.readValue(file, Carte.class);
                     this.cartesAssetParNom.put(c.getNom(), file);
+                    this.deck.push(c);
                 } catch (IOException ioe) {
                     System.out.println("Erreur lors de la lecture du fichier de carte " + file.getName());
                     ioe.printStackTrace();
@@ -80,19 +83,17 @@ public class Partie {
             }
         }
 
-        System.out.println(this.monstresAssetParNom);
-        System.out.println(this.cartesAssetParNom);
+        //System.out.println(this.monstresAssetParNom);
+        //System.out.println(this.cartesAssetParNom);
+        System.out.println(this.deck);
 
         this.salles = new ArrayList<Salle>();
-        this.deck = new ArrayList<Carte>();
-        this.main = new ArrayList<Carte>();
-        this.defausse = new LinkedList<Carte>();
-        this.exile = new LinkedList<Carte>();
-        this.pioche = new LinkedList<Carte>();
         this.hero = new Hero("Bob");
     }
 
     public void jouerPartie() {
+        
+
         genererSalles();
         System.out.println(salles);
         for (Salle salle : salles) {
@@ -281,7 +282,7 @@ public class Partie {
         return salles.get(indiceSalle);
     }
 
-    public ArrayList<Carte> getDeck() {
+    public LinkedList<Carte> getDeck() {
         return deck;
     }
 
