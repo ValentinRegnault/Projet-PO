@@ -25,10 +25,10 @@ public class Partie {
     private ArrayList<Carte> main;
 
     // Defausse : Pile de cartes utilisées
-    private ArrayList<Carte> defausse;
+    private LinkedList<Carte> defausse;
 
     // Exile : Pile de cartes utilisées ayant le statut Exile
-    private ArrayList<Carte> exile;
+    private LinkedList<Carte> exile;
 
     // Pioche : Carte dans laquelle le joueur peut piocher
     private LinkedList<Carte> pioche;
@@ -41,6 +41,7 @@ public class Partie {
         this.monstresAssetParNom = new TreeMap<String, File>();
 
         File dir = new File("Projet-PO/assets/monstres");
+
         if (!dir.exists() || !dir.isDirectory()) {
             System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
         } else {
@@ -85,8 +86,8 @@ public class Partie {
         this.salles = new ArrayList<Salle>();
         this.deck = new ArrayList<Carte>();
         this.main = new ArrayList<Carte>();
-        this.defausse = new ArrayList<Carte>();
-        this.exile = new ArrayList<Carte>();
+        this.defausse = new LinkedList<Carte>();
+        this.exile = new LinkedList<Carte>();
         this.pioche = new LinkedList<Carte>();
         this.hero = new Hero("Bob");
     }
@@ -253,11 +254,11 @@ public class Partie {
     }
 
     public void videDefausse() {
-        this.defausse = new ArrayList<Carte>();
+        this.defausse = new LinkedList<Carte>();
     }
 
     public void videExile() {
-        this.exile = new ArrayList<Carte>();
+        this.exile = new LinkedList<Carte>();
     }
 
     public void videMain() {
@@ -284,11 +285,11 @@ public class Partie {
         return deck;
     }
 
-    public ArrayList<Carte> getDefausse() {
+    public LinkedList<Carte> getDefausse() {
         return defausse;
     }
 
-    public ArrayList<Carte> getExile() {
+    public LinkedList<Carte> getExile() {
         return exile;
     }
 
