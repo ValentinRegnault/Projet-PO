@@ -1,8 +1,19 @@
 import java.util.ArrayList;
+import java.util.TreeMap;
+
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class Partie {
     private ArrayList<Salle> salles;
     private int indiceSalle;
+
+    private final TreeMap<String, File> monstresAssetParNom;
 
     // Deck : Ensemble des cartes du joueur
     private ArrayList<Carte> deck;
@@ -24,6 +35,21 @@ public class Partie {
     static Partie partie = new Partie();
 
     private Partie() {
+
+        File[] files = new File("./assets/monstres").listFiles();
+        this.monstresAssetParNom = new TreeMap<String, File>();
+        ObjectMapper mapper = new ObjectMapper();
+        for (File file : files) {
+            if (file.isFile()) {
+                try {
+                    Monstre m = mapper.readValue(file, Monstre.class);
+                    this.monstresAssetParNom.put(m.nom, file);
+                } catch (IOException ioe) {
+                    System.out.println("Erreur lors de la lecture du fichier de monstre " + file.getName());
+                }
+            }
+        }
+
         this.salles = new ArrayList<Salle>();
         this.deck = new ArrayList<Carte>();
         this.main = new ArrayList<Carte>();
@@ -31,8 +57,6 @@ public class Partie {
         this.exile = new ArrayList<Carte>();
         this.pioche = new ArrayList<Carte>();
     }
-
-    
 
     public void jouerPartie() {
         for (Salle salle : salles) {

@@ -1,0 +1,22 @@
+{
+  "nom": "Petit Slime Acide",
+  "pvMax": 8,
+  "pv": 8,
+  "pointBlocage": 0,
+  "pattern": {
+    "type": "cyclique",
+    "listeAction": [
+      {
+        "nom": "Charge",
+        "effetsLanceur": [],
+        "effetsCible": [{ "type": "appliqueDegat", "pointEffet": 3 }]
+      },
+      {
+        "nom": "Lécher",
+        "effetsLanceur": [],
+        "effetsCible": [{ "type": "faiblesse", "pointEffet": 1 }]
+      }
+    ],
+    "indice": 0
+  }
+}

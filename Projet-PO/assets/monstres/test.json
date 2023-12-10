@@ -1,1 +1,0 @@
-{"nom":"Test","pvMax":10,"pv":10,"pointBlocage":0,"pattern":{"type":"cyclique","listeAction":[{"nom":"atq","effetsLanceur":[],"effetsCible":[{"type":"appliqueDegat","pointEffet":2}]}],"indice":0}}
