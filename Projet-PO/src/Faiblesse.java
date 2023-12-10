@@ -2,6 +2,10 @@ import java.util.ArrayList;
 
 public class Faiblesse extends Effet {
 
+    public Faiblesse(){
+        super(0);
+    }
+
     public Faiblesse(int pointEffet){
         super(pointEffet);
     }
@@ -17,14 +21,10 @@ public class Faiblesse extends Effet {
        
     }
 
-
-
     @Override
     public String toString() {
         return "Faiblesse " + this.pointEffet;
     }
-
-    
 }
     
 

@@ -19,5 +19,5 @@ public interface Pattern extends Serializable {
 
     public abstract void afficherIntention();
 
-    public abstract String getIntention();
+    public abstract String genererIntention();
 }

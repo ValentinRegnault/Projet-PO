@@ -40,7 +40,7 @@ public class Cyclique implements Pattern {
         return "Cyclique [listeAction=" + listeAction + ", indice=" + indice + "]";
     }
 
-    public String getIntention(){
+    public String genererIntention(){
         return this.actionActuelle().toString();
     }
 

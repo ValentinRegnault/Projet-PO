@@ -14,6 +14,11 @@ enum TypeMontre {
 public class Monstre extends Entite {
     Pattern pattern;
 
+    public Monstre() {
+        super("", 0, 0);
+        this.pattern = null;
+    }
+
     public Monstre(String nom, int pvMax, Pattern pattern) {
         super(nom, pvMax, 0);
         this.pattern = pattern;
@@ -23,8 +28,16 @@ public class Monstre extends Entite {
         this.pattern.jouerAction(this, listeCible);
     }
 
-    public String getIntention() {
-        return this.pattern.getIntention();
+    public String genererIntention() {
+        return this.pattern.genererIntention();
+    }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 
     @Override

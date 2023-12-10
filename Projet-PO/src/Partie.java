@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.LinkedList;
 
-
 public class Partie {
     private ArrayList<Salle> salles;
     private int indiceSalle;
@@ -38,20 +37,29 @@ public class Partie {
     static Partie partie = new Partie();
 
     private Partie() {
-
-        File[] files = new File("./assets/monstres").listFiles();
         this.monstresAssetParNom = new TreeMap<String, File>();
-        ObjectMapper mapper = new ObjectMapper();
-        for (File file : files) {
-            if (file.isFile()) {
+
+        File dir = new File("Projet-PO/assets/monstres");
+        System.out.println(dir.getAbsolutePath());
+        if (!dir.exists() || !dir.isDirectory()) {
+            System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            for (File file : dir.listFiles()) {
+                if (!file.isFile())
+                    continue;
+
                 try {
                     Monstre m = mapper.readValue(file, Monstre.class);
                     this.monstresAssetParNom.put(m.nom, file);
                 } catch (IOException ioe) {
                     System.out.println("Erreur lors de la lecture du fichier de monstre " + file.getName());
+                    ioe.printStackTrace();
                 }
             }
         }
+
+        System.out.println(this.monstresAssetParNom);
 
         this.salles = new ArrayList<Salle>();
         this.deck = new ArrayList<Carte>();
@@ -62,10 +70,11 @@ public class Partie {
     }
 
     public void jouerPartie() {
+        System.out.println(this.monstresAssetParNom);
+
         for (Salle salle : salles) {
             genererPioche();
             creerMain();
-
 
             if (!salle.jouerSalle()) {
                 System.out.println("Vous avez perdu");
@@ -74,8 +83,7 @@ public class Partie {
             main.clear();
             defausse.clear();
 
-            
-            if (salles.get(indiceSalle) instanceof SalleCombat){
+            if (salles.get(indiceSalle) instanceof SalleCombat) {
                 obtenirRecompense();
 
             }
@@ -94,16 +102,16 @@ public class Partie {
             while (!defausse.isEmpty()) {
                 pioche.push(defausse.pop());
             }
-    
+
             // Mélanger la pioche
             Collections.shuffle(pioche);
         }
-    
+
         // Si la pioche n'est pas vide après avoir remis les cartes de la défausse
         if (!pioche.isEmpty()) {
             // Prendre la carte du dessus de la pioche
             Carte carte = pioche.pop();
-    
+
             // Ajouter cette carte à la main
             main.add(carte);
         }

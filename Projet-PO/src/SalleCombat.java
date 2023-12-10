@@ -64,7 +64,7 @@ public abstract class SalleCombat extends Salle {
 
                         // Affichage de l'intention des monstres
                         for (int i = 0; i < equipeMonstre.size(); i++) {
-                                System.out.println(i + ": " + equipeMonstre.get(i).getNom() + " - " + equipeMonstre.get(i).getIntention());
+                                System.out.println(i + ": " + equipeMonstre.get(i).getNom() + " - " + equipeMonstre.get(i).genererIntention());
                         }
 
                         // Affichage du nombre de carte dans la pioche

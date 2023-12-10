@@ -2,7 +2,6 @@
   "nom": "Petit Slime Piquant",
   "pvMax": 12,
   "pv": 12,
-  "pointBlocage": 0,
   "pattern": {
     "type": "cyclique",
     "listeAction": [
@@ -11,7 +10,6 @@
         "effetsLanceur": [],
         "effetsCible": [{ "type": "appliqueDegat", "pointEffet": 5 }]
       }
-    ],
-    "indice": 0
+    ]
   }
 }
