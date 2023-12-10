@@ -125,6 +125,9 @@ public abstract class SalleCombat extends Salle {
 
                 /// TODO : Faire baisser les status
 
+                // Piocher une carte
+                Partie.partie.piocheCarte();
+
             }
 
         }
