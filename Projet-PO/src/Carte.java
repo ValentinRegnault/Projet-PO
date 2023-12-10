@@ -45,9 +45,7 @@ public class Carte implements Cloneable {
     private boolean exile;
     private boolean aCible;
 
-    public Carte genCarte(CarteExistante carte) {
-        // TODO
-    }
+    
 
     public String getNom() {
         return nom;
@@ -93,7 +91,7 @@ public class Carte implements Cloneable {
         this.description = description;
     }
 
-    public void jouerCarte(Entite lanceur) {
+    public void jouerCarte(Hero lanceur) {
         Monstre cible = null;
 
         if (this.aCible) {
@@ -104,11 +102,14 @@ public class Carte implements Cloneable {
             Scanner myObj = new Scanner(System.in);
 
             while (index < 0 || index >= listeMonstre.size()) {
+
                 for (int i = 0; i < listeMonstre.size(); i++) {
                     System.out.println(i + " - " + listeMonstre.get(i).getNom());
                 }
                 index = myObj.nextInt();
             }
+
+            myObj.close();
 
             cible = listeMonstre.get(index);
 
@@ -126,6 +127,8 @@ public class Carte implements Cloneable {
             effetsCible.get(i).appliquerEffet(lanceur, new ArrayList<Entite>(Arrays.asList(cible)));
         }
 
+        Partie.partie.defausseCarte(Partie.partie.getMain().indexOf(this));
+
     }
 
     @Override
@@ -140,7 +143,19 @@ public class Carte implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
+        Carte cloned = (Carte) super.clone();
+
+        cloned.effetsLanceur = new ArrayList<>();
+        for (Effet effet : this.effetsLanceur) {
+            cloned.effetsLanceur.add((Effet) effet.clone());
+        }
+
+        cloned.effetsCible = new ArrayList<>();
+        for (Effet effet : this.effetsCible) {
+            cloned.effetsCible.add((Effet) effet.clone());
+        }
+
+        return cloned;
+}
 
 }

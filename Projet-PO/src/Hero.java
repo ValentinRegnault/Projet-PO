@@ -34,6 +34,7 @@ public class Hero extends Entite {
             this.pointEnergie = this.pointEnergieMax;
         }
     }
+
     
     public void restaureEnergie(){
         this.pointEnergie = this.pointEnergieMax;

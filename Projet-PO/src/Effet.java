@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
     @Type(value = PerdrePV.class, name = "perdrePV"),
     @Type(value = Vulnerable.class, name = "vulnerable"),
 })
-public abstract class Effet implements java.io.Serializable {
+public abstract class Effet implements java.io.Serializable,  Cloneable {
     protected int pointEffet;
 
     public Effet() {
@@ -42,4 +42,9 @@ public abstract class Effet implements java.io.Serializable {
     public void setPointEffet(int pointEffet) {
         this.pointEffet = pointEffet;
     }
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

@@ -43,6 +43,12 @@ public abstract class Entite{
         return this.status.get(s);
     }
 
+    public void afficheStatus(){
+        for (Status s : this.status.keySet()){
+            System.out.println(s + " : " + this.status.get(s));
+        }
+    }
+
     public int getPvMax() {
         return pvMax;
     }
