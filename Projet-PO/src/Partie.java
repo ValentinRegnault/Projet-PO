@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class Partie {
-    private ArrayList<Salle> salles;
+    private ArrayList<Salle> salles = new ArrayList<>(15);
     private int indiceSalle;
 
     private final TreeMap<String, File> monstresAssetParNom;
@@ -88,9 +88,12 @@ public class Partie {
         this.defausse = new ArrayList<Carte>();
         this.exile = new ArrayList<Carte>();
         this.pioche = new LinkedList<Carte>();
+        this.hero = new Hero("Bob");
     }
 
     public void jouerPartie() {
+        genererSalles();
+        System.out.println(salles);
         for (Salle salle : salles) {
             genererPioche();
             creerMain();
@@ -112,6 +115,67 @@ public class Partie {
 
         System.out.println("Vous avez gagné");
 
+    }
+
+    public void genererSalles() {
+        // [C] -> [C] -> [R] -> [C] -> [C] -> [C] -> [R] -> [C] -> [C] -> [C] -> [R] ->
+        // [C] -> [C] -> [R] -> [B]
+        this.salles.clear();
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(1)));
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(2)));
+        this.salles.add(new SalleRepos());
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(3)));
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(4)));
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(5)));
+        this.salles.add(new SalleRepos());
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(6)));
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(7)));
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(8)));
+        this.salles.add(new SalleRepos());
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(9)));
+        this.salles.add(new SalleMonstre(genererEquipeMonstre(10)));
+        this.salles.add(new SalleRepos());
+        this.salles.add(new SalleBoss(genererEquipeMonstre(10)));
+    }
+
+    public static Monstre instancierMonstre(String name) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Monstre m = mapper.readValue(Partie.partie.monstresAssetParNom.get(name), Monstre.class);
+            return m;
+        } catch (IOException ioe) {
+            System.out.println("Erreur lors de la lecture du fichier de monstre " + name);
+            ioe.printStackTrace();
+            throw ioe;
+        }
+    }
+
+    /**
+     * Génère une salle de monstres de difficulté donnée (entre 0 et 10)
+     * Dans une salle de difficulté n, il y a n/2 monstres. Ces monstres sont
+     * choisis aléatoirement de la manière suivante :
+     * - on tire n monstre au hasard parmi l'ensemble du catalogue de monstres
+     * - on choisi les n/2 monstres avec le plus de points de vie.
+     * 
+     * @param difficulte La difficulté de la salle entre 1 et 10
+     * @return Une liste de monstres
+     */
+    public ArrayList<Monstre> genererEquipeMonstre(int difficulte) {
+        ArrayList<Monstre> monstresTires = new ArrayList<Monstre>();
+        while (monstresTires.size() < difficulte) {
+            try {
+                int randomIndex = (int) (Math.random() * this.monstresAssetParNom.size());
+                
+                Monstre m = instancierMonstre(this.monstresAssetParNom.keySet().toArray()[randomIndex].toString());
+                monstresTires.add(m);
+            } catch (IOException ioe) {
+                System.out.println("Erreur lors de la lecture du fichier de monstre.");
+                ioe.printStackTrace();
+            }
+        }
+
+        Collections.sort(monstresTires, (m1, m2) -> m2.getPvMax() - m1.getPvMax());
+        return new ArrayList<>(monstresTires.subList(difficulte / 2, difficulte));
     }
 
     public void piocheCarte() {
