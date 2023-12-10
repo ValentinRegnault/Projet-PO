@@ -3,41 +3,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Carte implements Cloneable {
-    enum Rarete {
-        Commun,
-        NonCommun,
-        Rare
-    }
-
-    enum CarteExistante {
-        Frappe,
-        Defense,
-        Heurt,
-        MemePasMal,
-        VagueDeFer,
-        FrappeDuPommeau,
-        FrappeDouble,
-        Enchainement,
-        EpeeBoomerang,
-        Manchette,
-        Plaquage,
-        Saignee,
-        Hemokinesie,
-        Uppercut,
-        VoleeDeCoups,
-        VoirRouge,
-        Enflammer,
-        Desarmement,
-        OndeDeChoc,
-        Tenacite,
-        Gourdin,
-        Invincible,
-        Offrande,
-        FormeDemoniaque
-    }
-
     private String nom;
-    private Rarete rarete;
+    private RareteCarte rarete;
     private int cout;
     private ArrayList<Effet> effetsLanceur;
     private ArrayList<Effet> effetsCible;
@@ -45,41 +12,18 @@ public class Carte implements Cloneable {
     private boolean exile;
     private boolean aCible;
 
-    
-
-    public String getNom() {
-        return nom;
+    public Carte() {
+        this.nom = "";
+        this.rarete = RareteCarte.Commun;
+        this.cout = 0;
+        this.effetsCible = new ArrayList<Effet>();
+        this.effetsLanceur = new ArrayList<Effet>();
+        this.exile = false;
+        this.aCible = false;
+        this.description = "";
     }
 
-    public Rarete getRarete() {
-        return rarete;
-    }
-
-    public int getCout() {
-        return cout;
-    }
-
-    public ArrayList<Effet> getEffetsLanceur() {
-        return effetsLanceur;
-    }
-
-    public ArrayList<Effet> getEffetsCible() {
-        return effetsCible;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isExile() {
-        return exile;
-    }
-
-    public boolean isaCible() {
-        return aCible;
-    }
-
-    public Carte(String nom, Carte.Rarete rarete, int cout, ArrayList<Effet> effetsLanceur,
+    public Carte(String nom, RareteCarte rarete, int cout, ArrayList<Effet> effetsLanceur,
             ArrayList<Effet> effetsCible, boolean exile, boolean aCible, String description) {
         this.nom = nom;
         this.rarete = rarete;
@@ -156,6 +100,70 @@ public class Carte implements Cloneable {
         }
 
         return cloned;
-}
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public RareteCarte getRarete() {
+        return rarete;
+    }
+
+    public int getCout() {
+        return cout;
+    }
+
+    public ArrayList<Effet> getEffetsLanceur() {
+        return effetsLanceur;
+    }
+
+    public ArrayList<Effet> getEffetsCible() {
+        return effetsCible;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isExile() {
+        return exile;
+    }
+
+    public boolean isaCible() {
+        return aCible;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setRarete(RareteCarte rarete) {
+        this.rarete = rarete;
+    }
+
+    public void setCout(int cout) {
+        this.cout = cout;
+    }
+
+    public void setEffetsLanceur(ArrayList<Effet> effetsLanceur) {
+        this.effetsLanceur = effetsLanceur;
+    }
+
+    public void setEffetsCible(ArrayList<Effet> effetsCible) {
+        this.effetsCible = effetsCible;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setExile(boolean exile) {
+        this.exile = exile;
+    }
+
+    public void setaCible(boolean aCible) {
+        this.aCible = aCible;
+    }
 
 }

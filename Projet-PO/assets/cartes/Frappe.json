@@ -1,0 +1,10 @@
+{
+  "nom": "Frappe",
+  "rarete": "Commun",
+  "cout": 1,
+  "effetsLanceur": [],
+  "effetsCible": [{ "type": "appliqueDegat", "pointEffet": 6 }],
+  "description": "Inflige 6 dégats à une cible",
+  "exile": false,
+  "aCible": true
+}

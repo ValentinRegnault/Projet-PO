@@ -16,6 +16,7 @@ public class Partie {
     private int indiceSalle;
 
     private final TreeMap<String, File> monstresAssetParNom;
+    private final TreeMap<String, File> cartesAssetParNom;
 
     // Deck : Ensemble des cartes du joueur
     private ArrayList<Carte> deck;
@@ -40,7 +41,6 @@ public class Partie {
         this.monstresAssetParNom = new TreeMap<String, File>();
 
         File dir = new File("Projet-PO/assets/monstres");
-        System.out.println(dir.getAbsolutePath());
         if (!dir.exists() || !dir.isDirectory()) {
             System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
         } else {
@@ -59,7 +59,28 @@ public class Partie {
             }
         }
 
+        this.cartesAssetParNom = new TreeMap<String, File>();
+        dir = new File("Projet-PO/assets/cartes");
+        if (!dir.exists() || !dir.isDirectory()) {
+            System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            for (File file : dir.listFiles()) {
+                if (!file.isFile())
+                    continue;
+
+                try {
+                    Carte c = mapper.readValue(file, Carte.class);
+                    this.cartesAssetParNom.put(c.getNom(), file);
+                } catch (IOException ioe) {
+                    System.out.println("Erreur lors de la lecture du fichier de carte " + file.getName());
+                    ioe.printStackTrace();
+                }
+            }
+        }
+
         System.out.println(this.monstresAssetParNom);
+        System.out.println(this.cartesAssetParNom);
 
         this.salles = new ArrayList<Salle>();
         this.deck = new ArrayList<Carte>();
@@ -70,8 +91,6 @@ public class Partie {
     }
 
     public void jouerPartie() {
-        System.out.println(this.monstresAssetParNom);
-
         for (Salle salle : salles) {
             genererPioche();
             creerMain();
