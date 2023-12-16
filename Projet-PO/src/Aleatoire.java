@@ -8,6 +8,10 @@ public class Aleatoire implements Pattern {
 
     private Double indice = Math.random();
 
+    public Aleatoire(){
+        this.actionsPossible = new TreeMap<Double, Action>();
+    }
+
     public Aleatoire(TreeMap<Double, Action> mapActionsPossible){
         // TODO: Doit être testé
 
@@ -69,5 +73,22 @@ public class Aleatoire implements Pattern {
         return this.actionActuelle().toString();
     }
 
+    public TreeMap<Double, Action> getActionsPossible() {
+        return actionsPossible;
+    }
+
+    public void setActionsPossible(TreeMap<Double, Action> actionsPossible) {
+        this.actionsPossible = actionsPossible;
+    }
+
+    public Double getIndice() {
+        return indice;
+    }
+
+    public void setIndice(Double indice) {
+        this.indice = indice;
+    }
+
+    
 
 }

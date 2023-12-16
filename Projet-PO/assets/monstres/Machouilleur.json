@@ -1,0 +1,22 @@
+{
+  "nom": "Test",
+  "pvMax": 12,
+  "pv": 12,
+  "pointBlocage": 0,
+  "status": { "Force": 0, "Faiblesse": 0, "Vulnérable": 0, "Fragile": 0 },
+  "pattern": {
+    "type": "preparation",
+    "phase1": {
+      "type": "cyclique",
+      "listeAction": [
+        {
+          "nom": "Charge",
+          "effetsLanceur": [],
+          "effetsCible": [{ "type": "appliqueDegat", "pointEffet": 5 }]
+        }
+      ],
+      "indice": 0
+    },
+    "phase2": { "type": "aleatoire" }
+  }
+}

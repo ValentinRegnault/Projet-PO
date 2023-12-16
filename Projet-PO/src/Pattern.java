@@ -9,8 +9,9 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Cyclique.class, name = "cyclique"),
-        @JsonSubTypes.Type(value = Aleatoire.class, name = "aleatoire"),
+    @JsonSubTypes.Type(value = Cyclique.class, name = "cyclique"),
+    @JsonSubTypes.Type(value = Aleatoire.class, name = "aleatoire"),
+    @JsonSubTypes.Type(value = Preparation.class, name = "preparation"),
 })
 public interface Pattern extends Serializable {
     public void jouerAction(Monstre lanceur, ArrayList<Entite> listeCible);
