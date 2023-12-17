@@ -2,23 +2,22 @@ import java.util.ArrayList;
 
 public class Faiblesse extends Effet {
 
-    public Faiblesse(){
-        super(0);
+    public Faiblesse() {
+        super(0, TypeCible.AUCUN);
     }
 
-    public Faiblesse(int pointEffet){
-        super(pointEffet);
+    public Faiblesse(int pointEffet, TypeCible typeCible) {
+        super(pointEffet, typeCible);
     }
-    
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> ListeCible){
 
-        // Inflige prends en compte les points de blocage
-        for (Entite cible : ListeCible) {
-            cible.setStatusPoint(Entite.Status.Faiblesse, cible.getStatusPoint(Entite.Status.Faiblesse) + this.pointEffet);
-            System.out.println(lanceur.getNom() + " donne " + this.pointEffet + " points de faiblesse à " + cible.getNom());
+    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
+        for (Entite cible : cibles) {
+            // Inflige prends en compte les points de blocage
+            cible.setStatusPoint(Entite.Status.Faiblesse,
+                    cible.getStatusPoint(Entite.Status.Faiblesse) + this.pointEffet);
+            System.out.println(
+                    lanceur.getNom() + " donne " + this.pointEffet + " points de faiblesse à " + cible.getNom());
         }
-
-       
     }
 
     @Override
@@ -26,5 +25,3 @@ public class Faiblesse extends Effet {
         return "Faiblesse " + this.pointEffet;
     }
 }
-    
-

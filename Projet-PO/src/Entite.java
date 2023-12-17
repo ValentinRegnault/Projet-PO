@@ -1,4 +1,5 @@
 import java.util.TreeMap;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 public abstract class Entite {
@@ -14,6 +15,19 @@ public abstract class Entite {
     protected int pv;
     protected int pointBlocage = 0;
     protected TreeMap<Status, Integer> status;
+
+    public Entite() {
+        this.nom = "";
+        this.pvMax = 0;
+        this.pv = 0;
+        this.pointBlocage = 0;
+
+        this.status = new TreeMap<>();
+        this.status.put(Status.Faiblesse, 0);
+        this.status.put(Status.Force, 0);
+        this.status.put(Status.Vulnérable, 0);
+        this.status.put(Status.Fragile, 0);
+    }
 
     public Entite(String nom, int pvMax, int pointBlocage) {
         this.nom = nom;
@@ -43,9 +57,10 @@ public abstract class Entite {
     }
 
     public void afficheStatus() {
-        for (Status s : this.status.keySet()) {
-            System.out.println(s + " : " + this.status.get(s));
+        for (Entry<Status, Integer> s : this.status.entrySet()) {
+            System.out.print(s.getKey() + " : " + s.getValue() + " ");
         }
+        System.out.println();
     }
 
     public int getPvMax() {
@@ -66,7 +81,9 @@ public abstract class Entite {
 
     public void setPv(int pv) {
         this.pv = pv;
-
+        if(this.pv < 0) {
+            this.pv = 0;
+        }
     }
 
     public int getPointBlocage() {

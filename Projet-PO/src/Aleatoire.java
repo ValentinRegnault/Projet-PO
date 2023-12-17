@@ -11,52 +11,26 @@ public class Aleatoire implements Pattern {
     public Aleatoire(){
         this.actionsPossible = new TreeMap<Double, Action>();
     }
-
-    public Aleatoire(TreeMap<Double, Action> mapActionsPossible){
-        // TODO: Doit être testé
-
-        // Creation du dictionnaire avec probabilitées normalisées
-        // Action1 : 30%
-        // Action2 : 40%
-        // Action3 : 30%
-        // Le dictionnaire ressemblera à :
-        // 0.3 - Action1, 0.7 - Action2, 1. Action2
-        Double somme = 0.0;
-        for(Double proba : mapActionsPossible.keySet()){
-            somme += proba;
-            this.actionsPossible.put(somme, mapActionsPossible.get(proba));
-        }
-
-
-    }
-
- 
-
+    
     public Action actionActuelle(){
-
+        double cumul = 0.0;
         for(Double proba : this.actionsPossible.keySet()){
-            if(this.indice <= proba){
+            cumul += proba;
+            if(this.indice <= cumul){
                 return this.actionsPossible.get(proba);
             }
         }
 
-        // TODO : Ne devrait pas se produire?
-        return null;
-
+        throw new Error("Erreur dans le tirage aléatoire du pattern Aleatoire, aucune carte n'a été tirée");
     }
 
-    public void jouerAction(Monstre lanceur, ArrayList<Entite> listeCible){
-        this.actionActuelle().jouerAction(lanceur, listeCible);
+    public void jouerAction(Monstre lanceur){
+        this.actionActuelle().jouerAction(lanceur);
         this.actionSuivante();
     }
 
     public void actionSuivante(){
         this.indice = Math.random();
-    }
-
-    public void afficherIntention(){
-        System.out.println(this.actionActuelle());
-
     }
 
     @Override
@@ -69,8 +43,8 @@ public class Aleatoire implements Pattern {
         return output;
     }
 
-    public String genererIntention(){
-        return this.actionActuelle().toString();
+    public Action intention(){
+        return this.actionActuelle();
     }
 
     public TreeMap<Double, Action> getActionsPossible() {

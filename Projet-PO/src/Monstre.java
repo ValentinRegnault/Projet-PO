@@ -12,7 +12,7 @@ enum TypeMontre {
 }
 
 public class Monstre extends Entite {
-    Pattern pattern;
+    private Pattern pattern;
 
     public Monstre() {
         super("", 0, 0);
@@ -24,12 +24,8 @@ public class Monstre extends Entite {
         this.pattern = pattern;
     }
 
-    public void jouerAction(ArrayList<Entite> listeCible) {
-        this.pattern.jouerAction(this, listeCible);
-    }
-
-    public String genererIntention() {
-        return this.pattern.genererIntention();
+    public void jouerAction() {
+        this.pattern.jouerAction(this);
     }
 
     public Pattern getPattern() {

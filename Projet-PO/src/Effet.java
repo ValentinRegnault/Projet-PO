@@ -10,28 +10,30 @@ import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
 
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "type")
 @JsonSubTypes({
-    @Type(value = AppliqueDegat.class, name = "appliqueDegat"),
-    @Type(value = AppliqueDegatParBlocage.class, name = "appliqueDegat"),
-    @Type(value = Blocage.class, name = "blocage"),
-    @Type(value = Energie.class, name = "energie"),
-    @Type(value = Faiblesse.class, name = "faiblesse"),
-    @Type(value = Force.class, name = "force"),
-    @Type(value = Fragile.class, name = "fragile"),
-    @Type(value = PerdrePV.class, name = "perdrePV"),
-    @Type(value = Vulnerable.class, name = "vulnerable"),
+        @Type(value = AppliqueDegat.class, name = "appliqueDegat"),
+        @Type(value = AppliqueDegatParBlocage.class, name = "appliqueDegatParBlocage"),
+        @Type(value = Blocage.class, name = "blocage"),
+        @Type(value = Energie.class, name = "energie"),
+        @Type(value = Faiblesse.class, name = "faiblesse"),
+        @Type(value = Force.class, name = "force"),
+        @Type(value = Fragile.class, name = "fragile"),
+        @Type(value = PerdrePV.class, name = "perdrePV"),
+        @Type(value = Vulnerable.class, name = "vulnerable"),
 })
-public abstract class Effet implements java.io.Serializable,  Cloneable {
+public abstract class Effet implements java.io.Serializable, Cloneable {
     protected int pointEffet;
+    private TypeCible typeCible;
 
     public Effet() {
         this.pointEffet = 0;
     }
 
-    public Effet(int pointEffet) {
+    public Effet(int pointEffet, TypeCible typeCible) {
         this.pointEffet = pointEffet;
+        this.typeCible = typeCible;
     }
 
-    protected abstract void appliquerEffet(Entite lanceur, ArrayList<Entite> listeCible);
+    protected abstract void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles);
 
     public abstract String toString();
 
@@ -42,9 +44,17 @@ public abstract class Effet implements java.io.Serializable,  Cloneable {
     public void setPointEffet(int pointEffet) {
         this.pointEffet = pointEffet;
     }
+
+    public TypeCible getTypeCible() {
+        return typeCible;
+    }
+
+    public void setTypeCible(TypeCible typeCible) {
+        this.typeCible = typeCible;
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-
 }

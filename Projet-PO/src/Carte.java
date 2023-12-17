@@ -6,73 +6,97 @@ public class Carte implements Cloneable {
     private String nom;
     private RareteCarte rarete;
     private int cout;
-    private ArrayList<Effet> effetsLanceur;
-    private ArrayList<Effet> effetsCible;
+    private ArrayList<Effet> effets;
     private String description;
-    private boolean exile;
-    private boolean aCible;
+    private boolean aExiler;
 
     public Carte() {
         this.nom = "";
         this.rarete = RareteCarte.Commun;
         this.cout = 0;
-        this.effetsCible = new ArrayList<Effet>();
-        this.effetsLanceur = new ArrayList<Effet>();
-        this.exile = false;
-        this.aCible = false;
+        this.effets = new ArrayList<Effet>();
+        this.aExiler = false;
         this.description = "";
     }
 
-    public Carte(String nom, RareteCarte rarete, int cout, ArrayList<Effet> effetsLanceur,
-            ArrayList<Effet> effetsCible, boolean exile, boolean aCible, String description) {
+    public Carte(String nom, RareteCarte rarete, int cout, ArrayList<Effet> effets, boolean exile, String description) {
         this.nom = nom;
         this.rarete = rarete;
         this.cout = cout;
-        this.effetsCible = effetsCible;
-        this.effetsLanceur = effetsLanceur;
-        this.exile = exile;
-        this.aCible = aCible;
+        this.effets = effets;
+        this.aExiler = exile;
         this.description = description;
     }
 
-    public void jouerCarte(Hero lanceur) {
-        Monstre cible = null;
+    public void jouerCarte() {
+        Hero hero = Partie.partie.getHero();
 
-        if (this.aCible) {
-            System.out.println("Choisissez une cible");
-            SalleCombat salle = (SalleCombat) Partie.partie.getSalleActuelle();
-            ArrayList<Monstre> listeMonstre = salle.getEquipeMonstre();
-            int index = -1;
-            Scanner myObj = new Scanner(System.in);
+        boolean doitOnSelectionnerUneCible = effets.stream()
+                .anyMatch(e -> e.getTypeCible() == TypeCible.SELECTION_JOUEUR);
+        Monstre cibleSelectionee = null;
+        if (doitOnSelectionnerUneCible) {
+            ArrayList<Monstre> equipeMonstre = Partie.partie.getEquipeMonstreActuelle();
+            int indice = demanderMonstre(equipeMonstre);
+            cibleSelectionee = equipeMonstre.get(indice);
+        }
 
-            while (index < 0 || index >= listeMonstre.size()) {
-
-                for (int i = 0; i < listeMonstre.size(); i++) {
-                    System.out.println(i + " - " + listeMonstre.get(i).getNom());
-                }
-                index = myObj.nextInt();
+        for (Effet effet : effets) {
+            ArrayList<Entite> cibles = new ArrayList<Entite>();
+            switch (effet.getTypeCible()) {
+                case AUCUN:
+                    break;
+                case HERO:
+                    cibles.add(Partie.partie.getHero());
+                    break;
+                case TOUS_LES_MONSTRES:
+                    cibles.addAll(Partie.partie.getEquipeMonstreActuelle());
+                    break;
+                case MONSTRE_ALEATOIRE:
+                    cibles.add(Partie.partie.getEquipeMonstreActuelle()
+                            .get((int) (Math.random() * Partie.partie.getEquipeMonstreActuelle().size())));
+                    break;
+                case SELECTION_JOUEUR:
+                    cibles.add(cibleSelectionee);
+                    break;
+                case LANCEUR:
+                    throw new IllegalStateException(
+                            "Une carte contient des effets. Ces effets ont un type de cible. Le type de cible LANCEUR corresponds au monstre qui à effectué l'action, et ne devrait pas être utilisé dans une carte.");
+                default:
+                    break;
             }
 
-            myObj.close();
-
-            cible = listeMonstre.get(index);
-
+            effet.appliquerEffet(hero, cibles);
         }
 
-        if (lanceur instanceof Hero hero) {
-            hero.setPointEnergie(hero.getPointEnergie() - this.cout);
-        }
-
-        for (int i = 0; i < effetsLanceur.size(); i++) {
-            effetsLanceur.get(i).appliquerEffet(lanceur, null);
-        }
-
-        for (int i = 0; i < effetsCible.size(); i++) {
-            effetsCible.get(i).appliquerEffet(lanceur, new ArrayList<Entite>(Arrays.asList(cible)));
-        }
-
+        Partie.partie.getHero().setPointEnergie(Partie.partie.getHero().getPointEnergie() - this.cout);
         Partie.partie.defausseCarte(Partie.partie.getMain().indexOf(this));
+    }
 
+    private int demanderMonstre(ArrayList<Monstre> equipeMonstre) {
+        System.out.println();
+        for (int i = 0; i < equipeMonstre.size(); i++) {
+            System.out.println("[" + i + "] "
+                    + equipeMonstre.get(i).getNom()
+                    + " - " + equipeMonstre.get(i).getPv()
+                    + "/" + equipeMonstre.get(i).getPvMax()
+                    + " PV");
+        }
+        System.out.println();
+
+        int indiceMonstre = 0;
+        boolean indiceValide = false;
+        while (!indiceValide) {
+            System.out.println("Choisissez un monstre : ");
+            indiceMonstre = Partie.partie.getScanner().nextInt();
+
+            if (indiceMonstre >= 0 && indiceMonstre < equipeMonstre.size()) {
+                indiceValide = true;
+            } else {
+                System.out.println("Indice invalide");
+            }
+        }
+
+        return indiceMonstre;
     }
 
     @Override
@@ -82,21 +106,17 @@ public class Carte implements Cloneable {
                 Carte: %s
                 Rareté: %s
                 Cout: %d
-                """, this.nom, this.rarete, this.cout) + "Description: " + this.description + "\nExile: " + this.exile;
+                """, this.nom, this.rarete, this.cout) + "Description: " + this.description + "\nExile: "
+                + this.aExiler;
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         Carte cloned = (Carte) super.clone();
 
-        cloned.effetsLanceur = new ArrayList<>();
-        for (Effet effet : this.effetsLanceur) {
-            cloned.effetsLanceur.add((Effet) effet.clone());
-        }
-
-        cloned.effetsCible = new ArrayList<>();
-        for (Effet effet : this.effetsCible) {
-            cloned.effetsCible.add((Effet) effet.clone());
+        cloned.effets = new ArrayList<Effet>();
+        for (Effet effet : this.effets) {
+            cloned.effets.add((Effet) effet.clone());
         }
 
         return cloned;
@@ -114,24 +134,16 @@ public class Carte implements Cloneable {
         return cout;
     }
 
-    public ArrayList<Effet> getEffetsLanceur() {
-        return effetsLanceur;
-    }
-
-    public ArrayList<Effet> getEffetsCible() {
-        return effetsCible;
+    public ArrayList<Effet> getEffets() {
+        return effets;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public boolean isExile() {
-        return exile;
-    }
-
-    public boolean isaCible() {
-        return aCible;
+    public boolean isaExiler() {
+        return aExiler;
     }
 
     public void setNom(String nom) {
@@ -146,24 +158,15 @@ public class Carte implements Cloneable {
         this.cout = cout;
     }
 
-    public void setEffetsLanceur(ArrayList<Effet> effetsLanceur) {
-        this.effetsLanceur = effetsLanceur;
-    }
-
-    public void setEffetsCible(ArrayList<Effet> effetsCible) {
-        this.effetsCible = effetsCible;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setExile(boolean exile) {
-        this.exile = exile;
+    public void setaExiler(boolean exile) {
+        this.aExiler = exile;
     }
 
-    public void setaCible(boolean aCible) {
-        this.aCible = aCible;
+    public void setEffets(ArrayList<Effet> effets) {
+        this.effets = effets;
     }
-
 }

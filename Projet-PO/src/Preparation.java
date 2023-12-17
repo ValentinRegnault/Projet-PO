@@ -3,12 +3,7 @@ import java.util.TreeMap;
 
 public class Preparation implements Pattern {
     private Cyclique phase1;
-    private Aleatoire phase2;
-
-    public Preparation(ArrayList<Action> phase1ListeActions, TreeMap<Double, Action> phase2ActionsPossible) {
-        this.phase1 = new Cyclique(phase1ListeActions);
-        this.phase2 = new Aleatoire(phase2ActionsPossible);
-    }
+    private Pattern phase2;
 
     public Preparation() {
         this.phase1 = new Cyclique();
@@ -23,22 +18,17 @@ public class Preparation implements Pattern {
         }
     }
 
-    public void jouerAction(Monstre lanceur, ArrayList<Entite> listeCible) {
-        patternActuel().jouerAction(lanceur, listeCible);
+    public void jouerAction(Monstre lanceur) {
+        patternActuel().jouerAction(lanceur);
     }
 
     public void actionSuivante() {
         patternActuel().actionSuivante();
     }
 
-    public String genererIntention() {
-        return patternActuel().genererIntention();
+    public Action intention() {
+        return patternActuel().intention();
     }
-
-    public void afficherIntention() {
-        patternActuel().afficherIntention();
-    }
-
 
     public Cyclique getPhase1() {
         return phase1;
@@ -48,11 +38,17 @@ public class Preparation implements Pattern {
         this.phase1 = phase1;
     }
 
-    public Aleatoire getPhase2() {
+    public Pattern getPhase2() {
         return phase2;
     }
 
-    public void setPhase2(Aleatoire phase2) {
+    public void setPhase2(Pattern phase2) {
         this.phase2 = phase2;
     }
+
+    public String toString() {
+        return "Préparation :" + "Phase 1 :" + this.phase1.toString() + "\n" + this.phase2.toString();
+    }
+
 }
+

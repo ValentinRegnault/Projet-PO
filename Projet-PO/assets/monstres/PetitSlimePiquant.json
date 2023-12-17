@@ -7,8 +7,9 @@
     "listeAction": [
       {
         "nom": "Charge",
-        "effetsLanceur": [],
-        "effetsCible": [{ "type": "appliqueDegat", "pointEffet": 5 }]
+        "effets": [
+          { "type": "appliqueDegat", "pointEffet": 5, "typeCible": "HERO" }
+        ]
       }
     ]
   }

@@ -1,7 +1,7 @@
 {
-  "nom": "Test",
-  "pvMax": 12,
-  "pv": 12,
+  "nom": "Mâchouilleur",
+  "pvMax": 40,
+  "pv": 40,
   "pointBlocage": 0,
   "status": { "Force": 0, "Faiblesse": 0, "Vulnérable": 0, "Fragile": 0 },
   "pattern": {
@@ -11,12 +11,38 @@
       "listeAction": [
         {
           "nom": "Charge",
-          "effetsLanceur": [],
-          "effetsCible": [{ "type": "appliqueDegat", "pointEffet": 5 }]
+          "effets": [
+            { "type": "appliqueDegat", "pointEffet": 7, "typeCible": "HERO" },
+            { "type": "blocage", "pointEffet": 5, "typeCible": "LANCEUR" }
+          ]
         }
       ],
       "indice": 0
     },
-    "phase2": { "type": "aleatoire" }
+    "phase2": {
+      "type": "aleatoire",
+      "actionsPossible": {
+        "0.25": {
+          "nom": "Morsure",
+          "effets": [
+            { "type": "appliqueDegat", "pointEffet": 11, "typeCible": "HERO" }
+          ]
+        },
+        "0.3": {
+          "nom": "Charge",
+          "effets": [
+            { "type": "appliqueDegat", "pointEffet": 7, "typeCible": "HERO" },
+            { "type": "blocage", "pointEffet": 5, "typeCible": "LANCEUR" }
+          ]
+        },
+        "0.45": {
+          "nom": "Gronder",
+          "effets": [
+            { "type": "blocage", "pointEffet": 6, "typeCible": "LANCEUR" },
+            { "type": "force", "pointEffet": 3, "typeCible": "LANCEUR" }
+          ]
+        }
+      }
+    }
   }
 }

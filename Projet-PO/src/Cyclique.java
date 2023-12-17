@@ -1,38 +1,33 @@
 import java.util.ArrayList;
 
 public class Cyclique implements Pattern {
-    
+
     private ArrayList<Action> listeAction;
     private int indice;
 
-    public Cyclique(){
+    public Cyclique() {
         this.listeAction = new ArrayList<Action>();
         this.indice = 0;
     }
 
-    public Cyclique(ArrayList<Action> listAction){
+    public Cyclique(ArrayList<Action> listAction) {
         this.listeAction = listAction;
         this.indice = 0;
     }
-    
-    public void jouerAction(Monstre lanceur, ArrayList<Entite> listeCible){
-        this.actionActuelle().jouerAction(lanceur, listeCible);
+
+    public void jouerAction(Monstre lanceur) {
+        this.actionActuelle().jouerAction(lanceur);
         this.actionSuivante();
     }
 
-    public Action actionActuelle(){
+    public Action actionActuelle() {
 
         return this.listeAction.get(this.indice);
     }
 
-    public void actionSuivante(){
+    public void actionSuivante() {
 
-        this.indice = ((this.indice+1)%listeAction.size());
-    }
-
-    public void afficherIntention(){
-        System.out.println(this.actionActuelle());
-
+        this.indice = ((this.indice + 1) % listeAction.size());
     }
 
     @Override
@@ -40,10 +35,9 @@ public class Cyclique implements Pattern {
         return "Cyclique [listeAction=" + listeAction + ", indice=" + indice + "]";
     }
 
-    public String genererIntention(){
-        return this.actionActuelle().toString();
+    public Action intention() {
+        return this.actionActuelle();
     }
-
 
     public ArrayList<Action> getListeAction() {
         return listeAction;

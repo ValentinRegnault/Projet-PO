@@ -14,11 +14,18 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
     @JsonSubTypes.Type(value = Preparation.class, name = "preparation"),
 })
 public interface Pattern extends Serializable {
-    public void jouerAction(Monstre lanceur, ArrayList<Entite> listeCible);
+    /**
+     * Joue l'action actuellement préparé par le monstre
+     */
+    public void jouerAction(Monstre lanceur);
 
+    /**
+     * Passe à l'action suivante
+     */
     public abstract void actionSuivante();
 
-    public abstract void afficherIntention();
-
-    public abstract String genererIntention();
+    /**
+     * Retourne l'action actuellement préparé par le monstre
+     */
+    public abstract Action intention();
 }

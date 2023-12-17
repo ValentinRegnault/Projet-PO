@@ -2,9 +2,12 @@ import java.util.ArrayList;
 
 public class Pioche extends Effet {
 
+    public Pioche() {
+        super(0, TypeCible.AUCUN);
+    }
 
-    public Pioche(int nbCartes) {
-        super(nbCartes);
+    public Pioche(int nbCartes, TypeCible typeCible ) {
+        super(nbCartes, typeCible);
     }
 
     @Override
@@ -18,5 +21,5 @@ public class Pioche extends Effet {
     public String toString() {
         return "Pioche " + this.pointEffet + " cartes";
     }
-    
+
 }
