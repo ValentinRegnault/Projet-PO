@@ -24,11 +24,10 @@ public abstract class Entite {
         this.pointBlocage = 0;
 
         this.status = new TreeMap<>();
-        this.status.put(Status.Faiblesse, 0);
-        this.status.put(Status.Force, 0);
-        this.status.put(Status.Vulnérable, 0);
-        this.status.put(Status.Fragile, 0);
-        this.status.put(Status.Rituel, 0);
+        for (Status s : Status.values()) {
+            this.status.put(s, 0);
+        }
+
     }
 
     public Entite(String nom, int pvMax, int pointBlocage) {
@@ -38,10 +37,9 @@ public abstract class Entite {
         this.pointBlocage = pointBlocage;
 
         this.status = new TreeMap<>();
-        this.status.put(Status.Faiblesse, 0);
-        this.status.put(Status.Force, 0);
-        this.status.put(Status.Vulnérable, 0);
-        this.status.put(Status.Fragile, 0);
+        for (Status s : Status.values()) {
+            this.status.put(s, 0);
+        }
     }
 
     @Override

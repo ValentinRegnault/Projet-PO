@@ -1,16 +1,14 @@
-import java.util.ArrayList;
-import java.util.TreeMap;
-
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Partie {
 	private ArrayList<Salle> salles = new ArrayList<>(15);
@@ -77,7 +75,6 @@ public class Partie {
 				try {
 					Carte c = mapper.readValue(file, Carte.class);
 					this.cartesAssetParNom.put(c.getNom(), file);
-					this.deck.push(c);
 				} catch (IOException ioe) {
 					System.out.println("Erreur lors de la lecture du fichier de carte " + file.getName());
 					ioe.printStackTrace();
@@ -85,8 +82,6 @@ public class Partie {
 			}
 		}
 
-		// System.out.println(this.monstresAssetParNom);
-		// System.out.println(this.cartesAssetParNom);
 		System.out.println(this.deck);
 
 		this.salles = new ArrayList<Salle>();
@@ -99,16 +94,12 @@ public class Partie {
 			genererPioche();
 			boolean victoire = salle.jouerSalle();
 			if (!victoire) {
-                System.out.println();
+				System.out.println();
 				System.out.println("--- Vous avez perdu ---");
 				return;
 			}
 			main.clear();
 			defausse.clear();
-
-			if (salles.get(indiceSalle) instanceof SalleCombat) {
-				obtenirRecompense();
-			}
 			indiceSalle++;
 		}
 
@@ -189,6 +180,40 @@ public class Partie {
 		return new ArrayList<>(monstresTires.subList(difficulte / 2, difficulte));
 	}
 
+	public Carte carteAleatoire() {
+		RareteCarte rarete = RareteCarte.Commun;
+		double random = (double) (Math.random() * 1);
+
+		// Commun : 60%
+		if (random < 0.6) {
+			rarete = RareteCarte.Commun;
+		}
+		// Non Commun : 37%
+		else if (random < 0.97) {
+			rarete = RareteCarte.NonCommun;
+		}
+		// Rare : 3%
+		else {
+			rarete = RareteCarte.Rare;
+		}
+
+		final RareteCarte rareteChoisie = rarete;
+		ArrayList<Carte> cartesDeRareteChoisie = cartesAssetParNom.keySet().stream()
+				.map((String nomCarte) -> {
+					try {
+						return instancierCarte(nomCarte);
+					} catch (IOException e) {
+						e.printStackTrace();
+						return null;
+					}
+				})
+				.filter(carte -> carte.getRarete() == rareteChoisie)
+				.collect(Collectors.toCollection(ArrayList::new));
+
+		int randomIndex = (int) (Math.random() * cartesDeRareteChoisie.size());
+		return cartesDeRareteChoisie.get(randomIndex);
+	}
+
 	public ArrayList<Monstre> getEquipeMonstreActuelle() throws IllegalStateException {
 		if (!(salles.get(indiceSalle) instanceof SalleMonstre)) {
 			throw new IllegalStateException("Il n'y a pas d'équipe de monstres actuelle.");
@@ -243,10 +268,6 @@ public class Partie {
 		exile.add(carteUtilise);
 	}
 
-	public void ajouterCarte(Carte carte) {
-		this.deck.add(carte);
-	}
-
 	public void genererPioche() {
 		pioche.clear();
 		for (Carte carte : deck) {
@@ -266,10 +287,6 @@ public class Partie {
 				main.add(pioche.pop());
 			}
 		}
-	}
-
-	public void obtenirRecompense() {
-		// TODO
 	}
 
 	public void videDefausse() {

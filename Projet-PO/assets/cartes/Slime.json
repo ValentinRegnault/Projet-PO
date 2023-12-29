@@ -1,8 +1,8 @@
 {
-    "nom": "Slime",
-    "rarete": "Commun",
-    "cout": 1,
-    "effets": [],
-    "description": "Slurp slurp :-)",
-    "aExiler": false
-  }
+  "nom": "Slime",
+  "rarete": "NonCommun",
+  "cout": 1,
+  "effets": [],
+  "description": "Slurp slurp :-)",
+  "aExiler": false
+}

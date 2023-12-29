@@ -41,7 +41,6 @@ public class App {
         Partie.partie.getDeck().add(Partie.instancierCarte("Frappe"));
         Partie.partie.getDeck().add(Partie.instancierCarte("Frappe"));
         Partie.partie.jouerPartie();
-
     }
 
     private static void creerMachouilleur() {

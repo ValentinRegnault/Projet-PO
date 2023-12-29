@@ -3,7 +3,6 @@
   "pvMax": 50,
   "pv": 50,
   "pointBlocage": 0,
-  "status": { "Force": 0, "Faiblesse": 0, "Vulnérable": 0, "Fragile": 0 },
   "pattern": {
     "type": "preparation",
     "phase1": {

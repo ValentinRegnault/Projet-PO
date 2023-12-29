@@ -25,7 +25,15 @@ public abstract class SalleCombat extends Salle {
 		lancerCombat();
 		Hero hero = Partie.partie.getHero();
 		System.out.println(hero.getPv() <= 0);
-		return hero.getPv() > 0;
+
+		if (hero.getPv() <= 0) {
+			System.out.println("Vous avez perdu !");
+			return false;
+		} else {
+			System.out.println("Félicitations, vous avez vaincu les monstres de cette salle !");
+			choisirRecompense();
+			return true;
+		}
 	}
 
 	public void lancerCombat() {
@@ -100,7 +108,8 @@ public abstract class SalleCombat extends Salle {
 					.filter(carte -> carte.getNom().equals("Brûlure"))
 					.count();
 			if (nbCarteBrulureDansMain > 0) {
-				System.out.println("Vous avez " + nbCarteBrulureDansMain + " cartes Brûlure dans votre main. Vous allez perdre deux points de vie par carte brûlure !");
+				System.out.println("Vous avez " + nbCarteBrulureDansMain
+						+ " cartes Brûlure dans votre main. Vous allez perdre deux points de vie par carte brûlure !");
 				hero.setPv(hero.getPv() - 2 * (int) nbCarteBrulureDansMain);
 			}
 
@@ -120,25 +129,27 @@ public abstract class SalleCombat extends Salle {
 				}
 			}
 
-			// TODO update les status
-
 			System.out.println();
 			System.out.println("Bilan du tour :");
 			System.out.println();
 
 			System.out.println("Vous avez " + hero.getPv() + " PV et " + hero.getPointEnergie() + " points d'énergie.");
-			System.out.println("Vous êtes affecté par les status suivants :");
-			hero.afficheStatus();
+
+			if (hero.status.values().stream().anyMatch(val -> val > 0)) {
+				System.out.println("Vous êtes affecté par les status suivants :");
+				hero.afficheStatus();
+			}
 
 			// Affichage des PV des monstres et leurs status
 			for (Monstre monstre : equipeMonstre) {
-				System.out.println(monstre.getNom() + " a " + monstre.getPv() + "/" + monstre.getPvMax()
-						+ " PV et est affecté par les status suivants :");
-				monstre.afficheStatus();
+				if (monstre.status.values().stream().anyMatch(val -> val > 0)) {
+					System.out.println(monstre.getNom() + " a " + monstre.getPv() + "/" + monstre.getPvMax()
+							+ " PV et est affecté par les status suivants :");
+
+					monstre.afficheStatus();
+				}
 			}
 		}
-
-		// Récompense
 	}
 
 	private int demanderCarte() {
@@ -171,8 +182,28 @@ public abstract class SalleCombat extends Salle {
 		return indiceCarte;
 	}
 
-	private Carte choisirRecompense() {
-		
+	private void choisirRecompense() {
+		System.out.println("Choisissez une carte de récompense parmis les trois suivante, ou aucune :");
+		Carte[] cartes = new Carte[3];
+		for (int i = 0; i < 3; i++) {
+			cartes[i] = Partie.partie.carteAleatoire();
+		}
+
+		for (int i = 0; i < 3; i++) {
+			Carte carte = cartes[i];
+			System.out.println("[" + i + "] " + carte.getNom() + " - " + carte.getDescription() + " - "
+					+ carte.getCout() + " points d'énergie");
+		}
+
+		System.out.println("[-1] Aucune");
+		System.out.println("Votre choix : ");
+		int indiceCarte = Partie.partie.getScanner().nextInt();
+		if (indiceCarte == -1) {
+			System.out.println("Vous avez rejeter les cartes de récompense.");
+		} else {
+			System.out.println("Vous avez choisi la carte " + cartes[indiceCarte].getNom());
+			Partie.partie.getDeck().add(cartes[indiceCarte]);
+		}
 	}
 
 	private void retirerMonstresMorts() {
