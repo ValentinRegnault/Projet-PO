@@ -1,4 +1,5 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
@@ -6,6 +7,7 @@ import main.TypeCible;
 
 /**
  * Effet qui ajoute des points de rituel à la cible.
+ * 
  * @see Effet
  */
 public class Rituel extends Effet {

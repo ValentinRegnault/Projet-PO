@@ -1,6 +1,6 @@
 package main;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 /**
  * Classe representant une salle de Boss.

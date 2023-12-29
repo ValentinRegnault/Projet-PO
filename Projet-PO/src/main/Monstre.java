@@ -3,11 +3,14 @@ package main;
 import patterns.Pattern;
 
 /**
- * Représente un monstre du jeu. Cette classe se sérialise et se désérialise. Typiquement, on créera un monstre au format JSON et on le désérialisera en une instance de cette classe. 
+ * Représente un monstre du jeu. Cette classe se sérialise et se désérialise.
+ * Typiquement, on créera un monstre au format JSON et on le désérialisera en
+ * une instance de cette classe.
  */
 public class Monstre extends Entite {
     /**
-     * Les monstres ont tous un pattern qui définit leur comportement (les actions qu'il peut faire et la manière dont il les choisit)
+     * Les monstres ont tous un pattern qui définit leur comportement (les actions
+     * qu'il peut faire et la manière dont il les choisit)
      */
     private Pattern pattern;
 

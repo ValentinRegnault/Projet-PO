@@ -1,4 +1,5 @@
 package effets;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import main.TypeCible;
 
 /**
  * Effet qui ajoute une carte Brûlure dans la défausse.
+ * 
  * @see Effet
  */
 public class CarteBrulureDansDefausse extends Effet {

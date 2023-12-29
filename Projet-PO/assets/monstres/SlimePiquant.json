@@ -9,14 +9,16 @@
         "nom": "Crachat",
         "effets": [
           { "type": "appliqueDegat", "pointEffet": 8, "typeCible": "HERO" },
-          { "type": "carteSlimeDansDefausse", "pointEffet": 1, "typeCible": "AUCUN" }
+          {
+            "type": "carteSlimeDansDefausse",
+            "pointEffet": 1,
+            "typeCible": "AUCUN"
+          }
         ]
       },
       "1.0": {
         "nom": "Lécher",
-        "effets": [
-          { "type": "fragile", "pointEffet": 1, "typeCible": "HERO" }
-        ]
+        "effets": [{ "type": "fragile", "pointEffet": 1, "typeCible": "HERO" }]
       }
     }
   }

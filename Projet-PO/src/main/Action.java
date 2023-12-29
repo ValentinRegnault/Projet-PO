@@ -1,10 +1,13 @@
 package main;
+
 import java.util.ArrayList;
 
 import effets.Effet;
 
 /**
- * Représente une action effectuée par un monstre, qui peut contenir plusieurs effets.
+ * Représente une action effectuée par un monstre, qui peut contenir plusieurs
+ * effets.
+ * 
  * @see Effet
  */
 public class Action implements java.io.Serializable {
@@ -17,7 +20,7 @@ public class Action implements java.io.Serializable {
     }
 
     /**
-     * @param nom Nom de l'action
+     * @param nom    Nom de l'action
      * @param effets Effets de l'action
      */
     public Action(String nom, ArrayList<Effet> effets) {
@@ -27,13 +30,15 @@ public class Action implements java.io.Serializable {
 
     /**
      * Effectue l'action. Applique chacun des effets de l'action.
+     * 
      * @param lanceur Monstre qui effectue l'action
-     * @apiNote Cette méthode est appelée par {@link patterns.Pattern#jouerAction(Monstre)}
+     * @apiNote Cette méthode est appelée par
+     *          {@link patterns.Pattern#jouerAction(Monstre)}
      */
     public void jouerAction(Monstre lanceur) {
-        for(Effet e : this.effets){
+        for (Effet e : this.effets) {
             ArrayList<Entite> cibles = new ArrayList<Entite>();
-            
+
             switch (e.getTypeCible()) {
                 case AUCUN:
                     break;
@@ -44,13 +49,15 @@ public class Action implements java.io.Serializable {
                     cibles.addAll(Partie.getPartie().getEquipeMonstreActuelle());
                     break;
                 case MONSTRE_ALEATOIRE:
-                    cibles.add(Partie.getPartie().getEquipeMonstreActuelle().get((int) (Math.random() * Partie.getPartie().getEquipeMonstreActuelle().size())));
+                    cibles.add(Partie.getPartie().getEquipeMonstreActuelle()
+                            .get((int) (Math.random() * Partie.getPartie().getEquipeMonstreActuelle().size())));
                     break;
                 case LANCEUR:
                     cibles.add(lanceur);
                     break;
                 case SELECTION_JOUEUR:
-                    throw new IllegalStateException("Un monstre contient un pattern qui contient des actions. Ces actions ne peuvent pas cibler un monstre choisi par le joueur, or c'est le cas ici.");
+                    throw new IllegalStateException(
+                            "Un monstre contient un pattern qui contient des actions. Ces actions ne peuvent pas cibler un monstre choisi par le joueur, or c'est le cas ici.");
                 default:
                     break;
             }

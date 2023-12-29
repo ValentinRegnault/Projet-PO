@@ -23,6 +23,7 @@ public class Preparation implements Pattern {
 
     /**
      * Détermine dans quel phase on est et retourne le pattern correspondant.
+     * 
      * @return le pattern actuel
      */
     public Pattern patternActuel() {

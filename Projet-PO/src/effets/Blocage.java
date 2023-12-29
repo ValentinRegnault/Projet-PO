@@ -1,4 +1,5 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
@@ -6,6 +7,7 @@ import main.TypeCible;
 
 /**
  * Effet qui donne des points de blocage au propriétaire de la carte.
+ * 
  * @see Effet
  */
 public class Blocage extends Effet {

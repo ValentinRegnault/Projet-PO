@@ -397,7 +397,7 @@ public class Partie {
 	}
 
 	/**
-	 * Vide la defausse 
+	 * Vide la defausse
 	 */
 	public void videDefausse() {
 		this.defausse = new LinkedList<Carte>();

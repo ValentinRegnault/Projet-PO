@@ -1,4 +1,5 @@
 package main;
+
 import java.util.ArrayList;
 
 import effets.Effet;
@@ -16,7 +17,6 @@ public class Carte implements Cloneable {
         NonCommun,
         Rare
     }
-
 
     private String nom;
     private RareteCarte rarete;
@@ -44,8 +44,10 @@ public class Carte implements Cloneable {
     }
 
     /**
-     * Détermine les cibles en fonction du type de cible des effets de la carte. Applique les effets de la carte sur ces cibles.
+     * Détermine les cibles en fonction du type de cible des effets de la carte.
+     * Applique les effets de la carte sur ces cibles.
      * Retire les points d'energie de la carte au héros, et defausse la carte.
+     * 
      * @see {@link Effet#getTypeCible()}
      * @see {@link Effet#appliquerEffet(Entite, ArrayList)}
      */
@@ -95,7 +97,9 @@ public class Carte implements Cloneable {
 
     /**
      * Demande au joueur de choisir un monstre dans l'équipe de monstre
-     * @param equipeMonstre L'équipe de monstre contre laquelle le joueur est en train de se battre.
+     * 
+     * @param equipeMonstre L'équipe de monstre contre laquelle le joueur est en
+     *                      train de se battre.
      * @return L'indice du monstre choisi.
      * @category Affichage
      * @category Interaction

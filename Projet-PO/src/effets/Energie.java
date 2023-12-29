@@ -1,4 +1,5 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
@@ -7,6 +8,7 @@ import main.TypeCible;
 
 /**
  * Effet qui ajoute des points d'énergie au héros.
+ * 
  * @see Effet
  */
 public class Energie extends Effet {
@@ -25,8 +27,7 @@ public class Energie extends Effet {
             if (cible instanceof Hero hero) {
                 hero.setPointEnergie(hero.getPointEnergie() + pointEffet);
                 System.out.println(hero.getNom() + " gagne " + pointEffet + " points d'énergie");
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException("La cible de l'effet Energie doit être un Hero");
             }
         }

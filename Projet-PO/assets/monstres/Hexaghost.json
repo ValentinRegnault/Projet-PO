@@ -24,7 +24,11 @@
           "nom": "Enfer",
           "effets": [
             { "type": "appliqueDegat", "pointEffet": 6, "typeCible": "HERO" },
-            { "type": "ajoutCarteBrulureDansDefausse", "pointEffet": 3, "typeCible": "AUCUN"}
+            {
+              "type": "ajoutCarteBrulureDansDefausse",
+              "pointEffet": 3,
+              "typeCible": "AUCUN"
+            }
           ]
         },
         {

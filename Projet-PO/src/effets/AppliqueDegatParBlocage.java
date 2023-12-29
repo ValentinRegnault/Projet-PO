@@ -1,4 +1,5 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
@@ -6,6 +7,7 @@ import main.TypeCible;
 
 /**
  * Effet qui applique autant de dégats que le points de blocage de la cible
+ * 
  * @see Effet
  */
 public class AppliqueDegatParBlocage extends Effet {

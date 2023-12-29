@@ -1,4 +1,5 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
@@ -6,6 +7,7 @@ import main.TypeCible;
 
 /**
  * Effet qui divise les PV du héros par 12.
+ * 
  * @see Effet
  */
 public class Divise extends Effet {

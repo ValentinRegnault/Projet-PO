@@ -1,11 +1,14 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
 
 /**
- * Effet qui fait perdre des points de vie à la cible, en outrepassant les points de blocage.
+ * Effet qui fait perdre des points de vie à la cible, en outrepassant les
+ * points de blocage.
+ * 
  * @see Effet
  */
 public class PerdrePV extends Effet {

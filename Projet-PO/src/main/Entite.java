@@ -54,6 +54,7 @@ public abstract class Entite {
 
     /**
      * Affiche les status de l'entité.
+     * 
      * @category Affichage
      */
     public void afficheStatus() {

@@ -1,8 +1,8 @@
 {
-    "nom": "Brulure",
-    "rarete": "Rare",
-    "cout": 1,
-    "effets": [],
-    "description": "Aïe, Ouille, ça brûle ! Inflige 2 dégat si elle reste dans votre main à la fin de votre tour.",
-    "aExiler": false
-  }
+  "nom": "Brulure",
+  "rarete": "Rare",
+  "cout": 1,
+  "effets": [],
+  "description": "Aïe, Ouille, ça brûle ! Inflige 2 dégat si elle reste dans votre main à la fin de votre tour.",
+  "aExiler": false
+}

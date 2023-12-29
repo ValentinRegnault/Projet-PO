@@ -1,4 +1,5 @@
 package effets;
+
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 
@@ -11,9 +12,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import main.Entite;
 import main.TypeCible;
 
-
 /**
- * Classe abstraite représentant un effet. Pour la sérialisation des classes de type Effet, on utilise un champs "type" avec le nom de la classe fille qui est sérialisée.
+ * Classe abstraite représentant un effet. Pour la sérialisation des classes de
+ * type Effet, on utilise un champs "type" avec le nom de la classe fille qui
+ * est sérialisée.
  */
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "type")
 @JsonSubTypes({
@@ -35,7 +37,9 @@ public abstract class Effet implements java.io.Serializable, Cloneable {
     protected int pointEffet;
 
     /**
-     * Type de cible de l'effet. Lorsque l'on appel la méthode appliquerEffet, on lui passe en paramètre une liste de cibles, qui doivent correspondrent au type de cible.
+     * Type de cible de l'effet. Lorsque l'on appel la méthode appliquerEffet, on
+     * lui passe en paramètre une liste de cibles, qui doivent correspondrent au
+     * type de cible.
      */
     private TypeCible typeCible;
 
@@ -50,8 +54,10 @@ public abstract class Effet implements java.io.Serializable, Cloneable {
 
     /**
      * Applique l'effet sur les cibles.
+     * 
      * @param lanceur Le lanceur de l'effet
-     * @param cibles Les cibles de l'effet, qui doivent correspondre au type de cible {@link Effet#getTypeCible()} de l'effet.
+     * @param cibles  Les cibles de l'effet, qui doivent correspondre au type de
+     *                cible {@link Effet#getTypeCible()} de l'effet.
      */
     public abstract void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles);
 
@@ -66,7 +72,9 @@ public abstract class Effet implements java.io.Serializable, Cloneable {
     }
 
     /**
-     * Retourne le type de cible de l'effet. Lorsque l'on appel la méthode appliquerEffet, on lui passe en paramètre une liste de cibles, qui doivent correspondrent au type de cible.
+     * Retourne le type de cible de l'effet. Lorsque l'on appel la méthode
+     * appliquerEffet, on lui passe en paramètre une liste de cibles, qui doivent
+     * correspondrent au type de cible.
      */
     public TypeCible getTypeCible() {
         return typeCible;

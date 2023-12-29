@@ -1,4 +1,5 @@
 package effets;
+
 import java.util.ArrayList;
 
 import main.Entite;
@@ -7,6 +8,7 @@ import main.TypeCible;
 
 /**
  * Effet qui ajoute des points de force à la cible.
+ * 
  * @see Effet
  */
 public class Pioche extends Effet {
@@ -15,7 +17,7 @@ public class Pioche extends Effet {
         super(0, TypeCible.AUCUN);
     }
 
-    public Pioche(int nbCartes, TypeCible typeCible ) {
+    public Pioche(int nbCartes, TypeCible typeCible) {
         super(nbCartes, typeCible);
     }
 

@@ -169,6 +169,7 @@ public abstract class SalleCombat extends Salle {
 
 	/**
 	 * Demande au joueur de choisir une carte dans sa main.
+	 * 
 	 * @return
 	 */
 	private int demanderCarte() {
@@ -202,7 +203,8 @@ public abstract class SalleCombat extends Salle {
 	}
 
 	/**
-	 * Demande au joueur de choisir une carte de récompense parmis trois cartes aléatoires.
+	 * Demande au joueur de choisir une carte de récompense parmis trois cartes
+	 * aléatoires.
 	 */
 	private void choisirRecompense() {
 		System.out.println("Choisissez une carte de récompense parmis les trois suivante, ou aucune :");
