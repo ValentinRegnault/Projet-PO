@@ -1,0 +1,31 @@
+{
+  "nom": "Slime Acide",
+  "pvMax": 30,
+  "pv": 30,
+  "pattern": {
+    "type": "aleatoire",
+    "actionsPossible": {
+      "0.4": {
+        "nom": "Crachat",
+        "effets": [
+          { "type": "appliqueDegat", "pointEffet": 8, "typeCible": "HERO" },
+          {
+            "type": "carteSlimeDansDefausse",
+            "pointEffet": 1,
+            "typeCible": "AUCUN"
+          }
+        ]
+      },
+      "0.7": {
+        "nom": "Lécher",
+        "effets": [{ "type": "fragile", "pointEffet": 1, "typeCible": "HERO" }]
+      },
+      "1.0": {
+        "nom": "Morsure",
+        "effets": [
+          { "type": "appliqueDegat", "pointEffet": 10, "typeCible": "HERO" }
+        ]
+      }
+    }
+  }
+}

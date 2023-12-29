@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
         @Type(value = Fragile.class, name = "fragile"),
         @Type(value = PerdrePV.class, name = "perdrePV"),
         @Type(value = Vulnerable.class, name = "vulnerable"),
+        @Type(value = CarteSlimeDansDefausse.class, name = "carteSlimeDansDefausse"),
+        @Type(value = Rituel.class, name = "rituel")
 })
 public abstract class Effet implements java.io.Serializable, Cloneable {
     protected int pointEffet;

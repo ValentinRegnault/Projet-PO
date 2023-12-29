@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 //TODO : Changer le nom ou le mettre dans un package parceque la c'est pas clair "Aleatoire"
 public class Aleatoire implements Pattern {
@@ -13,11 +14,9 @@ public class Aleatoire implements Pattern {
     }
     
     public Action actionActuelle(){
-        double cumul = 0.0;
-        for(Double proba : this.actionsPossible.keySet()){
-            cumul += proba;
-            if(this.indice <= cumul){
-                return this.actionsPossible.get(proba);
+        for(Entry<Double, Action> entry : this.actionsPossible.entrySet()){
+            if(this.indice <= entry.getKey()){
+                return entry.getValue();
             }
         }
 
@@ -31,16 +30,6 @@ public class Aleatoire implements Pattern {
 
     public void actionSuivante(){
         this.indice = Math.random();
-    }
-
-    @Override
-    public String toString() {
-        String output = "";
-        for(Double proba : this.actionsPossible.keySet()){
-            output += proba + " - " + this.actionsPossible.get(proba) + "\n";
-        }
-
-        return output;
     }
 
     public Action intention(){

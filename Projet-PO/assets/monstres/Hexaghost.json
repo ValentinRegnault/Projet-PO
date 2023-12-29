@@ -1,0 +1,37 @@
+{
+  "nom": "Hexaghost",
+  "pvMax": 250,
+  "pv": 250,
+  "pattern": {
+    "type": "preparation",
+    "phase1": {
+      "type": "cyclique",
+      "listeAction": [
+        {
+          "nom": "Chargement",
+          "effets": []
+        },
+        {
+          "nom": "Divise",
+          "effets": [{ "type": "divise", "pointEffet": 0, "typeCible": "HERO" }]
+        }
+      ]
+    },
+    "phase2": {
+      "type": "cyclique",
+      "listeAction": [
+        {
+          "nom": "Enfer",
+          "effets": [
+            { "type": "appliqueDegat", "pointEffet": 6, "typeCible": "HERO" },
+            { "type": "ajoutCarteBrulureDansDefausse", "pointEffet": 3, "typeCible": "AUCUN"}
+          ]
+        },
+        {
+          "nom": "Divise",
+          "effets": [{ "type": "divise", "pointEffet": 0, "typeCible": "HERO" }]
+        }
+      ]
+    }
+  }
+}

@@ -16,8 +16,7 @@
             { "type": "blocage", "pointEffet": 5, "typeCible": "LANCEUR" }
           ]
         }
-      ],
-      "indice": 0
+      ]
     },
     "phase2": {
       "type": "aleatoire",
@@ -28,14 +27,14 @@
             { "type": "appliqueDegat", "pointEffet": 11, "typeCible": "HERO" }
           ]
         },
-        "0.3": {
+        "0.55": {
           "nom": "Charge",
           "effets": [
             { "type": "appliqueDegat", "pointEffet": 7, "typeCible": "HERO" },
             { "type": "blocage", "pointEffet": 5, "typeCible": "LANCEUR" }
           ]
         },
-        "0.45": {
+        "1.0": {
           "nom": "Gronder",
           "effets": [
             { "type": "blocage", "pointEffet": 6, "typeCible": "LANCEUR" },

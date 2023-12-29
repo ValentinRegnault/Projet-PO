@@ -10,6 +10,7 @@ public class Blocage extends Effet {
         super(0, TypeCible.AUCUN);
     }
 
+    @Override
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
         for (Entite cible : cibles) {
             // Inflige prends en compte les points de blocage

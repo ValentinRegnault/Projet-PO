@@ -7,7 +7,8 @@ public abstract class Entite {
         Force,
         Faiblesse,
         Vulnérable,
-        Fragile
+        Fragile,
+        Rituel
     }
 
     protected String nom;
@@ -27,6 +28,7 @@ public abstract class Entite {
         this.status.put(Status.Force, 0);
         this.status.put(Status.Vulnérable, 0);
         this.status.put(Status.Fragile, 0);
+        this.status.put(Status.Rituel, 0);
     }
 
     public Entite(String nom, int pvMax, int pointBlocage) {
@@ -58,7 +60,9 @@ public abstract class Entite {
 
     public void afficheStatus() {
         for (Entry<Status, Integer> s : this.status.entrySet()) {
-            System.out.print(s.getKey() + " : " + s.getValue() + " ");
+            if (s.getValue() > 0) {
+                System.out.print(s.getKey() + " : " + s.getValue() + " ");
+            }
         }
         System.out.println();
     }
@@ -81,7 +85,7 @@ public abstract class Entite {
 
     public void setPv(int pv) {
         this.pv = pv;
-        if(this.pv < 0) {
+        if (this.pv < 0) {
             this.pv = 0;
         }
     }

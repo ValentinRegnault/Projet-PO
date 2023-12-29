@@ -1,3 +1,4 @@
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -66,7 +67,7 @@ public abstract class SalleCombat extends Salle {
 
 			boolean tourTermine = false;
 			while (!tourTermine) {
-				if(combatTermine()) {
+				if (combatTermine()) {
 					System.out.println("Pas le tempsd de finir le tour que vous avez déjà gagner !");
 					break;
 				}
@@ -90,9 +91,17 @@ public abstract class SalleCombat extends Salle {
 				}
 			}
 
-			if(combatTermine()) {
+			if (combatTermine()) {
 				System.out.println("Le combat est terminé !");
 				break;
+			}
+
+			long nbCarteBrulureDansMain = Partie.partie.getMain().stream()
+					.filter(carte -> carte.getNom().equals("Brûlure"))
+					.count();
+			if (nbCarteBrulureDansMain > 0) {
+				System.out.println("Vous avez " + nbCarteBrulureDansMain + " cartes Brûlure dans votre main. Vous allez perdre deux points de vie par carte brûlure !");
+				hero.setPv(hero.getPv() - 2 * (int) nbCarteBrulureDansMain);
 			}
 
 			/// TOUR DES MONSTRES ///
@@ -100,6 +109,15 @@ public abstract class SalleCombat extends Salle {
 				// Remise a zéro des points de blocage du monstre
 				monstre.setPointBlocage(0);
 				monstre.jouerAction();
+			}
+
+			// Status rituel
+			for (Monstre monstre : equipeMonstre) {
+				int pointRituel = monstre.getStatusPoint(Entite.Status.Rituel);
+				if (pointRituel > 0) {
+					monstre.setStatusPoint(Entite.Status.Force, pointRituel);
+					monstre.setStatusPoint(Entite.Status.Rituel, pointRituel - 1);
+				}
 			}
 
 			// TODO update les status
@@ -119,6 +137,8 @@ public abstract class SalleCombat extends Salle {
 				monstre.afficheStatus();
 			}
 		}
+
+		// Récompense
 	}
 
 	private int demanderCarte() {
@@ -149,6 +169,10 @@ public abstract class SalleCombat extends Salle {
 		}
 
 		return indiceCarte;
+	}
+
+	private Carte choisirRecompense() {
+		
 	}
 
 	private void retirerMonstresMorts() {
