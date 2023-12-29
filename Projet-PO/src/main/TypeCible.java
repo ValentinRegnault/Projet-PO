@@ -1,0 +1,4 @@
+package main;
+public enum TypeCible {
+    HERO, SELECTION_JOUEUR, LANCEUR, TOUS_LES_MONSTRES, MONSTRE_ALEATOIRE, AUCUN
+}
