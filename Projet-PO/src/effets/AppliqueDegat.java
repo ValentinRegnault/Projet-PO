@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import main.Entite;
 import main.TypeCible;
 
+/**
+ * Effet qui inflige des dégats à la cible, en brisant d'abord son blocage.
+ * @see Effet
+ */
 public class AppliqueDegat extends Effet {
 
     public AppliqueDegat() {

@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
-import main.Entite.Status;
 
+/**
+ * Effet qui ajoute des points de faiblesses à la cible.
+ * @see Effet
+ */
 public class Faiblesse extends Effet {
 
     public Faiblesse() {

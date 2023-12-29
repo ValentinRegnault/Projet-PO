@@ -5,6 +5,10 @@ import main.Entite;
 import main.Hero;
 import main.TypeCible;
 
+/**
+ * Effet qui ajoute des points d'énergie au héros.
+ * @see Effet
+ */
 public class Energie extends Effet {
 
     public Energie() {

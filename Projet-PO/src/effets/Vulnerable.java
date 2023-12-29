@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
-import main.Entite.Status;
 
+/**
+ * Effet qui ajoute des points de vulnérabilité à la cible.
+ * @see Effet
+ */
 public class Vulnerable extends Effet {
 
     public Vulnerable() {

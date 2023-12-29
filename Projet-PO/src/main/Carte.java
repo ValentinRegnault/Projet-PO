@@ -1,11 +1,23 @@
 package main;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
 import effets.Effet;
 
+/**
+ * Représente une carte du jeu.
+ */
 public class Carte implements Cloneable {
+
+    /**
+     * Enumération des différentes raretés de carte possibles.
+     */
+    public enum RareteCarte {
+        Commun,
+        NonCommun,
+        Rare
+    }
+
+
     private String nom;
     private RareteCarte rarete;
     private int cout;
@@ -31,6 +43,12 @@ public class Carte implements Cloneable {
         this.description = description;
     }
 
+    /**
+     * Détermine les cibles en fonction du type de cible des effets de la carte. Applique les effets de la carte sur ces cibles.
+     * Retire les points d'energie de la carte au héros, et defausse la carte.
+     * @see {@link Effet#getTypeCible()}
+     * @see {@link Effet#appliquerEffet(Entite, ArrayList)}
+     */
     public void jouerCarte() {
         Hero hero = Partie.getPartie().getHero();
 
@@ -75,6 +93,13 @@ public class Carte implements Cloneable {
         Partie.getPartie().defausseCarte(Partie.getPartie().getMain().indexOf(this));
     }
 
+    /**
+     * Demande au joueur de choisir un monstre dans l'équipe de monstre
+     * @param equipeMonstre L'équipe de monstre contre laquelle le joueur est en train de se battre.
+     * @return L'indice du monstre choisi.
+     * @category Affichage
+     * @category Interaction
+     */
     private int demanderMonstre(ArrayList<Monstre> equipeMonstre) {
         System.out.println();
         for (int i = 0; i < equipeMonstre.size(); i++) {

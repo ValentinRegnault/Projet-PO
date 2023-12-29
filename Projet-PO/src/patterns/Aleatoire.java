@@ -1,24 +1,28 @@
 package patterns;
-import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 
-import effets.Action;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import main.Action;
 import main.Monstre;
 
+/**
+ * Pattern de monstre qui joue une action aléatoire parmi une liste d'actions
+ * possibles.
+ */
 public class Aleatoire implements Pattern {
-    
+
     private TreeMap<Double, Action> actionsPossible = new TreeMap<Double, Action>();
 
     private Double indice = Math.random();
 
-    public Aleatoire(){
+    public Aleatoire() {
         this.actionsPossible = new TreeMap<Double, Action>();
     }
-    
-    public Action actionActuelle(){
-        for(Entry<Double, Action> entry : this.actionsPossible.entrySet()){
-            if(this.indice <= entry.getKey()){
+
+    public Action actionActuelle() {
+        for (Entry<Double, Action> entry : this.actionsPossible.entrySet()) {
+            if (this.indice <= entry.getKey()) {
                 return entry.getValue();
             }
         }
@@ -26,16 +30,19 @@ public class Aleatoire implements Pattern {
         throw new Error("Erreur dans le tirage aléatoire du pattern Aleatoire, aucune carte n'a été tirée");
     }
 
-    public void jouerAction(Monstre lanceur){
+    @Override
+    public void jouerAction(Monstre lanceur) {
         this.actionActuelle().jouerAction(lanceur);
         this.actionSuivante();
     }
 
-    public void actionSuivante(){
+    @Override
+    public void actionSuivante() {
         this.indice = Math.random();
     }
 
-    public Action intention(){
+    @Override
+    public Action intention() {
         return this.actionActuelle();
     }
 
@@ -54,7 +61,5 @@ public class Aleatoire implements Pattern {
     public void setIndice(Double indice) {
         this.indice = indice;
     }
-
-    
 
 }

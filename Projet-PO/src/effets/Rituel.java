@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
-import main.Entite.Status;
 
+/**
+ * Effet qui ajoute des points de rituel à la cible.
+ * @see Effet
+ */
 public class Rituel extends Effet {
     public Rituel() {
         super(0, TypeCible.AUCUN);

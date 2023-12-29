@@ -3,9 +3,11 @@ import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
-import main.Entite.Status;
 
-
+/**
+ * Effet qui ajoute des points de fragilité à la cible.
+ * @see Effet
+ */
 public class Fragile extends Effet {
 
     public Fragile() {

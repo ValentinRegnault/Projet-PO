@@ -1,21 +1,14 @@
 package main;
-import java.util.Arrays;
 
 import patterns.Pattern;
 
-import java.util.ArrayList;
-
-enum TypeMontre {
-    PetitSlimePiquant,
-    PetitSlimeAcide,
-    Machouilleur,
-    Cultiste,
-    SlimePiquant,
-    SlimeAcide,
-    Hexaghost,
-}
-
+/**
+ * Représente un monstre du jeu. Cette classe se sérialise et se désérialise. Typiquement, on créera un monstre au format JSON et on le désérialisera en une instance de cette classe. 
+ */
 public class Monstre extends Entite {
+    /**
+     * Les monstres ont tous un pattern qui définit leur comportement (les actions qu'il peut faire et la manière dont il les choisit)
+     */
     private Pattern pattern;
 
     public Monstre() {
@@ -28,6 +21,9 @@ public class Monstre extends Entite {
         this.pattern = pattern;
     }
 
+    /**
+     * Joue l'action qui a été programmée dans le pattern du monstre.
+     */
     public void jouerAction() {
         this.pattern.jouerAction(this);
     }

@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
-import main.Entite.Status;
 
+/**
+ * Effet qui donne des points de blocage au propriétaire de la carte.
+ * @see Effet
+ */
 public class Blocage extends Effet {
 
     public Blocage(int pointEffet, TypeCible typeCible) {

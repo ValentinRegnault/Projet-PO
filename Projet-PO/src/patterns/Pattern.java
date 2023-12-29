@@ -1,15 +1,14 @@
 package patterns;
-import java.util.ArrayList;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
+
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import effets.Action;
+import main.Action;
 import main.Monstre;
-
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "type")
 @JsonSubTypes({
@@ -19,17 +18,18 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 })
 public interface Pattern extends Serializable {
     /**
-     * Joue l'action actuellement préparé par le monstre
+     * Joue l'action préparée par le monstre
+     * @param lanceur le monstre qui joue l'action
      */
     public void jouerAction(Monstre lanceur);
 
     /**
-     * Passe à l'action suivante
+     * Prépare une nouvelle action
      */
     public abstract void actionSuivante();
 
     /**
-     * Retourne l'action actuellement préparé par le monstre
+     * Retourne l'action préparée par le monstre sans la jouer.
      */
     public abstract Action intention();
 }

@@ -1,8 +1,12 @@
 package main;
-import java.util.TreeMap;
-import java.util.Map.Entry;
-import java.util.Optional;
 
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+/**
+ * Classe abstraite représentant une entité du jeu. Les monstres et le héro sont
+ * des entités.
+ */
 public abstract class Entite {
     public enum Status {
         Force,
@@ -48,15 +52,10 @@ public abstract class Entite {
         return "nom=" + nom + ", pvMax=" + pvMax + ", pv=" + pv + ", pointBlocage=" + pointBlocage;
     }
 
-    public void setStatusPoint(Status s, Integer point) {
-        this.status.replace(s, point);
-
-    }
-
-    public Integer getStatusPoint(Status s) {
-        return this.status.get(s);
-    }
-
+    /**
+     * Affiche les status de l'entité.
+     * @category Affichage
+     */
     public void afficheStatus() {
         for (Entry<Status, Integer> s : this.status.entrySet()) {
             if (s.getValue() > 0) {
@@ -64,6 +63,15 @@ public abstract class Entite {
             }
         }
         System.out.println();
+    }
+
+    public void setStatusPoint(Status s, Integer point) {
+        this.status.replace(s, point);
+
+    }
+
+    public Integer getStatusPoint(Status s) {
+        return this.status.get(s);
     }
 
     public int getPvMax() {

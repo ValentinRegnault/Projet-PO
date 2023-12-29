@@ -7,6 +7,10 @@ import main.Entite;
 import main.Partie;
 import main.TypeCible;
 
+/**
+ * Effet qui ajoute une carte Brûlure dans la défausse.
+ * @see Effet
+ */
 public class CarteBrulureDansDefausse extends Effet {
     public CarteBrulureDansDefausse() {
         super(0, TypeCible.AUCUN);

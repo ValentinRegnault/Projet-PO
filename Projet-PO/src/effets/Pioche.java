@@ -5,6 +5,10 @@ import main.Entite;
 import main.Partie;
 import main.TypeCible;
 
+/**
+ * Effet qui ajoute des points de force à la cible.
+ * @see Effet
+ */
 public class Pioche extends Effet {
 
     public Pioche() {

@@ -7,6 +7,10 @@ import main.Entite;
 import main.Partie;
 import main.TypeCible;
 
+/**
+ * Effet qui ajoute une carte Slime dans la défausse.
+ * @see Effet
+ */
 class CarteSlimeDansDefausse extends Effet {
 	public CarteSlimeDansDefausse() {
 		super(0, TypeCible.AUCUN);

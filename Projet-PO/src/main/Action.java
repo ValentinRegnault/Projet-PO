@@ -1,14 +1,13 @@
-package effets;
-import java.util.Arrays;
-
-import main.Entite;
-import main.Monstre;
-import main.Partie;
-
+package main;
 import java.util.ArrayList;
 
-public class Action implements java.io.Serializable {
+import effets.Effet;
 
+/**
+ * Représente une action effectuée par un monstre, qui peut contenir plusieurs effets.
+ * @see Effet
+ */
+public class Action implements java.io.Serializable {
     private String nom;
     private ArrayList<Effet> effets;
 
@@ -17,13 +16,21 @@ public class Action implements java.io.Serializable {
         this.effets = new ArrayList<Effet>();
     }
 
+    /**
+     * @param nom Nom de l'action
+     * @param effets Effets de l'action
+     */
     public Action(String nom, ArrayList<Effet> effets) {
         this.nom = nom;
         this.effets = effets;
     }
 
+    /**
+     * Effectue l'action. Applique chacun des effets de l'action.
+     * @param lanceur Monstre qui effectue l'action
+     * @apiNote Cette méthode est appelée par {@link patterns.Pattern#jouerAction(Monstre)}
+     */
     public void jouerAction(Monstre lanceur) {
-
         for(Effet e : this.effets){
             ArrayList<Entite> cibles = new ArrayList<Entite>();
             

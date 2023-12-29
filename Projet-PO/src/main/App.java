@@ -6,12 +6,12 @@ import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import effets.Action;
 import effets.AppliqueDegat;
 import effets.Blocage;
 import effets.Effet;
 import effets.Faiblesse;
 import effets.Force;
+import main.Carte.RareteCarte;
 import patterns.Aleatoire;
 import patterns.Cyclique;
 import patterns.Preparation;

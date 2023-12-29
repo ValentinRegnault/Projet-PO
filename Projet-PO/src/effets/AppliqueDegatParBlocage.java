@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 import main.Entite;
 import main.TypeCible;
-import main.Entite.Status;
 
+/**
+ * Effet qui applique autant de dégats que le points de blocage de la cible
+ * @see Effet
+ */
 public class AppliqueDegatParBlocage extends Effet {
     // Les points de dégats sont ceux du lanceur
     public AppliqueDegatParBlocage() {

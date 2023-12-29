@@ -1,6 +1,8 @@
 package main;
 public class SalleRepos extends Salle {
-    
+    /**
+     * Soigne le hero de 30% de ses PV max.
+     */
     public void soin(){
         hero.setPv((int)Math.round(hero.getPvMax()*0.3));
     }
