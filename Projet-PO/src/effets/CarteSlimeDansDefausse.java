@@ -18,6 +18,7 @@ class CarteSlimeDansDefausse extends Effet {
 		super(0, TypeCible.AUCUN);
 	}
 
+	@Override
 	public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
 		try {
 			for (int i = 0; i < this.pointEffet; i++) {

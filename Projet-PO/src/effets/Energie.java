@@ -21,6 +21,7 @@ public class Energie extends Effet {
         super(pointEffet, typeCible);
     }
 
+    @Override
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
         // Inflige prends en compte les points de blocage
         for (Entite cible : cibles) {

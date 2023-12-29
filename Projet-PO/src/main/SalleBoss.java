@@ -5,8 +5,11 @@ import java.util.ArrayList;
 /**
  * Classe representant une salle de Boss.
  */
+
+ // TODO: implementer la classe
 public class SalleBoss extends SalleCombat {
     public SalleBoss(ArrayList<Monstre> equipeMonstre) {
         super(equipeMonstre);
     }
+
 }

@@ -16,6 +16,7 @@ public class AppliqueDegatParBlocage extends Effet {
         super(0, TypeCible.AUCUN);
     }
 
+    @Override
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
         for (Entite cible : cibles) {
 

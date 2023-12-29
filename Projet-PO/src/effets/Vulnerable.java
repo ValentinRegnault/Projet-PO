@@ -20,6 +20,7 @@ public class Vulnerable extends Effet {
         super(pointEffet, typeCible);
     }
 
+    @Override
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
         for (Entite cible : cibles) {
             // Inflige prends en compte les points de blocage

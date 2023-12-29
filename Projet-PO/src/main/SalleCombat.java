@@ -30,6 +30,7 @@ public abstract class SalleCombat extends Salle {
 	 * @see {@link #lancerCombat()}
 	 * @see {@link #choisirRecompense()}
 	 */
+	@Override
 	public boolean jouerSalle() {
 		lancerCombat();
 		Hero hero = Partie.getPartie().getHero();
