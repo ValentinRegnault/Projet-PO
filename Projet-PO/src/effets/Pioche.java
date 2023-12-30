@@ -24,7 +24,7 @@ public class Pioche extends Effet {
     @Override
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
         for (int i = 0; i < this.pointEffet; i++) {
-            Partie.getPartie().piocheCarte();
+            Partie.piocherCarte();
         }
     }
 

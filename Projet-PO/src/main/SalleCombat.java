@@ -33,7 +33,7 @@ public abstract class SalleCombat extends Salle {
 	@Override
 	public boolean jouerSalle() {
 		lancerCombat();
-		Hero hero = Partie.getPartie().getHero();
+		Hero hero = Partie.getHero();
 		System.out.println(hero.getPv() <= 0);
 
 		if (hero.getPv() <= 0) {
@@ -51,7 +51,7 @@ public abstract class SalleCombat extends Salle {
 	 * Cette méthode contient la majorité de la logique de combat du jeu.
 	 */
 	public void lancerCombat() {
-		Hero hero = Partie.getPartie().getHero();
+		Hero hero = Partie.getHero();
 
 		// Affichage des monstres pour le premier tour
 		System.out.println("Vous entrez dans une salle de combat...");
@@ -69,7 +69,7 @@ public abstract class SalleCombat extends Salle {
 		System.out.println("Vous avez " + hero.getPv() + " PV et " + hero.getPointEnergieMax()
 				+ " points d'énergie. Dans votre main, vous avez :");
 
-		Partie.getPartie().getMain().stream().forEach(carte -> System.out.println(
+		Partie.getMain().stream().forEach(carte -> System.out.println(
 				carte.getNom() + " - " + carte.getDescription() + " - " + carte.getCout() + " points d'énergie"));
 
 		while (!combatTermine()) {
@@ -85,7 +85,7 @@ public abstract class SalleCombat extends Salle {
 
 			// Pioche de 5 cartes
 			for (int i = 0; i < 5; i++) {
-				Partie.getPartie().piocheCarte();
+				Partie.piocherCarte();
 			}
 
 			// Affichage de l'intention des monstres=
@@ -95,9 +95,9 @@ public abstract class SalleCombat extends Salle {
 			boolean tourTermine = false;
 			while (!tourTermine && !combatTermine()) {
 				System.out.println();
-				System.out.println("Votre main contient " + Partie.getPartie().getMain().size() + " cartes :");
-				for (int i = 0; i < Partie.getPartie().getMain().size(); i++) {
-					Carte carte = Partie.getPartie().getMain().get(i);
+				System.out.println("Votre main contient " + Partie.getMain().size() + " cartes :");
+				for (int i = 0; i < Partie.getMain().size(); i++) {
+					Carte carte = Partie.getMain().get(i);
 					System.out.println("- [" + i + "] " + carte.getNom() + "\n    Description : "
 							+ carte.getDescription() + "\n    Coût : " + carte.getCout() + " points d'énergie");
 				}
@@ -106,7 +106,7 @@ public abstract class SalleCombat extends Salle {
 				if (indiceCarte == -1) {
 					tourTermine = true;
 				} else {
-					Carte carte = Partie.getPartie().getMain().get(indiceCarte);
+					Carte carte = Partie.getMain().get(indiceCarte);
 					System.out.println("Vous avez choisi la carte " + carte.getNom());
 					carte.jouerCarte();
 					retirerMonstresMorts();
@@ -118,7 +118,7 @@ public abstract class SalleCombat extends Salle {
 				break;
 			}
 
-			long nbCarteBrulureDansMain = Partie.getPartie().getMain().stream()
+			long nbCarteBrulureDansMain = Partie.getMain().stream()
 					.filter(carte -> carte.getNom().equals("Brûlure"))
 					.count();
 			if (nbCarteBrulureDansMain > 0) {
@@ -178,22 +178,22 @@ public abstract class SalleCombat extends Salle {
 		boolean indiceValide = false;
 		boolean energieSuffisante = false;
 		while (!indiceValide || !energieSuffisante) {
-			System.out.println("Vous avez " + Partie.getPartie().getHero().getPointEnergie() + " points d'énergie");
+			System.out.println("Vous avez " + Partie.getHero().getPointEnergie() + " points d'énergie");
 			System.out.println("Choisissez une carte ou entrez -1 pour terminer votre tour");
-			indiceCarte = Partie.getPartie().getScanner().nextInt();
+			indiceCarte = Partie.getScanner().nextInt();
 
 			if (indiceCarte == -1) {
 				indiceValide = true;
 				energieSuffisante = true;
 				continue;
 			}
-			if (indiceCarte < 0 || indiceCarte >= Partie.getPartie().getMain().size()) {
+			if (indiceCarte < 0 || indiceCarte >= Partie.getMain().size()) {
 				System.out.println("Indice invalide");
 				continue;
 			}
 			indiceValide = true;
-			Carte carte = Partie.getPartie().getMain().get(indiceCarte);
-			if (carte.getCout() <= Partie.getPartie().getHero().getPointEnergie()) {
+			Carte carte = Partie.getMain().get(indiceCarte);
+			if (carte.getCout() <= Partie.getHero().getPointEnergie()) {
 				energieSuffisante = true;
 			} else {
 				System.out.println("Vous n'avez pas assez d'énergie pour jouer cette carte");
@@ -211,7 +211,7 @@ public abstract class SalleCombat extends Salle {
 		System.out.println("Choisissez une carte de récompense parmis les trois suivante, ou aucune :");
 		Carte[] cartes = new Carte[3];
 		for (int i = 0; i < 3; i++) {
-			cartes[i] = Partie.getPartie().carteAleatoire();
+			cartes[i] = Partie.carteAleatoire();
 		}
 
 		for (int i = 0; i < 3; i++) {
@@ -222,12 +222,12 @@ public abstract class SalleCombat extends Salle {
 
 		System.out.println("[-1] Aucune");
 		System.out.println("Votre choix : ");
-		int indiceCarte = Partie.getPartie().getScanner().nextInt();
+		int indiceCarte = Partie.getScanner().nextInt();
 		if (indiceCarte == -1) {
 			System.out.println("Vous avez rejeter les cartes de récompense.");
 		} else {
 			System.out.println("Vous avez choisi la carte " + cartes[indiceCarte].getNom());
-			Partie.getPartie().getDeck().add(cartes[indiceCarte]);
+			Partie.getDeck().add(cartes[indiceCarte]);
 		}
 	}
 

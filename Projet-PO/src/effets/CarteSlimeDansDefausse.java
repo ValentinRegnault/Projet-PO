@@ -24,7 +24,7 @@ class CarteSlimeDansDefausse extends Effet {
 			for (int i = 0; i < this.pointEffet; i++) {
 				Carte slime = null;
 				slime = Partie.instancierCarte("Slime");
-				Partie.getPartie().getDefausse().add(slime);
+				Partie.ajouterCarteDefausse(slime);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

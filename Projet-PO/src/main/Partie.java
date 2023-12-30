@@ -22,56 +22,52 @@ import main.Carte.RareteCarte;
  * avec {@link Partie#getPartie()}.
  */
 public class Partie {
-	private ArrayList<Salle> salles = new ArrayList<>(15);
-	private int indiceSalle;
+	private static final ArrayList<Salle> salles = new ArrayList<>(15);
+	private static int indiceSalle = 0;
 
 	/**
 	 * Ensembles des fichiers de monstres du jeu, indexés par le nom du monstre.
 	 */
-	private final TreeMap<String, File> monstresAssetParNom;
-
+	private static final TreeMap<String, File> monstresAssetParNom = new TreeMap<>();
 	/**
 	 * Ensembles des fichiers de cartes du jeu, indexés par le nom de la carte.
 	 */
-	private final TreeMap<String, File> cartesAssetParNom;
+	private static final TreeMap<String, File> cartesAssetParNom = new TreeMap<>();
 
 	/**
 	 * Deck : Ensemble des cartes du joueur
 	 */
-	private LinkedList<Carte> deck = new LinkedList<Carte>();
+	private static LinkedList<Carte> deck = new LinkedList<Carte>();
 
 	/**
 	 * Main : Cartes actuellement dans la main du joueur
 	 */
-	private ArrayList<Carte> main = new ArrayList<Carte>();
+	private static ArrayList<Carte> main = new ArrayList<Carte>();
 
 	/**
 	 * Defausse : Pile de cartes utilisées
 	 */
-	private LinkedList<Carte> defausse = new LinkedList<Carte>();
+	private static LinkedList<Carte> defausse = new LinkedList<Carte>();
 
 	/**
 	 * Exile : Pile de cartes utilisées ayant le statut Exile
 	 */
-	private LinkedList<Carte> exile = new LinkedList<Carte>();
+	private static LinkedList<Carte> exile = new LinkedList<Carte>();
 
 	/**
 	 * Pioche : Carte dans laquelle le joueur peut piocher
 	 */
-	private LinkedList<Carte> pioche = new LinkedList<Carte>();
+	private static LinkedList<Carte> pioche = new LinkedList<Carte>();
 
-	private Scanner scanner = new Scanner(System.in);
+	private static Scanner scanner = new Scanner(System.in);
 
-	protected Hero hero;
+	private static Hero hero = new Hero("Bob");
 
-	private static Partie partie = new Partie();
 
 	/**
-	 * Constructeur privé pour empêcher l'instanciation de la classe depuis
-	 * l'exterieur.
+	 * Initialise la partie, en chargeant les fichiers de monstres et de cartes.
 	 */
-	private Partie() {
-		this.monstresAssetParNom = new TreeMap<String, File>();
+	public static void initPartie() {
 
 		File dir = new File("assets/monstres");
 
@@ -85,7 +81,7 @@ public class Partie {
 
 				try {
 					Monstre m = mapper.readValue(file, Monstre.class);
-					this.monstresAssetParNom.put(m.nom, file);
+					Partie.monstresAssetParNom.put(m.nom, file);
 				} catch (IOException ioe) {
 					System.out.println("Erreur lors de la lecture du fichier de monstre " + file.getName());
 					ioe.printStackTrace();
@@ -94,7 +90,6 @@ public class Partie {
 
 		}
 
-		this.cartesAssetParNom = new TreeMap<String, File>();
 		dir = new File("assets/cartes");
 		if (!dir.exists() || !dir.isDirectory()) {
 			System.out.println("Le répertoire n'existe pas ou ne peut pas être lu");
@@ -106,7 +101,7 @@ public class Partie {
 
 				try {
 					Carte c = mapper.readValue(file, Carte.class);
-					this.cartesAssetParNom.put(c.getNom(), file);
+					Partie.cartesAssetParNom.put(c.getNom(), file);
 				} catch (IOException ioe) {
 					System.out.println("Erreur lors de la lecture du fichier de carte " + file.getName());
 					ioe.printStackTrace();
@@ -114,17 +109,14 @@ public class Partie {
 			}
 		}
 
-		System.out.println(this.deck);
-
-		this.salles = new ArrayList<Salle>();
-		this.hero = new Hero("Bob");
+		hero = new Hero("Bob");
 	}
 
 	/**
 	 * Initialise les salles et lance la partie, jusqu'à ce que le joueur gagne ou
 	 * perde.
 	 */
-	public void jouerPartie() {
+	public static void jouerPartie() {
 		genererSalles();
 		for (Salle salle : salles) {
 			genererPioche();
@@ -140,31 +132,30 @@ public class Partie {
 		}
 
 		System.out.println("Vous avez gagné");
-
 	}
 
 	/**
 	 * Génère les salles du jeu selon le schéma décrit dans le sujet.
 	 */
-	private void genererSalles() {
+	private static void genererSalles() {
 		// [C] -> [C] -> [R] -> [C] -> [C] -> [C] -> [R] -> [C] -> [C] -> [C] -> [R] ->
 		// [C] -> [C] -> [R] -> [B]
-		this.salles.clear();
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(1)));
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(2)));
-		this.salles.add(new SalleRepos());
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(3)));
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(4)));
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(5)));
-		this.salles.add(new SalleRepos());
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(6)));
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(7)));
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(8)));
-		this.salles.add(new SalleRepos());
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(9)));
-		this.salles.add(new SalleMonstre(genererEquipeMonstre(10)));
-		this.salles.add(new SalleRepos());
-		this.salles.add(new SalleBoss(genererEquipeMonstre(10)));
+		salles.clear();
+		salles.add(new SalleMonstre(genererEquipeMonstre(1)));
+		salles.add(new SalleMonstre(genererEquipeMonstre(2)));
+		salles.add(new SalleRepos());
+		salles.add(new SalleMonstre(genererEquipeMonstre(3)));
+		salles.add(new SalleMonstre(genererEquipeMonstre(4)));
+		salles.add(new SalleMonstre(genererEquipeMonstre(5)));
+		salles.add(new SalleRepos());
+		salles.add(new SalleMonstre(genererEquipeMonstre(6)));
+		salles.add(new SalleMonstre(genererEquipeMonstre(7)));
+		salles.add(new SalleMonstre(genererEquipeMonstre(8)));
+		salles.add(new SalleRepos());
+		salles.add(new SalleMonstre(genererEquipeMonstre(9)));
+		salles.add(new SalleMonstre(genererEquipeMonstre(10)));
+		salles.add(new SalleRepos());
+		salles.add(new SalleBoss(genererEquipeMonstre(10)));
 	}
 
 	/**
@@ -182,7 +173,7 @@ public class Partie {
 	public static Monstre instancierMonstre(String name) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			Monstre m = mapper.readValue(Partie.getPartie().monstresAssetParNom.get(name), Monstre.class);
+			Monstre m = mapper.readValue(monstresAssetParNom.get(name), Monstre.class);
 			return m;
 		} catch (IOException ioe) {
 			System.out.println("Erreur lors de la lecture du fichier de monstre " + name);
@@ -206,7 +197,7 @@ public class Partie {
 	public static Carte instancierCarte(String name) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			Carte m = mapper.readValue(Partie.getPartie().cartesAssetParNom.get(name), Carte.class);
+			Carte m = mapper.readValue(cartesAssetParNom.get(name), Carte.class);
 			return m;
 		} catch (IOException ioe) {
 			System.out.println("Erreur lors de la lecture du fichier de carte " + name);
@@ -225,13 +216,13 @@ public class Partie {
 	 * @param difficulte La difficulté de la salle entre 1 et 10
 	 * @return Une liste de monstres
 	 */
-	public ArrayList<Monstre> genererEquipeMonstre(int difficulte) {
+	private static ArrayList<Monstre> genererEquipeMonstre(int difficulte) {
 		ArrayList<Monstre> monstresTires = new ArrayList<Monstre>();
 		while (monstresTires.size() < difficulte) {
 			try {
-				int randomIndex = (int) (Math.random() * this.monstresAssetParNom.size());
+				int randomIndex = (int) (Math.random() * Partie.monstresAssetParNom.size());
 
-				Monstre m = instancierMonstre(this.monstresAssetParNom.keySet().toArray()[randomIndex].toString());
+				Monstre m = instancierMonstre(Partie.monstresAssetParNom.keySet().toArray()[randomIndex].toString());
 				monstresTires.add(m);
 			} catch (IOException ioe) {
 				System.out.println("Erreur lors de la lecture du fichier de monstre.");
@@ -254,7 +245,7 @@ public class Partie {
 	 *           pour retrouver les fichiers JSON des cartes et en choisir un
 	 *           aléatoirement.
 	 */
-	public Carte carteAleatoire() {
+	public static Carte carteAleatoire() {
 		RareteCarte rarete = RareteCarte.Commun;
 		double random = (double) (Math.random() * 1);
 
@@ -301,7 +292,7 @@ public class Partie {
 	 *                               contre une équipe de monstre (n'est pas dans
 	 *                               une salle de monstre)
 	 */
-	public ArrayList<Monstre> getEquipeMonstreActuelle() throws IllegalStateException {
+	public static ArrayList<Monstre> getEquipeMonstreActuelle() throws IllegalStateException {
 		if (!(salles.get(indiceSalle) instanceof SalleMonstre)) {
 			throw new IllegalStateException("Il n'y a pas d'équipe de monstres actuelle.");
 		}
@@ -314,7 +305,7 @@ public class Partie {
 	 * cartes de la défausse sont remises dans la pioche, et la pioche est mélangée,
 	 * sinon, la "carte du dessus" de la pioche est ajoutée à la main du joueur.
 	 */
-	public void piocheCarte() {
+	public static void piocherCarte() {
 		// Si la pioche est vide
 		if (pioche.isEmpty()) {
 			// Remettre toutes les cartes de la défausse dans la pioche
@@ -343,11 +334,11 @@ public class Partie {
 	 * 
 	 * @param indice L'indice de la carte dans la main du joueur
 	 */
-	public void defausseCarte(int indice) {
+	public static void defausseCarte(int indice) {
 		// index de la carte dans la main
 
-		Carte carteUtilise = this.main.get(indice);
-		this.main.remove(indice);
+		Carte carteUtilise = main.get(indice);
+		main.remove(indice);
 
 		if (carteUtilise.isaExiler()) {
 			exile.add(carteUtilise);
@@ -357,15 +348,23 @@ public class Partie {
 	}
 
 	/**
+	 * Ajoute une carte dans la défausse.
+	 * @param indice
+	 */
+	public static void ajouterCarteDefausse(Carte carte) {
+		defausse.add(carte);
+	}
+
+	/**
 	 * Exile une carte de la main du joueur. La carte est ajoutée à la pile d'exile.
 	 * 
 	 * @param indice
 	 */
-	public void exileCarte(int indice) {
+	private static void exileCarte(int indice) {
 		// index de la carte dans la main
 
-		Carte carteUtilise = this.main.get(indice);
-		this.main.remove(indice);
+		Carte carteUtilise = main.get(indice);
+		main.remove(indice);
 
 		exile.add(carteUtilise);
 	}
@@ -373,7 +372,7 @@ public class Partie {
 	/**
 	 * Génère la pioche à partir du deck du joueur. La pioche est mélangée.
 	 */
-	public void genererPioche() {
+	public static void genererPioche() {
 		pioche.clear();
 		for (Carte carte : deck) {
 			try {
@@ -386,79 +385,47 @@ public class Partie {
 	}
 
 	/**
-	 * Retourne l'instance de la partie. Cette méthode est accessible depuis
-	 * n'importe où dans le code. Elle brise le principe d'encapsulation mais permet
-	 * de simplifier le code et de le rendre moins verbeux
-	 * 
-	 * @return L'instance de la partie.
-	 */
-	public static Partie getPartie() {
-		return partie;
-	}
-
-	/**
 	 * Vide la defausse
 	 */
-	public void videDefausse() {
-		this.defausse = new LinkedList<Carte>();
+	public static void videDefausse() {
+		defausse = new LinkedList<Carte>();
 	}
 
 	/**
 	 * Vide la pile d'exile
 	 */
-	public void videExile() {
-		this.exile = new LinkedList<Carte>();
+	private static void videExile() {
+		exile = new LinkedList<Carte>();
 	}
 
 	/**
 	 * Vide la main
 	 */
-	public void videMain() {
-		this.main = new ArrayList<Carte>();
+	private static void videMain() {
+		main = new ArrayList<Carte>();
 	}
 
-	public Hero getHero() {
-		return hero;
-	}
-
-	public ArrayList<Salle> getSalles() {
-		return salles;
-	}
-
-	public int getIndiceSalle() {
-		return indiceSalle;
-	}
-
-	public Salle getSalleActuelle() {
-		return salles.get(indiceSalle);
-	}
-
-	public LinkedList<Carte> getDeck() {
-		return deck;
-	}
-
-	public LinkedList<Carte> getDefausse() {
+	public static LinkedList<Carte> getDefausse() {
 		return defausse;
 	}
 
-	public LinkedList<Carte> getExile() {
-		return exile;
+	public static LinkedList<Carte> getDeck() {
+		return deck;
 	}
 
-	public LinkedList<Carte> getPioche() {
-		return pioche;
-	}
-
-	public ArrayList<Carte> getMain() {
+	public static ArrayList<Carte> getMain() {
 		return main;
 	}
 
-	public Scanner getScanner() {
+	public static Hero getHero() {
+		return hero;
+	}
+
+	public static Scanner getScanner() {
 		return scanner;
 	}
 
-	public void setScanner(Scanner scanner) {
-		this.scanner = scanner;
+	public static void ajouterCarteDeck(Carte carte) {
+		deck.add(carte);
 	}
-
 }

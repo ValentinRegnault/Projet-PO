@@ -20,7 +20,7 @@ import patterns.Preparation;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        // Partie.getPartie().jouerPartie();
+        // Partie.jouerPartie();
         // creerPetitSlimeAcide();
 
         // ObjectMapper mapper = new ObjectMapper();
@@ -44,15 +44,16 @@ public class App {
 
         // creerCarteFrappe();
 
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().getDeck().add(Partie.instancierCarte("Frappe"));
-        Partie.getPartie().jouerPartie();
+        Partie.initPartie();
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+        Partie.jouerPartie();
     }
 
     private static void creerMachouilleur() {

@@ -43,14 +43,14 @@ public class Action implements java.io.Serializable {
                 case AUCUN:
                     break;
                 case HERO:
-                    cibles.add(Partie.getPartie().getHero());
+                    cibles.add(Partie.getHero());
                     break;
                 case TOUS_LES_MONSTRES:
-                    cibles.addAll(Partie.getPartie().getEquipeMonstreActuelle());
+                    cibles.addAll(Partie.getEquipeMonstreActuelle());
                     break;
                 case MONSTRE_ALEATOIRE:
-                    cibles.add(Partie.getPartie().getEquipeMonstreActuelle()
-                            .get((int) (Math.random() * Partie.getPartie().getEquipeMonstreActuelle().size())));
+                    cibles.add(Partie.getEquipeMonstreActuelle()
+                            .get((int) (Math.random() * Partie.getEquipeMonstreActuelle().size())));
                     break;
                 case LANCEUR:
                     cibles.add(lanceur);

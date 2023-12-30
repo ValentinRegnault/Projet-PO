@@ -52,13 +52,13 @@ public class Carte implements Cloneable {
      * @see {@link Effet#appliquerEffet(Entite, ArrayList)}
      */
     public void jouerCarte() {
-        Hero hero = Partie.getPartie().getHero();
+        Hero hero = Partie.getHero();
 
         boolean doitOnSelectionnerUneCible = effets.stream()
                 .anyMatch(e -> e.getTypeCible() == TypeCible.SELECTION_JOUEUR);
         Monstre cibleSelectionee = null;
         if (doitOnSelectionnerUneCible) {
-            ArrayList<Monstre> equipeMonstre = Partie.getPartie().getEquipeMonstreActuelle();
+            ArrayList<Monstre> equipeMonstre = Partie.getEquipeMonstreActuelle();
             int indice = demanderMonstre(equipeMonstre);
             cibleSelectionee = equipeMonstre.get(indice);
         }
@@ -69,14 +69,14 @@ public class Carte implements Cloneable {
                 case AUCUN:
                     break;
                 case HERO:
-                    cibles.add(Partie.getPartie().getHero());
+                    cibles.add(Partie.getHero());
                     break;
                 case TOUS_LES_MONSTRES:
-                    cibles.addAll(Partie.getPartie().getEquipeMonstreActuelle());
+                    cibles.addAll(Partie.getEquipeMonstreActuelle());
                     break;
                 case MONSTRE_ALEATOIRE:
-                    cibles.add(Partie.getPartie().getEquipeMonstreActuelle()
-                            .get((int) (Math.random() * Partie.getPartie().getEquipeMonstreActuelle().size())));
+                    cibles.add(Partie.getEquipeMonstreActuelle()
+                            .get((int) (Math.random() * Partie.getEquipeMonstreActuelle().size())));
                     break;
                 case SELECTION_JOUEUR:
                     cibles.add(cibleSelectionee);
@@ -91,8 +91,8 @@ public class Carte implements Cloneable {
             effet.appliquerEffet(hero, cibles);
         }
 
-        Partie.getPartie().getHero().setPointEnergie(Partie.getPartie().getHero().getPointEnergie() - this.cout);
-        Partie.getPartie().defausseCarte(Partie.getPartie().getMain().indexOf(this));
+        Partie.getHero().setPointEnergie(Partie.getHero().getPointEnergie() - this.cout);
+        Partie.defausseCarte(Partie.getMain().indexOf(this));
     }
 
     /**
@@ -119,7 +119,7 @@ public class Carte implements Cloneable {
         boolean indiceValide = false;
         while (!indiceValide) {
             System.out.println("Choisissez un monstre : ");
-            indiceMonstre = Partie.getPartie().getScanner().nextInt();
+            indiceMonstre = Partie.getScanner().nextInt();
 
             if (indiceMonstre >= 0 && indiceMonstre < equipeMonstre.size()) {
                 indiceValide = true;
