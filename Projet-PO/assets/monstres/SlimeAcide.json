@@ -1,5 +1,10 @@
 {
   "nom": "Slime Acide",
+  "x": 0.0,
+  "y": 0.0,
+  "imageFilePath": "assets/pictures/monstres/Acid-slime-M.png",
+  "width": 350,
+  "height": 350,
   "pvMax": 30,
   "pv": 30,
   "pattern": {

@@ -1,27 +1,31 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import main.Carte.EtatCarte;
+import ressources.Affichage;
+import ressources.AssociationTouches;
 
 /**
- * Classe representant une salle de combat, c'est à dire une salle contenant des
- * monstres ou un Boss.
- * Cette classe contient la logique de combat du jeu.
+ * Classe representant une salle de combat, c'est à dire une salle contenant des monstres ou un
+ * Boss. Cette classe contient la logique de combat du jeu.
  */
 public abstract class SalleCombat extends Salle {
 	protected ArrayList<Monstre> equipeMonstre;
 
-	public SalleCombat(ArrayList<Monstre> equipeMonstre) {
+	protected SalleCombat(ArrayList<Monstre> equipeMonstre) {
 		this.equipeMonstre = equipeMonstre;
 	}
 
 	/**
-	 * Détermine si le combat est terminé. Le combat est terminé si le hero est mort
-	 * ou si tous les monstres sont morts.
+	 * Détermine si le combat est terminé. Le combat est terminé si le hero est mort ou si tous les
+	 * monstres sont morts.
 	 * 
 	 * @return true si le combat est terminé, false sinon.
 	 */
 	public boolean combatTermine() {
-		return hero.getPv() == 0 || equipeMonstre.stream().allMatch(monstre -> monstre.getPv() <= 0);
+		return hero.getPv() == 0
+				|| equipeMonstre.stream().allMatch(monstre -> monstre.getPv() <= 0);
 	}
 
 	/**
@@ -32,9 +36,12 @@ public abstract class SalleCombat extends Salle {
 	 */
 	@Override
 	public boolean jouerSalle() {
-		lancerCombat();
-		Hero hero = Partie.getHero();
-		System.out.println(hero.getPv() <= 0);
+		try {
+			lancerCombat();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Heros hero = Partie.getHeros();
 
 		if (hero.getPv() <= 0) {
 			System.out.println("Vous avez perdu !");
@@ -47,34 +54,18 @@ public abstract class SalleCombat extends Salle {
 	}
 
 	/**
-	 * Déroule le combat et prends fin quand il est terminé.
-	 * Cette méthode contient la majorité de la logique de combat du jeu.
+	 * Déroule le combat et prends fin quand il est terminé. Cette méthode contient la majorité de
+	 * la logique de combat du jeu.
+	 * 
+	 * @throws InterruptedException
 	 */
-	public void lancerCombat() {
-		Hero hero = Partie.getHero();
+	public synchronized void lancerCombat() throws InterruptedException {
+		Heros hero = Partie.getHeros();
 
 		// Affichage des monstres pour le premier tour
-		System.out.println("Vous entrez dans une salle de combat...");
-		if (equipeMonstre.size() == 1) {
-			System.out.println("Devant vous se dresse un " + equipeMonstre.get(0).getNom() + " avec "
-					+ equipeMonstre.get(0).getPv() + " PV !");
-		} else {
-			System.out.println("Devant vous se dresse une équipe de monstres :");
-			for (Monstre monstre : equipeMonstre) {
-				System.out.println("- un " + monstre.getNom() + " avec " + monstre.getPv() + " PV !");
-			}
-		}
-
-		// Affichage du héro et de sa main pour le premier tour
-		System.out.println("Vous avez " + hero.getPv() + " PV et " + hero.getPointEnergieMax()
-				+ " points d'énergie. Dans votre main, vous avez :");
-
-		Partie.getMain().stream().forEach(carte -> System.out.println(
-				carte.getNom() + " - " + carte.getDescription() + " - " + carte.getCout() + " points d'énergie"));
+		Partie.setTexteExplicatif("Vous pénétrez dans une salle de combat !");
 
 		while (!combatTermine()) {
-			System.out.println();
-			System.out.println("---- Début du tour ----");
 
 			// --- Tour du hero
 
@@ -88,54 +79,45 @@ public abstract class SalleCombat extends Salle {
 				Partie.piocherCarte();
 			}
 
-			// Affichage de l'intention des monstres=
-			equipeMonstre.stream().forEach(monstre -> System.out.println(monstre.getNom()
-					+ " à l'intention de faire l'action " + monstre.getPattern().intention().getNom()));
+			Partie.setTexteExplicatif(
+					"C'est à votre tour de jouer. Vos point d'énergie ont été rechargé et vos points de blocage ont été réinitialisé. Vous piochez 5 cartes. ENTER pour continuer.");
 
-			boolean tourTermine = false;
-			while (!tourTermine && !combatTermine()) {
-				System.out.println();
-				System.out.println("Votre main contient " + Partie.getMain().size() + " cartes :");
-				for (int i = 0; i < Partie.getMain().size(); i++) {
-					Carte carte = Partie.getMain().get(i);
-					System.out.println("- [" + i + "] " + carte.getNom() + "\n    Description : "
-							+ carte.getDescription() + "\n    Coût : " + carte.getCout() + " points d'énergie");
-				}
+			String touche = null;
+			while (touche == null || !touche.equals("Entree"))
+				touche = AssociationTouches.trouveProchaineEntree();
 
-				int indiceCarte = demanderCarte();
-				if (indiceCarte == -1) {
-					tourTermine = true;
-				} else {
-					Carte carte = Partie.getMain().get(indiceCarte);
-					System.out.println("Vous avez choisi la carte " + carte.getNom());
-					carte.jouerCarte();
-					retirerMonstresMorts();
-				}
+			while (!combatTermine()) {
+				Optional<Carte> carte = Partie.demanderCarte();
+				if (carte.isEmpty())
+					break;
+
+				carte.get().jouerCarte();
+				retirerMonstresMorts();
 			}
+			Partie.defausserTouteLesCartes();
 
-			if (combatTermine()) {
-				System.out.println("Le combat est terminé !");
-				break;
-			}
-
-			long nbCarteBrulureDansMain = Partie.getMain().stream()
-					.filter(carte -> carte.getNom().equals("Brûlure"))
-					.count();
+			long nbCarteBrulureDansMain =
+					Partie.getMain().stream().filter(c -> c.getNom().equals("Brûlure")).count();
 			if (nbCarteBrulureDansMain > 0) {
-				System.out.println("Vous avez " + nbCarteBrulureDansMain
-						+ " cartes Brûlure dans votre main. Vous allez perdre deux points de vie par carte brûlure !");
+				Partie.setTexteExplicatif("Vous avez " + nbCarteBrulureDansMain
+						+ " cartes Brûlure dans votre main. Vous perdez donc "
+						+ 2 * nbCarteBrulureDansMain
+						+ " PV, et les cartes Brûlure sont défaussées.");
 				hero.setPv(hero.getPv() - 2 * (int) nbCarteBrulureDansMain);
+				Partie.defausseCarteBruluresDeLaMain();
+				wait(1500);
 			}
 
 			// --- Tour des monstres
 
 			for (Monstre monstre : equipeMonstre) {
-				// Remise a zéro des points de blocage du monstre
 				monstre.setPointBlocage(0);
 				monstre.jouerAction();
 			}
 
 			// --- Fin du tour
+
+			// Transformation des points de rituel des monstres en point de force
 			for (Monstre monstre : equipeMonstre) {
 				int pointRituel = monstre.getStatusPoint(Entite.Status.Rituel);
 				if (pointRituel > 0) {
@@ -143,91 +125,35 @@ public abstract class SalleCombat extends Salle {
 					monstre.setStatusPoint(Entite.Status.Rituel, pointRituel - 1);
 				}
 			}
-
-			System.out.println();
-			System.out.println("Bilan du tour :");
-			System.out.println();
-
-			System.out.println("Vous avez " + hero.getPv() + " PV et " + hero.getPointEnergie() + " points d'énergie.");
-
-			boolean doitOnAfficherLesStatusDuHero = hero.status.values().stream().anyMatch(val -> val > 0);
-			if (doitOnAfficherLesStatusDuHero) {
-				System.out.println("Vous êtes affecté par les status suivants :");
-				hero.afficheStatus();
-			}
-
-			// Affichage des PV des monstres et leurs status
-			for (Monstre monstre : equipeMonstre) {
-				if (monstre.status.values().stream().anyMatch(val -> val > 0)) {
-					System.out.println(monstre.getNom() + " a " + monstre.getPv() + "/" + monstre.getPvMax()
-							+ " PV et est affecté par les status suivants :");
-
-					monstre.afficheStatus();
-				}
-			}
 		}
 	}
 
 	/**
-	 * Demande au joueur de choisir une carte dans sa main.
-	 * 
-	 * @return
-	 */
-	private int demanderCarte() {
-		int indiceCarte = 0;
-		boolean indiceValide = false;
-		boolean energieSuffisante = false;
-		while (!indiceValide || !energieSuffisante) {
-			System.out.println("Vous avez " + Partie.getHero().getPointEnergie() + " points d'énergie");
-			System.out.println("Choisissez une carte ou entrez -1 pour terminer votre tour");
-			indiceCarte = Partie.getScanner().nextInt();
-
-			if (indiceCarte == -1) {
-				indiceValide = true;
-				energieSuffisante = true;
-				continue;
-			}
-			if (indiceCarte < 0 || indiceCarte >= Partie.getMain().size()) {
-				System.out.println("Indice invalide");
-				continue;
-			}
-			indiceValide = true;
-			Carte carte = Partie.getMain().get(indiceCarte);
-			if (carte.getCout() <= Partie.getHero().getPointEnergie()) {
-				energieSuffisante = true;
-			} else {
-				System.out.println("Vous n'avez pas assez d'énergie pour jouer cette carte");
-			}
-		}
-
-		return indiceCarte;
-	}
-
-	/**
-	 * Demande au joueur de choisir une carte de récompense parmis trois cartes
-	 * aléatoires.
+	 * Demande au joueur de choisir une carte de récompense parmis trois cartes aléatoires.
 	 */
 	private void choisirRecompense() {
-		System.out.println("Choisissez une carte de récompense parmis les trois suivante, ou aucune :");
 		Carte[] cartes = new Carte[3];
 		for (int i = 0; i < 3; i++) {
 			cartes[i] = Partie.carteAleatoire();
 		}
 
+		String[] cartesString = new String[3];
 		for (int i = 0; i < 3; i++) {
 			Carte carte = cartes[i];
-			System.out.println("[" + i + "] " + carte.getNom() + " - " + carte.getDescription() + " - "
-					+ carte.getCout() + " points d'énergie");
+			cartesString[i] = carte.toString();
 		}
 
-		System.out.println("[-1] Aucune");
-		System.out.println("Votre choix : ");
-		int indiceCarte = Partie.getScanner().nextInt();
+		int indiceCarte = Affichage.popup(
+				"Félicitation, vous avez vaincus tous les monstres de cette salles. Choisissez une récompense parmi ces cartes :",
+				cartesString, 0);
+
 		if (indiceCarte == -1) {
 			System.out.println("Vous avez rejeter les cartes de récompense.");
 		} else {
 			System.out.println("Vous avez choisi la carte " + cartes[indiceCarte].getNom());
-			Partie.getDeck().add(cartes[indiceCarte]);
+			Partie.setTexteExplicatif("Vous avez choisi la carte " + cartes[indiceCarte].getNom());
+			Partie.ajouterCarte(cartes[indiceCarte]);
+			cartes[indiceCarte].setEtat(EtatCarte.DANS_PIOCHE);
 		}
 	}
 

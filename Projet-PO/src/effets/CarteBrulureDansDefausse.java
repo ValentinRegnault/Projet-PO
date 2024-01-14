@@ -27,7 +27,7 @@ public class CarteBrulureDansDefausse extends Effet {
         try {
             for (int i = 0; i < this.pointEffet; i++) {
                 Carte brulure = null;
-                brulure = Partie.instancierCarte("Brûlure");
+                brulure = Partie.instancierCarte("Brulure");
                 Partie.ajouterCarteDefausse(brulure);
             }
         } catch (IOException e) {

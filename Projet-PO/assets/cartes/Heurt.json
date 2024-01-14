@@ -1,0 +1,19 @@
+{
+  "nom": "Heurt",
+  "rarete": "Commun",
+  "cout": 2,
+  "effets": [
+    {
+      "type": "appliqueDegat",
+      "pointEffet": 8,
+      "typeCible": "SELECTION_JOUEUR"
+    },
+    {
+      "type": "vulnerable",
+      "pointEffet": 2,
+      "typeCible": "SELECTION_JOUEUR"
+    }
+  ],
+  "description": "Inflige 8 dégâts à un ennemi puis 2 de Vulnérable.",
+  "aExiler": false
+}

@@ -1,16 +1,20 @@
 package main;
 
+import java.io.File;
+import ressources.Config;
+
 /**
  * Représente le héro du jeu.
  */
-public class Hero extends Entite {
+public class Heros extends Entite {
 
     private int pointEnergieMax;
     private int pointEnergie;
 
-    public Hero(String nom) {
+    public Heros(String nom) {
         // Par défaut, PV = 70
-        super(nom, 70, 0);
+        super(nom, 70, 0, "assets" + File.separator + "pictures" + File.separator + "Ironclad.png",
+                0.0, Config.Y_MAX/2.0 - 259.0/2, 356.0, 259.0);
         this.pointEnergie = 3;
         this.pointEnergieMax = 3;
     }
@@ -24,8 +28,8 @@ public class Hero extends Entite {
 
     @Override
     public String toString() {
-        return "Hero: [" + super.toString() + " pointEnergieMax=" + pointEnergieMax + ", pointEnergie=" + pointEnergie
-                + "]";
+        return "Hero: [" + super.toString() + " pointEnergieMax=" + pointEnergieMax
+                + ", pointEnergie=" + pointEnergie + "]";
     }
 
     public int getPointEnergieMax() {

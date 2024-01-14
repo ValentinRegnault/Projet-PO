@@ -12,10 +12,13 @@ import effets.Blocage;
 import effets.Effet;
 import effets.Faiblesse;
 import effets.Force;
+import librairies.StdDraw;
 import main.Carte.RareteCarte;
 import patterns.Aleatoire;
 import patterns.Cyclique;
 import patterns.Preparation;
+import ressources.AssociationTouches;
+import ressources.Config;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -44,16 +47,22 @@ public class App {
 
         // creerCarteFrappe();
 
+
         Partie.initPartie();
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
-        Partie.ajouterCarteDeck(Partie.instancierCarte("Frappe"));
+
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+        Partie.ajouterCarte(Partie.instancierCarte("Frappe"));
+
         Partie.jouerPartie();
+
+        // creerCarteFrappe();
+
     }
 
     private static void creerMachouilleur() {
@@ -93,7 +102,10 @@ public class App {
         a.setActionsPossible(actionsPossibles);
         pattern.setPhase2(a);
 
-        Monstre m = new Monstre("Mâchouilleur", 40, pattern);
+        Monstre m = new Monstre(
+                "Mâchouilleur", 40, pattern, "assets" + File.separator + "pictures" + File.separator
+                        + "monstres" + File.separator + "PetitSlimeAcide.png",
+                0.0, 0.0, 356.0, 259.0);
 
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -103,39 +115,43 @@ public class App {
         }
     }
 
-    private static void creerPetitSlimeAcide() {
-        // Charge : Inflige 3 dégats
-        AppliqueDegat degat = new AppliqueDegat(3, TypeCible.HERO);
-        ArrayList<Effet> effetsCharge = new ArrayList<>();
-        effetsCharge.add(degat);
-        Action charge = new Action("Charge", effetsCharge);
+    // private static void creerPetitSlimeAcide() {
+    //     // Charge : Inflige 3 dégats
+    //     AppliqueDegat degat = new AppliqueDegat(3, TypeCible.HERO);
+    //     ArrayList<Effet> effetsCharge = new ArrayList<>();
+    //     effetsCharge.add(degat);
+    //     Action charge = new Action("Charge", effetsCharge);
 
-        // Lêcher : Inflige 1 Faible
-        ArrayList<Effet> effetsLecher = new ArrayList<>();
-        effetsLecher.add(new Faiblesse(1, TypeCible.HERO));
-        Action lecher = new Action("Lêcher", effetsLecher);
+    //     // Lêcher : Inflige 1 Faible
+    //     ArrayList<Effet> effetsLecher = new ArrayList<>();
+    //     effetsLecher.add(new Faiblesse(1, TypeCible.HERO));
+    //     Action lecher = new Action("Lêcher", effetsLecher);
 
-        Cyclique pattern = new Cyclique();
-        ArrayList<Action> actions = new ArrayList<>();
-        actions.add(charge);
-        actions.add(lecher);
-        pattern.setListeAction(actions);
+    //     Cyclique pattern = new Cyclique();
+    //     ArrayList<Action> actions = new ArrayList<>();
+    //     actions.add(charge);
+    //     actions.add(lecher);
+    //     pattern.setListeAction(actions);
 
-        Monstre m = new Monstre("Petit Slime Acide", 40, pattern);
+    //     Monstre m = new Monstre(
+    //             "Petit Slime Acide", 40, pattern, "assets" + File.separator + "pictures"
+    //                     + File.separator + "monstres" + File.separator + "PetitSlimeAcide.png",
+    //             0.0, 0.0, 356.0, 259.0);
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writeValue(new File("./assets/monstres/PetitSlimeAcide.json"), m);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    //     ObjectMapper mapper = new ObjectMapper();
+    //     try {
+    //         mapper.writeValue(new File("./assets/monstres/PetitSlimeAcide.json"), m);
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     private static void creerCarteFrappe() {
         ArrayList<Effet> effets = new ArrayList<>();
         effets.add(new AppliqueDegat(6, TypeCible.SELECTION_JOUEUR));
 
-        Carte frappe = new Carte("Frappe", RareteCarte.Commun, 1, effets, false, "Inflige 6 dégâts.");
+        Carte frappe = new Carte("Frappe", RareteCarte.Commun, 1, effets, false,
+                "Inflige 6 dégâts.", Carte.EtatCarte.DANS_PIOCHE);
 
         ObjectMapper mapper = new ObjectMapper();
         try {

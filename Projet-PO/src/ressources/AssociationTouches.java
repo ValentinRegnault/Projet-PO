@@ -28,6 +28,26 @@ public class AssociationTouches {
         clavier.put(KeyEvent.VK_A, "A"); // Vous pouvez ajouter toute les lettres voulues de cette façon
         // Attention les touches absente d'un clavier QWERTY ("2/é", "9/ç", par
         // exemple), sont incompatibles avec StdDraw.
+        clavier.put(KeyEvent.VK_Z, "Z");
+        clavier.put(KeyEvent.VK_E, "E");
+        clavier.put(KeyEvent.VK_R, "R");
+        clavier.put(KeyEvent.VK_T, "T");
+        clavier.put(KeyEvent.VK_Y, "Y");
+        clavier.put(KeyEvent.VK_U, "U");
+        clavier.put(KeyEvent.VK_I, "I");
+        clavier.put(KeyEvent.VK_O, "O");
+        clavier.put(KeyEvent.VK_P, "P");
+        clavier.put(KeyEvent.VK_Q, "Q");
+        clavier.put(KeyEvent.VK_S, "S");
+        clavier.put(KeyEvent.VK_D, "D");
+        clavier.put(KeyEvent.VK_F, "F");
+        clavier.put(KeyEvent.VK_G, "G");
+        clavier.put(KeyEvent.VK_H, "H");
+        clavier.put(KeyEvent.VK_J, "J");
+        clavier.put(KeyEvent.VK_K, "K");
+        clavier.put(KeyEvent.VK_L, "L");
+        clavier.put(KeyEvent.VK_M, "M");
+        clavier.put(KeyEvent.VK_ESCAPE, "ESCAPE");
     }
 
     /**

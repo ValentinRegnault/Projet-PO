@@ -1,5 +1,10 @@
 {
   "nom": "Petit Slime Piquant",
+  "x": 0.0,
+  "y": 0.0,
+  "imageFilePath": "assets/pictures/monstres/Spike_Slime_S.png",
+  "width": 350,
+  "height": 350,
   "pvMax": 12,
   "pv": 12,
   "pattern": {

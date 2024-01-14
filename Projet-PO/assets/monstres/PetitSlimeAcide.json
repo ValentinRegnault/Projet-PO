@@ -1,5 +1,10 @@
 {
   "nom": "Petit Slime Acide",
+  "x": 0.0,
+  "y": 0.0,
+  "imageFilePath": "assets/pictures/monstres/Acid-slime-S.png",
+  "width": 350,
+  "height": 350,
   "pvMax": 8,
   "pv": 8,
   "pattern": {

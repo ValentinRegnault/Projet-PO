@@ -1,0 +1,20 @@
+{
+    "nom": "Frappe du pommeau",
+    "rarete": "Commun",
+    "cout": 1,
+    "effets": [
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 9,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "pioche",
+        "pointEffet": 1,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Inflige 9 dégâts à un ennemi puis pioche 1 carte",
+    "aExiler": false
+  }
+  

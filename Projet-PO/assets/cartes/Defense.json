@@ -1,0 +1,15 @@
+{
+    "nom": "Défense",
+    "rarete": "Commun",
+    "cout": 1,
+    "effets": [
+      {
+        "type": "blocage",
+        "pointEffet": 5,
+        "typeCible": "LANCEUR"
+      }
+    ],
+    "description": "Gagne 5 points de blocage.",
+    "aExiler": false
+  }
+  

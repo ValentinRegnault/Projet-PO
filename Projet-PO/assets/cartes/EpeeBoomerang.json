@@ -1,0 +1,24 @@
+{
+  "nom": "Epée boomrang",
+  "rarete": "Commun",
+  "cout": 1,
+  "effets": [
+    {
+      "type": "appliqueDegat",
+      "pointEffet": 3,
+      "typeCible": "MONSTRE_ALEATOIRE"
+    },
+    {
+      "type": "appliqueDegat",
+      "pointEffet": 3,
+      "typeCible": "MONSTRE_ALEATOIRE"
+    },
+    {
+      "type": "appliqueDegat",
+      "pointEffet": 3,
+      "typeCible": "MONSTRE_ALEATOIRE"
+    }
+  ],
+  "description": "Inflige 3 dégâts à un ennemi au hasard. Cet effet s’applique 3 fois à la suite.",
+  "aExiler": false
+}

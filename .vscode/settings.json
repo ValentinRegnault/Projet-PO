@@ -4,5 +4,8 @@
         "Projet-PO/lib/jackson-annotations-2.16.0.jar",
         "Projet-PO/lib/jackson-core-2.16.0.jar",
         "Projet-PO/lib/jackson-databind-2.16.0.jar"
-    ]
+    ],
+    "files.watcherExclude": {
+        "**/target": true
+    }
 }

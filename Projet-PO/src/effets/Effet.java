@@ -22,6 +22,7 @@ import main.TypeCible;
         @Type(value = AppliqueDegat.class, name = "appliqueDegat"),
         @Type(value = AppliqueDegatParBlocage.class, name = "appliqueDegatParBlocage"),
         @Type(value = Blocage.class, name = "blocage"),
+        @Type(value = Pioche.class, name = "pioche"),
         @Type(value = Energie.class, name = "energie"),
         @Type(value = Faiblesse.class, name = "faiblesse"),
         @Type(value = Force.class, name = "force"),
@@ -43,11 +44,11 @@ public abstract class Effet implements java.io.Serializable, Cloneable {
      */
     private TypeCible typeCible;
 
-    public Effet() {
+    protected Effet() {
         this.pointEffet = 0;
     }
 
-    public Effet(int pointEffet, TypeCible typeCible) {
+    protected Effet(int pointEffet, TypeCible typeCible) {
         this.pointEffet = pointEffet;
         this.typeCible = typeCible;
     }

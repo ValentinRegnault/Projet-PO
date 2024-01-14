@@ -2,7 +2,7 @@ package ressources;
 
 import java.awt.Color;
 import java.awt.Font;
-
+import java.io.File;
 import librairies.StdDraw;
 
 /**
@@ -51,6 +51,17 @@ public class Affichage {
      */
     public static void texteCentre(double x, double y, String texte) {
         texteCentre(x, y, texte, Config.POLICE_PAR_DEFAUT, Config.COULEUR_PAR_DEFAULT);
+    }
+
+    /**
+     * Affiche un texte centré avec la police et la couleur par défaut.
+     * 
+     * @param x     Abscisse du centre du texte
+     * @param y     Ordonnée du centre du texte
+     * @param texte Texte à afficher
+     */
+    public static void texteCentre(double x, double y, String texte, Color couleur) {
+        texteCentre(x, y, texte, Config.POLICE_PAR_DEFAUT, couleur);
     }
 
     /**
@@ -188,7 +199,7 @@ public class Affichage {
                     shareForOption / (0.128 * Config.Y_MAX)); // pour s'assurer que l'image n'est pas deformee
             widthX = pixelsCursor * (0.016 * Config.X_MAX);
             widthY = pixelsCursor * (0.016 * Config.Y_MAX);
-            StdDraw.picture(centerX, centerY, "pictures/cursor_popup.png", widthX, widthY);
+            StdDraw.picture(centerX, centerY, "assets" + File.separator + "pictures" + File.separator +  "cursor_popup.png", widthX, widthY);
             StdDraw.show();
             AssociationTouches.init();
             String touche = AssociationTouches.trouveProchaineEntree();
@@ -223,5 +234,11 @@ public class Affichage {
                 default:
             }
         }
+    }
+
+    public static void selecteur(String touche, double x, double y, double largeur, double hauteur) {
+        rectangleContour(x, x + largeur, y, y + largeur, new Color(255, 255, 255));
+        rectanglePlein(x, x + largeur, y, y + largeur, new Color(255, 255, 255, 50));
+        texteCentre(x + largeur/2, y + hauteur/2, touche);
     }
 }

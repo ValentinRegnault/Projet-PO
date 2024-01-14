@@ -3,7 +3,7 @@ package effets;
 import java.util.ArrayList;
 
 import main.Entite;
-import main.Hero;
+import main.Heros;
 import main.TypeCible;
 
 /**
@@ -25,7 +25,7 @@ public class Energie extends Effet {
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
         // Inflige prends en compte les points de blocage
         for (Entite cible : cibles) {
-            if (cible instanceof Hero hero) {
+            if (cible instanceof Heros hero) {
                 hero.setPointEnergie(hero.getPointEnergie() + pointEffet);
                 System.out.println(hero.getNom() + " gagne " + pointEffet + " points d'énergie");
             } else {

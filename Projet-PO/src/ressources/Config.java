@@ -21,7 +21,7 @@ public class Config {
   final public static Font POLICE_PAR_DEFAUT = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 
   /** Couleur du texte par defaut */
-  final public static Color COULEUR_PAR_DEFAULT = new Color(200, 200, 200);
+  final public static Color COULEUR_PAR_DEFAULT = new Color(255, 255, 255);
 
   /** Police du texte de popup */
   final public static Font POLICE_POPUP = new Font("Arial", Font.BOLD, 16);

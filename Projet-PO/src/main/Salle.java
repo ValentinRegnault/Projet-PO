@@ -5,7 +5,7 @@ package main;
  * qui est déplacé de salle en salle par Partie.
  */
 public abstract class Salle {
-    protected Hero hero = Partie.getHero();
+    protected Heros hero = Partie.getHeros();
 
     public abstract boolean jouerSalle();
 }

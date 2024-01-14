@@ -1,0 +1,19 @@
+{
+  "nom": "Même pas mal",
+  "rarete": "Commun",
+  "cout": 1,
+  "effets": [
+    {
+      "type": "blocage",
+      "pointEffet": 8,
+      "typeCible": "LANCEUR"
+    },
+    {
+      "type": "pioche",
+      "pointEffet": 1,
+      "typeCible": "AUCUN"
+    }
+  ],
+  "description": "Gagne 8 points de blocage puis pioche 1 carte",
+  "aExiler": false
+}

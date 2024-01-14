@@ -1,0 +1,15 @@
+{
+    "nom": "Plaquage",
+    "rarete": "Commun",
+    "cout": 1,
+    "effets": [
+      {
+        "type": "appliqueDegatParBlocage",
+        "pointEffet": 1,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Inflige 12 dégâts à un ennemi puis 2 de Faiblesse.",
+    "aExiler": false
+  }
+  

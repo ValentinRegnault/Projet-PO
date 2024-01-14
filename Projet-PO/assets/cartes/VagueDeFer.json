@@ -1,0 +1,19 @@
+{
+  "nom": "Vague de fer",
+  "rarete": "Commun",
+  "cout": 1,
+  "effets": [
+    {
+      "type": "blocage",
+      "pointEffet": 5,
+      "typeCible": "LANCEUR"
+    },
+    {
+      "type": "appliqueDegat",
+      "pointEffet": 5,
+      "typeCible": "SELECTION_JOUEUR"
+    }
+  ],
+  "description": "Gagne 5 points de blocage puis inflige 5 dégâts à un ennemi.",
+  "aExiler": false
+}

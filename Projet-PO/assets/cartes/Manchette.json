@@ -1,0 +1,20 @@
+{
+    "nom": "Manchette",
+    "rarete": "Commun",
+    "cout": 2,
+    "effets": [
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 12,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "faiblesse",
+        "pointEffet": 2,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Inflige 12 dégâts à un ennemi puis 2 de Faiblesse.",
+    "aExiler": false
+  }
+  

@@ -1,0 +1,14 @@
+{
+  "nom": "Enchaînement",
+  "rarete": "Commun",
+  "cout": 1,
+  "effets": [
+    {
+      "type": "appliqueDegat",
+      "pointEffet": 8,
+      "typeCible": "TOUS_LES_MONSTRES"
+    }
+  ],
+  "description": "Inflige 8 dégâts à tous les ennemis",
+  "aExiler": false
+}

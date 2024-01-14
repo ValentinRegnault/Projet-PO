@@ -1,21 +1,25 @@
 package main;
 
+import java.awt.Color;
 import java.util.ArrayList;
-
 import effets.Effet;
+import ressources.Affichage;
+import ressources.Config;
 
 /**
  * Représente une carte du jeu.
  */
-public class Carte implements Cloneable {
+public class Carte extends Affichable implements Cloneable {
 
     /**
      * Enumération des différentes raretés de carte possibles.
      */
     public enum RareteCarte {
-        Commun,
-        NonCommun,
-        Rare
+        Commun, NonCommun, Rare
+    }
+
+    public enum EtatCarte {
+        DANS_PIOCHE, DANS_MAIN, DEFAUSSEE, EXILEE
     }
 
     private String nom;
@@ -24,66 +28,71 @@ public class Carte implements Cloneable {
     private ArrayList<Effet> effets;
     private String description;
     private boolean aExiler;
+    private EtatCarte etat;
+
+    public static final double LARGEUR_CARTE = 130.0;
+    public static final double HAUTEUR_CARTE = 200.0;
 
     public Carte() {
+        super(0.0, 0.0);
         this.nom = "";
         this.rarete = RareteCarte.Commun;
         this.cout = 0;
-        this.effets = new ArrayList<Effet>();
+        this.effets = new ArrayList<>();
         this.aExiler = false;
         this.description = "";
+        this.etat = EtatCarte.DANS_PIOCHE;
     }
 
-    public Carte(String nom, RareteCarte rarete, int cout, ArrayList<Effet> effets, boolean exile, String description) {
+    public Carte(String nom, RareteCarte rarete, int cout, ArrayList<Effet> effets, boolean exile,
+            String description, EtatCarte etat) {
+        super(0.0, 0.0);
         this.nom = nom;
         this.rarete = rarete;
         this.cout = cout;
         this.effets = effets;
         this.aExiler = exile;
         this.description = description;
+        this.etat = etat;
     }
 
     /**
-     * Détermine les cibles en fonction du type de cible des effets de la carte.
-     * Applique les effets de la carte sur ces cibles.
-     * Retire les points d'energie de la carte au héros, et defausse la carte.
+     * Détermine les cibles en fonction du type de cible des effets de la carte. Applique les effets
+     * de la carte sur ces cibles. Retire les points d'energie de la carte au héros, et defausse la
+     * carte.
      * 
      * @see {@link Effet#getTypeCible()}
      * @see {@link Effet#appliquerEffet(Entite, ArrayList)}
      */
-    public void jouerCarte() {
-        Hero hero = Partie.getHero();
+    public synchronized void jouerCarte() throws InterruptedException {
+        Heros hero = Partie.getHeros();
 
-        boolean doitOnSelectionnerUneCible = effets.stream()
-                .anyMatch(e -> e.getTypeCible() == TypeCible.SELECTION_JOUEUR);
+        boolean doitOnSelectionnerUneCible =
+                effets.stream().anyMatch(e -> e.getTypeCible() == TypeCible.SELECTION_JOUEUR);
         Monstre cibleSelectionee = null;
         if (doitOnSelectionnerUneCible) {
-            ArrayList<Monstre> equipeMonstre = Partie.getEquipeMonstreActuelle();
-            int indice = demanderMonstre(equipeMonstre);
-            cibleSelectionee = equipeMonstre.get(indice);
+            ArrayList<Monstre> equipeMonstre = Partie.getEquipeMonstreActuelle().get();
+            cibleSelectionee = Partie.demanderMonstre();
         }
 
         for (Effet effet : effets) {
-            ArrayList<Entite> cibles = new ArrayList<Entite>();
+            ArrayList<Entite> cibles = new ArrayList<>();
             switch (effet.getTypeCible()) {
                 case AUCUN:
                     break;
-                case HERO:
-                    cibles.add(Partie.getHero());
+                case HERO, LANCEUR:
+                    cibles.add(Partie.getHeros());
                     break;
                 case TOUS_LES_MONSTRES:
-                    cibles.addAll(Partie.getEquipeMonstreActuelle());
+                    cibles.addAll(Partie.getEquipeMonstreActuelle().get());
                     break;
                 case MONSTRE_ALEATOIRE:
-                    cibles.add(Partie.getEquipeMonstreActuelle()
-                            .get((int) (Math.random() * Partie.getEquipeMonstreActuelle().size())));
+                    cibles.add(Partie.getEquipeMonstreActuelle().get().get((int) (Math.random()
+                            * Partie.getEquipeMonstreActuelle().get().size())));
                     break;
                 case SELECTION_JOUEUR:
                     cibles.add(cibleSelectionee);
                     break;
-                case LANCEUR:
-                    throw new IllegalStateException(
-                            "Une carte contient des effets. Ces effets ont un type de cible. Le type de cible LANCEUR corresponds au monstre qui à effectué l'action, et ne devrait pas être utilisé dans une carte.");
                 default:
                     break;
             }
@@ -91,55 +100,43 @@ public class Carte implements Cloneable {
             effet.appliquerEffet(hero, cibles);
         }
 
-        Partie.getHero().setPointEnergie(Partie.getHero().getPointEnergie() - this.cout);
+        Partie.getHeros().setPointEnergie(Partie.getHeros().getPointEnergie() - this.cout);
         Partie.defausseCarte(Partie.getMain().indexOf(this));
     }
 
-    /**
-     * Demande au joueur de choisir un monstre dans l'équipe de monstre
-     * 
-     * @param equipeMonstre L'équipe de monstre contre laquelle le joueur est en
-     *                      train de se battre.
-     * @return L'indice du monstre choisi.
-     * @category Affichage
-     * @category Interaction
-     */
-    private int demanderMonstre(ArrayList<Monstre> equipeMonstre) {
-        System.out.println();
-        for (int i = 0; i < equipeMonstre.size(); i++) {
-            System.out.println("[" + i + "] "
-                    + equipeMonstre.get(i).getNom()
-                    + " - " + equipeMonstre.get(i).getPv()
-                    + "/" + equipeMonstre.get(i).getPvMax()
-                    + " PV");
+
+    @Override
+    public void afficher() {
+        if (this.etat != EtatCarte.DANS_MAIN)
+            return;
+
+        Affichage.rectanglePlein(getX(), getX() + LARGEUR_CARTE, getY(), getY() + HAUTEUR_CARTE,
+                new Color(255, 255, 255));
+        Affichage.rectangleContour(getX(), getX() + LARGEUR_CARTE, getY(), getY() + HAUTEUR_CARTE,
+                new Color(0, 0, 0));
+
+        Affichage.texteCentre(getX() + LARGEUR_CARTE / 2, getY() + HAUTEUR_CARTE - 10, nom,
+                new Color(0, 0, 0));
+
+        String[] lines = new String[description.length() / 13 + 2];
+        for (int i = 0; i < lines.length - 1; i++) {
+            lines[i] = description.substring(i * 13, Math.min((i + 1) * 13, description.length()));
         }
-        System.out.println();
+        lines[lines.length - 1] = "Coût : " + cout;
 
-        int indiceMonstre = 0;
-        boolean indiceValide = false;
-        while (!indiceValide) {
-            System.out.println("Choisissez un monstre : ");
-            indiceMonstre = Partie.getScanner().nextInt();
 
-            if (indiceMonstre >= 0 && indiceMonstre < equipeMonstre.size()) {
-                indiceValide = true;
-            } else {
-                System.out.println("Indice invalide");
-            }
+        for (int i = 0; i < lines.length; i++) {
+            Affichage.texteGauche(getX() + 5, getY() + HAUTEUR_CARTE - 30 - i * 20, lines[i],
+                    Config.POLICE_PAR_DEFAUT, Color.BLACK);
         }
 
-        return indiceMonstre;
     }
+
 
     @Override
     public String toString() {
-
-        return String.format("""
-                Carte: %s
-                Rareté: %s
-                Cout: %d
-                """, this.nom, this.rarete, this.cout) + "Description: " + this.description + "\nExile: "
-                + this.aExiler;
+        return this.nom + " - Carte " + this.rarete + " - " + this.description + " - Coût : "
+                + this.cout;
     }
 
     @Override
@@ -200,5 +197,13 @@ public class Carte implements Cloneable {
 
     public void setEffets(ArrayList<Effet> effets) {
         this.effets = effets;
+    }
+
+    public EtatCarte getEtat() {
+        return etat;
+    }
+
+    public void setEtat(EtatCarte etat) {
+        this.etat = etat;
     }
 }

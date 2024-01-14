@@ -10,5 +10,6 @@
     }
   ],
   "description": "Inflige 6 dégâts.",
-  "aExiler": false
+  "aExiler": false,
+  "etat": "DANS_PIOCHE"
 }

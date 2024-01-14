@@ -1,5 +1,10 @@
 {
   "nom": "Cultiste",
+  "x": 0.0,
+  "y": 0.0,
+  "imageFilePath": "assets/pictures/monstres/Cultist-pretty.png",
+  "width": 350,
+  "height": 350,
   "pvMax": 50,
   "pv": 50,
   "pointBlocage": 0,

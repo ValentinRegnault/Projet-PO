@@ -26,8 +26,6 @@ public class Faiblesse extends Effet {
             // Inflige prends en compte les points de blocage
             cible.setStatusPoint(Entite.Status.Faiblesse,
                     cible.getStatusPoint(Entite.Status.Faiblesse) + this.pointEffet);
-            System.out.println(
-                    lanceur.getNom() + " donne " + this.pointEffet + " points de faiblesse à " + cible.getNom());
         }
     }
 

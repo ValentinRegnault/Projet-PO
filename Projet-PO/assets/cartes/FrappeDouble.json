@@ -1,0 +1,20 @@
+{
+    "nom": "Frappe double",
+    "rarete": "Commun",
+    "cout": 1,
+    "effets": [
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 5,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 5,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Inflige 5 dégâts 2 fois à un en-nemi.",
+    "aExiler": false
+  }
+  
