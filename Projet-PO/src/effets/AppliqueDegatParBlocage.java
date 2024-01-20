@@ -1,9 +1,11 @@
 package effets;
 
 import java.util.ArrayList;
-
+import main.Deck;
 import main.Entite;
-import main.TypeCible;
+import main.Heros;
+import main.Monstre;
+import main.Salle.TexteExplicatif;
 
 /**
  * Effet qui applique autant de dégats que le points de blocage de la cible
@@ -17,7 +19,8 @@ public class AppliqueDegatParBlocage extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
+    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
+            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
 
             this.pointEffet = cible.getPointBlocage();
@@ -42,7 +45,8 @@ public class AppliqueDegatParBlocage extends Effet {
             cible.setPointBlocage(pointBlocageCible - this.pointEffet);
             int degatInflige = Math.abs(pointBlocageCible - this.pointEffet);
             cible.setPv(cible.getPv() - degatInflige);
-            System.out.println(lanceur.getNom() + " inflige " + degatInflige + " dégats à " + cible.getNom());
+            System.out.println(
+                    lanceur.getNom() + " inflige " + degatInflige + " dégats à " + cible.getNom());
         }
     }
 

@@ -1,0 +1,15 @@
+{
+  "nom": "Saignée",
+  "rarete": "NonCommun",
+  "cout": 1,
+  "effets": [
+    {
+      "type": "saignee",
+      "pointEffet": 0,
+      "typeCible": "AUCUN"
+    }
+  ],
+  "description": "Perdez 3 points de vie puis gagnez 2 points d’énergie.",
+  "aExiler": false,
+  "positive": true
+}

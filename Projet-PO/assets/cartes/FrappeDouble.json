@@ -15,6 +15,7 @@
       }
     ],
     "description": "Inflige 5 dégâts 2 fois à un en-nemi.",
-    "aExiler": false
+    "aExiler": false,
+    "positive": true
   }
   

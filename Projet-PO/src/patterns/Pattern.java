@@ -23,7 +23,7 @@ public interface Pattern extends Serializable {
      * 
      * @param lanceur le monstre qui joue l'action
      */
-    public void jouerAction(Monstre lanceur);
+    public Action actionActuelle();
 
     /**
      * Prépare une nouvelle action

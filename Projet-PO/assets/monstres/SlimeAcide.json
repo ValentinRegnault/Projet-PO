@@ -26,7 +26,7 @@
         "effets": [{ "type": "fragile", "pointEffet": 1, "typeCible": "HERO" }]
       },
       "1.0": {
-        "nom": "Morsure",
+        "nom": "Charge",
         "effets": [
           { "type": "appliqueDegat", "pointEffet": 10, "typeCible": "HERO" }
         ]

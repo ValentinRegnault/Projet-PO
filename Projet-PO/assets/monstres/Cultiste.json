@@ -10,17 +10,14 @@
   "pointBlocage": 0,
   "pattern": {
     "type": "preparation",
-    "phase1": {
-      "type": "cyclique",
-      "listeAction": [
-        {
-          "nom": "Rituel",
-          "effets": [
-            { "type": "rituel", "pointEffet": 3, "typeCible": "LANCEUR" }
-          ]
-        }
-      ]
-    },
+    "phase1": [
+      {
+        "nom": "Rituel",
+        "effets": [
+          { "type": "rituel", "pointEffet": 3, "typeCible": "LANCEUR" }
+        ]
+      }
+    ],
     "phase2": {
       "type": "cyclique",
       "listeAction": [

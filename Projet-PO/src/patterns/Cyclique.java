@@ -25,11 +25,6 @@ public class Cyclique implements Pattern {
     }
 
     @Override
-    public void jouerAction(Monstre lanceur) {
-        this.actionActuelle().jouerAction(lanceur);
-        this.actionSuivante();
-    }
-
     public Action actionActuelle() {
         return this.listeAction.get(this.indice);
     }

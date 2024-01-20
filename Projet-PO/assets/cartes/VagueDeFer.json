@@ -15,5 +15,6 @@
     }
   ],
   "description": "Gagne 5 points de blocage puis inflige 5 dégâts à un ennemi.",
-  "aExiler": false
+  "aExiler": false,
+  "positive": true
 }

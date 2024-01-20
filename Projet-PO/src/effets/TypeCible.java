@@ -1,4 +1,4 @@
-package main;
+package effets;
 
 /**
  * Enumération des types de cibles possibles pour les effets.

@@ -15,6 +15,7 @@
       }
     ],
     "description": "Inflige 9 dégâts à un ennemi puis pioche 1 carte",
-    "aExiler": false
+    "aExiler": false,
+    "positive": true
   }
   

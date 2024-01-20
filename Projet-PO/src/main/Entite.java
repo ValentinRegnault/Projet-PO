@@ -141,6 +141,9 @@ public abstract class Entite extends Sprite {
         if (this.pv < 0) {
             this.pv = 0;
         }
+        if (this.pv > this.pvMax) {
+            this.pv = this.pvMax;
+        }
     }
 
     public int getPointBlocage() {

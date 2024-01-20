@@ -20,5 +20,6 @@
     }
   ],
   "description": "Inflige 3 dégâts à un ennemi au hasard. Cet effet s’applique 3 fois à la suite.",
-  "aExiler": false
+  "aExiler": false,
+  "positive": true
 }

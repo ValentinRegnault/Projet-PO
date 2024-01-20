@@ -27,43 +27,6 @@ public class Action implements java.io.Serializable {
         this.effets = effets;
     }
 
-    /**
-     * Effectue l'action. Applique chacun des effets de l'action.
-     * 
-     * @param lanceur Monstre qui effectue l'action
-     * @apiNote Cette méthode est appelée par {@link patterns.Pattern#jouerAction(Monstre)}
-     */
-    public void jouerAction(Monstre lanceur) {
-        for (Effet e : this.effets) {
-            ArrayList<Entite> cibles = new ArrayList<Entite>();
-
-            switch (e.getTypeCible()) {
-                case AUCUN:
-                    break;
-                case HERO:
-                    cibles.add(Partie.getHeros());
-                    break;
-                case TOUS_LES_MONSTRES:
-                    cibles.addAll(Partie.getEquipeMonstreActuelle().get());
-                    break;
-                case MONSTRE_ALEATOIRE:
-                    cibles.add(Partie.getEquipeMonstreActuelle().get().get((int) (Math.random()
-                            * Partie.getEquipeMonstreActuelle().get().size())));
-                    break;
-                case LANCEUR:
-                    cibles.add(lanceur);
-                    break;
-                case SELECTION_JOUEUR:
-                    throw new IllegalStateException(
-                            "Un monstre contient un pattern qui contient des actions. Ces actions ne peuvent pas cibler un monstre choisi par le joueur, or c'est le cas ici.");
-                default:
-                    break;
-            }
-
-            e.appliquerEffet(lanceur, cibles);
-        }
-    }
-
     @Override
     public String toString() {
         return "Action [effets=" + effets + ", nom=" + nom + "]";

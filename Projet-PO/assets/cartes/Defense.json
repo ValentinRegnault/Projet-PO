@@ -10,6 +10,7 @@
       }
     ],
     "description": "Gagne 5 points de blocage.",
-    "aExiler": false
+    "aExiler": false,
+    "positive": true
   }
   

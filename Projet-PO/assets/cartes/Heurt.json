@@ -15,5 +15,6 @@
     }
   ],
   "description": "Inflige 8 dégâts à un ennemi puis 2 de Vulnérable.",
-  "aExiler": false
+  "aExiler": false,
+  "positive": true
 }

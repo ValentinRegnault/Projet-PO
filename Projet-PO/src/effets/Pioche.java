@@ -1,10 +1,12 @@
 package effets;
 
 import java.util.ArrayList;
-
+import main.Deck;
 import main.Entite;
+import main.Heros;
+import main.Monstre;
 import main.Partie;
-import main.TypeCible;
+import main.Salle.TexteExplicatif;
 
 /**
  * Effet qui ajoute des points de force à la cible.
@@ -22,9 +24,10 @@ public class Pioche extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
+    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
+            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (int i = 0; i < this.pointEffet; i++) {
-            Partie.piocherCarte();
+            deckRef.piocherCarte();
         }
     }
 

@@ -1,9 +1,11 @@
 package effets;
 
 import java.util.ArrayList;
-
+import main.Deck;
 import main.Entite;
-import main.TypeCible;
+import main.Heros;
+import main.Monstre;
+import main.Salle.TexteExplicatif;
 
 /**
  * Effet qui divise les PV du héros par 12.
@@ -20,7 +22,8 @@ public class Divise extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
+    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
+            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
             for (int i = 0; i < this.pointEffet; i++) {
                 int degat = (cible.getPv() + 1) / 12;

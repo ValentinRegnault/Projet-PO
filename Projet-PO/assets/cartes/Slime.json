@@ -4,5 +4,6 @@
   "cout": 1,
   "effets": [],
   "description": "Slurp slurp :-)",
-  "aExiler": false
+  "aExiler": true,
+  "positive": false
 }

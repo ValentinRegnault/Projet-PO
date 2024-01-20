@@ -1,27 +1,23 @@
 {
   "x": 0.0,
   "y": 0.0,
-  "imageFilePath": "assets/pictures/monstres/Jaw-worm-pretty.png",
-  "width": 350,
-  "height": 350,
+  "imageFilePath": "assets/pictures/monstres/Acid-slime-M.png",
+  "width": 356.0,
+  "height": 259.0,
   "nom": "Mâchouilleur",
   "pvMax": 40,
   "pv": 40,
   "pattern": {
     "type": "preparation",
-    "phase1": {
-      "type": "cyclique",
-      "listeAction": [
-        {
-          "nom": "Charge",
-          "effets": [
-            { "type": "appliqueDegat", "pointEffet": 7, "typeCible": "HERO" },
-            { "type": "blocage", "pointEffet": 5, "typeCible": "LANCEUR" }
-          ]
-        }
-      ],
-      "indice": 0
-    },
+    "phase1": [
+      {
+        "nom": "Charge",
+        "effets": [
+          { "type": "appliqueDegat", "pointEffet": 7, "typeCible": "HERO" },
+          { "type": "blocage", "pointEffet": 5, "typeCible": "LANCEUR" }
+        ]
+      }
+    ],
     "phase2": {
       "type": "aleatoire",
       "actionsPossible": {

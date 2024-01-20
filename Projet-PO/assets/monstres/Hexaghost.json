@@ -9,25 +9,23 @@
   "pv": 250,
   "pattern": {
     "type": "preparation",
-    "phase1": {
-      "type": "cyclique",
-      "listeAction": [
-        {
-          "nom": "Chargement",
-          "effets": []
-        },
-        {
-          "nom": "Divise",
-          "effets": [{ "type": "divise", "pointEffet": 0, "typeCible": "HERO" }]
-        }
-      ]
-    },
+    "phase1": [
+      {
+        "nom": "Chargement",
+        "effets": []
+      },
+      {
+        "nom": "Divise",
+        "effets": [{ "type": "divise", "pointEffet": 0, "typeCible": "HERO" }]
+      }
+    ],
     "phase2": {
       "type": "cyclique",
       "listeAction": [
         {
           "nom": "Enfer",
           "effets": [
+            { "type": "appliqueDegat", "pointEffet": 6, "typeCible": "HERO" },
             { "type": "appliqueDegat", "pointEffet": 6, "typeCible": "HERO" },
             {
               "type": "ajoutCarteBrulureDansDefausse",
@@ -38,7 +36,7 @@
         },
         {
           "nom": "Divise",
-          "effets": [{ "type": "divise", "pointEffet": 0, "typeCible": "HERO" }]
+          "effets": [{ "type": "divise", "pointEffet": 6, "typeCible": "HERO" }]
         }
       ]
     }

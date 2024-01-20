@@ -1,9 +1,11 @@
 package effets;
 
 import java.util.ArrayList;
-
+import main.Deck;
 import main.Entite;
-import main.TypeCible;
+import main.Heros;
+import main.Monstre;
+import main.Salle.TexteExplicatif;
 
 /**
  * Effet qui ajoute des points de faiblesses à la cible.
@@ -21,7 +23,8 @@ public class Faiblesse extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
+    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
+            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
             // Inflige prends en compte les points de blocage
             cible.setStatusPoint(Entite.Status.Faiblesse,

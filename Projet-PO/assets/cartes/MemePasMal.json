@@ -15,5 +15,6 @@
     }
   ],
   "description": "Gagne 8 points de blocage puis pioche 1 carte",
-  "aExiler": false
+  "aExiler": false,
+  "positive": true
 }

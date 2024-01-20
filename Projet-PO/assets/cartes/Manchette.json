@@ -15,6 +15,7 @@
       }
     ],
     "description": "Inflige 12 dégâts à un ennemi puis 2 de Faiblesse.",
-    "aExiler": false
+    "aExiler": false,
+    "positive": true
   }
   

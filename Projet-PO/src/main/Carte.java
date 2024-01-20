@@ -29,6 +29,11 @@ public class Carte extends Affichable implements Cloneable {
     private String description;
     private boolean aExiler;
     private EtatCarte etat;
+    /**
+     * Si true, l'effet est positif, sinon il est négatif. Cela permet de savoir si la carte peut
+     * etre donnée en récompense.
+     */
+    private boolean positive;
 
     public static final double LARGEUR_CARTE = 130.0;
     public static final double HAUTEUR_CARTE = 200.0;
@@ -56,55 +61,6 @@ public class Carte extends Affichable implements Cloneable {
         this.etat = etat;
     }
 
-    /**
-     * Détermine les cibles en fonction du type de cible des effets de la carte. Applique les effets
-     * de la carte sur ces cibles. Retire les points d'energie de la carte au héros, et defausse la
-     * carte.
-     * 
-     * @see {@link Effet#getTypeCible()}
-     * @see {@link Effet#appliquerEffet(Entite, ArrayList)}
-     */
-    public synchronized void jouerCarte() throws InterruptedException {
-        Heros hero = Partie.getHeros();
-
-        boolean doitOnSelectionnerUneCible =
-                effets.stream().anyMatch(e -> e.getTypeCible() == TypeCible.SELECTION_JOUEUR);
-        Monstre cibleSelectionee = null;
-        if (doitOnSelectionnerUneCible) {
-            ArrayList<Monstre> equipeMonstre = Partie.getEquipeMonstreActuelle().get();
-            cibleSelectionee = Partie.demanderMonstre();
-        }
-
-        for (Effet effet : effets) {
-            ArrayList<Entite> cibles = new ArrayList<>();
-            switch (effet.getTypeCible()) {
-                case AUCUN:
-                    break;
-                case HERO, LANCEUR:
-                    cibles.add(Partie.getHeros());
-                    break;
-                case TOUS_LES_MONSTRES:
-                    cibles.addAll(Partie.getEquipeMonstreActuelle().get());
-                    break;
-                case MONSTRE_ALEATOIRE:
-                    cibles.add(Partie.getEquipeMonstreActuelle().get().get((int) (Math.random()
-                            * Partie.getEquipeMonstreActuelle().get().size())));
-                    break;
-                case SELECTION_JOUEUR:
-                    cibles.add(cibleSelectionee);
-                    break;
-                default:
-                    break;
-            }
-
-            effet.appliquerEffet(hero, cibles);
-        }
-
-        Partie.getHeros().setPointEnergie(Partie.getHeros().getPointEnergie() - this.cout);
-        Partie.defausseCarte(Partie.getMain().indexOf(this));
-    }
-
-
     @Override
     public void afficher() {
         if (this.etat != EtatCarte.DANS_MAIN)
@@ -130,13 +86,6 @@ public class Carte extends Affichable implements Cloneable {
                     Config.POLICE_PAR_DEFAUT, Color.BLACK);
         }
 
-    }
-
-
-    @Override
-    public String toString() {
-        return this.nom + " - Carte " + this.rarete + " - " + this.description + " - Coût : "
-                + this.cout;
     }
 
     @Override
@@ -206,4 +155,19 @@ public class Carte extends Affichable implements Cloneable {
     public void setEtat(EtatCarte etat) {
         this.etat = etat;
     }
+
+    public boolean isPositive() {
+        return positive;
+    }
+
+    public void setPositive(boolean positif) {
+        this.positive = positif;
+    }
+
+    @Override
+    public String toString() {
+        return nom + " (" + rarete + ") description : " + description + " coût : " + cout;
+    }
+
+
 }

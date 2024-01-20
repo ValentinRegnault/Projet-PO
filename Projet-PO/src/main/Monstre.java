@@ -30,13 +30,12 @@ public class Monstre extends Entite {
         this.pattern = pattern;
     }
 
-    /**
-     * Joue l'action qui a été programmée dans le pattern du monstre.
-     */
-    public synchronized void jouerAction() throws InterruptedException {
-        Partie.setTexteExplicatif(getNom() + " joue l'action " + this.pattern.intention().getNom());
-        this.pattern.jouerAction(this);
-        wait(2500);
+    public void actionSuivante() {
+        this.pattern.actionSuivante();
+    }
+
+    public Action actionActuelle() {
+        return this.pattern.actionActuelle();
     }
 
     @Override

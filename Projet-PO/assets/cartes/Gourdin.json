@@ -1,15 +1,15 @@
 {
-  "nom": "Frappe",
-  "rarete": "Commun",
+  "nom": "Gourdin",
+  "rarete": "Rare",
   "cout": 1,
   "effets": [
     {
       "type": "appliqueDegat",
-      "pointEffet": 6,
+      "pointEffet": 32,
       "typeCible": "SELECTION_JOUEUR"
     }
   ],
-  "description": "Inflige 6 dégâts.",
+  "description": "Inflige 32 points de dégâts à un ennemi.",
   "aExiler": false,
   "positive": true
 }

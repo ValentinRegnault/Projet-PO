@@ -1,10 +1,11 @@
 package effets;
 
 import java.util.ArrayList;
-
+import main.Deck;
 import main.Entite;
 import main.Heros;
-import main.TypeCible;
+import main.Monstre;
+import main.Salle.TexteExplicatif;
 
 /**
  * Effet qui ajoute des points d'énergie au héros.
@@ -22,7 +23,8 @@ public class Energie extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles) {
+    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
+            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         // Inflige prends en compte les points de blocage
         for (Entite cible : cibles) {
             if (cible instanceof Heros hero) {

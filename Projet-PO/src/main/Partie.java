@@ -28,8 +28,8 @@ import ressources.Config;
  *           accessibles globalement.
  */
 public class Partie {
-	private static final ArrayList<Salle> salles = new ArrayList<>(15);
-	private static int indiceSalle = 0;
+	private final ArrayList<Salle> salles = new ArrayList<>(15);
+	private int indiceSalle = 0;
 
 	/**
 	 * Ensembles des fichiers de monstres du jeu, indexés par le nom du monstre.
@@ -40,25 +40,16 @@ public class Partie {
 	 */
 	private static final TreeMap<String, File> cartesAssetParNom = new TreeMap<>();
 
-	/**
-	 * Toutes les cartes du joueurs. Les constructeurs {@link Partie#getPioche},
-	 * {@link Partie#getMain}, {@link Partie#getDefausse} et {@link Partie#getExile} permettent
-	 * d'accéder à des sous-ensembles de ces cartes.
-	 */
-	private static LinkedList<Carte> toutesLesCartes = new LinkedList<Carte>();
+	private Scanner scanner = new Scanner(System.in);
 
-	private static Scanner scanner = new Scanner(System.in);
+	private Heros heros = new Heros("Bob");
 
-	private static Heros heros = new Heros("Bob");
-	private static Affichable background =
-			new Sprite("assets" + File.separator + "pictures" + File.separator + "background.jpg",
-					0.0, 0.0, Config.X_MAX, Config.Y_MAX);
-	private static UI ui = new UI();
+	public Deck deck = new Deck();
 
 	/**
 	 * Initialise la partie, en chargeant les fichiers de monstres et de cartes.
 	 */
-	public static void initPartie() {
+	public void initPartie() {
 
 		AssociationTouches.init();
 		Config.init();
@@ -110,76 +101,49 @@ public class Partie {
 	}
 
 	/**
-	 * Affiche tout les éléments du jeu, en appelant leurs méthodes
-	 * {@link Affichable#afficher}.
-	 */
-	public static void afficherLeMonde() {
-		StdDraw.clear();
-
-		ArrayList<Affichable> monde = new ArrayList<>();
-		monde.add(background);
-		List<Carte> main = getMain();
-		monde.addAll(main);
-
-		for (int i = 0; i < main.size(); i++) {
-			Carte carte = main.get(i);
-			carte.setX(250 + i * (Carte.LARGEUR_CARTE + 40));
-			carte.setY(20);
-		}
-
-		Optional<ArrayList<Monstre>> equipeActuelle = getEquipeMonstreActuelle();
-		if (equipeActuelle.isPresent())
-			monde.addAll(equipeActuelle.get());
-		
-		monde.add(heros);
-		monde.add(ui);
-
-		monde.stream().forEach(a -> a.afficher());
-
-		StdDraw.show();
-	}
-
-	/**
 	 * Initialise les salles et lance la partie, jusqu'à ce que le joueur gagne ou perde.
 	 */
-	public static void jouerPartie() {
+	public void jouerPartie() {
 		genererSalles();
 		for (Salle salle : salles) {
-			genererPioche();
-			afficherLeMonde();
+			deck.genererPioche();
 			boolean victoire = salle.jouerSalle();
 			if (!victoire) {
-				ui.setTexteExplicatif("Vous avez perdu :/");
 				return;
 			}
 			indiceSalle++;
 		}
-
-		ui.setTexteExplicatif("Victoire !");
 	}
 
 	/**
 	 * Génère les salles du jeu selon le schéma décrit dans le sujet.
 	 */
-	private static void genererSalles() {
+	private void genererSalles() {
 		// [C] -> [C] -> [R] -> [C] -> [C] -> [C] -> [R] -> [C] -> [C] -> [C] -> [R] ->
 		// [C] -> [C] -> [R] -> [B]
 		salles.clear();
-		salles.add(new SalleMonstre(genererEquipeMonstre(1)));
-		salles.add(new SalleMonstre(genererEquipeMonstre(2)));
-		salles.add(new SalleRepos());
-		salles.add(new SalleMonstre(genererEquipeMonstre(3)));
-		salles.add(new SalleMonstre(genererEquipeMonstre(4)));
-		salles.add(new SalleMonstre(genererEquipeMonstre(5)));
-		salles.add(new SalleRepos());
-		salles.add(new SalleMonstre(genererEquipeMonstre(6)));
-		salles.add(new SalleMonstre(genererEquipeMonstre(7)));
-		salles.add(new SalleMonstre(genererEquipeMonstre(8)));
-		salles.add(new SalleRepos());
-		salles.add(new SalleMonstre(genererEquipeMonstre(9)));
-		salles.add(new SalleMonstre(genererEquipeMonstre(10)));
-		salles.add(new SalleRepos());
-		salles.add(new SalleBoss(genererEquipeMonstre(10)));
+		salles.add(new SalleCombat(genererEquipeMonstre(1), deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(2), deck, heros));
+		salles.add(new SalleRepos(deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(3), deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(4), deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(5), deck, heros));
+		salles.add(new SalleRepos(deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(6), deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(7), deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(8), deck, heros));
+		salles.add(new SalleRepos(deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(9), deck, heros));
+		salles.add(new SalleCombat(genererEquipeMonstre(10), deck, heros));
+		salles.add(new SalleRepos(deck, heros));
+		ArrayList<Monstre> boss = new ArrayList<>();
+		try {
+			boss.add(instancierMonstre("Hexaghost"));
+		} catch (IOException e) {
+			System.err.println("Erreur lors de la lecture du fichier de monstre Hexaghost");
+			e.printStackTrace();
+		}
+		salles.add(new SalleCombat(boss, deck, heros));
 	}
 
 	/**
@@ -196,8 +160,7 @@ public class Partie {
 	public static Monstre instancierMonstre(String name) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			Monstre m = mapper.readValue(monstresAssetParNom.get(name), Monstre.class);
-			return m;
+			return mapper.readValue(monstresAssetParNom.get(name), Monstre.class);
 		} catch (IOException ioe) {
 			System.out.println("Erreur lors de la lecture du fichier de monstre " + name);
 			ioe.printStackTrace();
@@ -219,8 +182,7 @@ public class Partie {
 	public static Carte instancierCarte(String name) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			Carte m = mapper.readValue(cartesAssetParNom.get(name), Carte.class);
-			return m;
+			return mapper.readValue(cartesAssetParNom.get(name), Carte.class);
 		} catch (IOException ioe) {
 			System.out.println("Erreur lors de la lecture du fichier de carte " + name);
 			ioe.printStackTrace();
@@ -245,6 +207,10 @@ public class Partie {
 
 				Monstre m = instancierMonstre(
 						Partie.monstresAssetParNom.keySet().toArray()[randomIndex].toString());
+
+				if (m.getNom().equals("Hexaghost")) // On ne veut pas de boss dans les salles
+					continue;
+
 				monstresTires.add(m);
 			} catch (IOException ioe) {
 				System.out.println("Erreur lors de la lecture du fichier de monstre.");
@@ -301,8 +267,11 @@ public class Partie {
 			rarete = RareteCarte.Rare;
 		}
 
+
+
 		final RareteCarte rareteChoisie = rarete;
-		ArrayList<Carte> cartesDeRareteChoisie =
+
+		ArrayList<Carte> cartePossibles =
 				cartesAssetParNom.keySet().stream().map((String nomCarte) -> {
 					try {
 						return instancierCarte(nomCarte);
@@ -310,184 +279,10 @@ public class Partie {
 						e.printStackTrace();
 						return null;
 					}
-				}).filter(carte -> carte.getRarete() == rareteChoisie)
+				}).filter(carte -> carte.getRarete() == rareteChoisie).filter(Carte::isPositive)
 						.collect(Collectors.toCollection(ArrayList::new));
 
-		int randomIndex = (int) (Math.random() * cartesDeRareteChoisie.size());
-		return cartesDeRareteChoisie.get(randomIndex);
-	}
-
-	/**
-	 * Retourne l'équipe de monstre contre laquelle le joueur est en train de se battre au moment de
-	 * l'appel. Si le joueur n'est pas en train de se battre contre une équipe de monstre (n'est pas
-	 * dans une salle de monstre), une exception est levée.
-	 * 
-	 * @implNote Cette méthode accèdes à la salle actuelle et récupère l'équipe de monstre
-	 *           ({@link SalleMonstre#getEquipeMonstre()}).
-	 * @return
-	 * @throws IllegalStateException Si le joueur n'est pas en train de se battre contre une équipe
-	 *         de monstre (n'est pas dans une salle de monstre)
-	 */
-	public static Optional<ArrayList<Monstre>> getEquipeMonstreActuelle() {
-		if (!(salles.get(indiceSalle) instanceof SalleMonstre)) {
-			return Optional.empty();
-		}
-
-		return Optional.of(((SalleMonstre) salles.get(indiceSalle)).getEquipeMonstre());
-	}
-
-	/**
-	 * Fait piocher une carte au joueur dans la pioche. Si la pioche est vide, les cartes de la
-	 * défausse sont remises dans la pioche, et la pioche est mélangée. Puis, la "carte du dessus"
-	 * de la pioche est ajoutée à la main du joueur.
-	 */
-	public static void piocherCarte() {
-		if (getPioche().isEmpty()) {
-			toutesLesCartes.stream().filter(c -> c.getEtat() == EtatCarte.DEFAUSSEE)
-					.forEach(c -> c.setEtat(EtatCarte.DANS_PIOCHE));
-			Collections.shuffle(toutesLesCartes);
-		} else {
-			Carte carte = getPioche().get(0);
-			carte.setEtat(EtatCarte.DANS_MAIN);
-			System.out.println("Vous piochez la carte " + carte.getNom() + " - "
-					+ carte.getDescription() + " - " + carte.getCout() + " points d'énergie");
-		}
-	}
-
-	/**
-	 * Défausse une carte de la main du joueur. La carte est ajoutée à la défausse
-	 * 
-	 * @param indice L'indice de la carte dans la main du joueur
-	 */
-	public static void defausseCarte(int indice) {
-		// index de la carte dans la main
-
-		List<Carte> main = getMain();
-		Carte carteUtilise = main.get(indice);
-		carteUtilise.setEtat(carteUtilise.isaExiler() ? EtatCarte.EXILEE : EtatCarte.DEFAUSSEE);
-	}
-
-	/**
-	 * Defausse toutes les cartes de la main du joueur.
-	 */
-	public static void defausserTouteLesCartes() {
-		List<Carte> main = getMain();
-		main.stream().forEach(carte -> carte.setEtat(carte.isaExiler() ? EtatCarte.EXILEE : EtatCarte.DEFAUSSEE));
-	}
-
-	/**
-	 * Ajoute une carte dans la défausse.
-	 * 
-	 * @param indice
-	 */
-	public static void ajouterCarteDefausse(Carte carte) {
-		carte.setEtat(EtatCarte.DEFAUSSEE);
-	}
-
-	/**
-	 * Retire les cartes Brûlure de la main du joueur, et les défausse.
-	 */
-	public static void defausseCarteBruluresDeLaMain() {
-		List<Carte> main = getMain();
-		main.stream().filter(carte -> carte.getNom().equals("Brûlure"))
-				.forEach(carte -> carte.setEtat(EtatCarte.DEFAUSSEE));
-	}
-
-	/**
-	 * Change l'état de toutes les cartes pour les mettre dans la pioche, puis mélange la pioche.
-	 */
-	public static void genererPioche() {
-		toutesLesCartes.stream().forEach(c -> c.setEtat(EtatCarte.DANS_PIOCHE));
-		Collections.shuffle(toutesLesCartes);
-	}
-
-
-	/**
-	 * Retourne un monstre sélectionné par le joueur.
-	 * 
-	 * @see {@link UI#demanderMonstre()}
-	 */
-	public static Monstre demanderMonstre() {
-		return ui.demanderMonstre();
-	}
-
-	/**
-	 * Retourne une carte sélectionnée par le joueur.
-	 * 
-	 * @see {@link UI#demanderCarte()}
-	 */
-	public static Optional<Carte> demanderCarte() {
-		return ui.demanderCarte();
-	}
-
-	/**
-	 * Change le texte explicatif affiché en haut de l'écran.
-	 * 
-	 * @param texte le nouveau texte explicatif
-	 * 
-	 * @see {@link UI#setTexteExplicatif()}
-	 */
-	public static void setTexteExplicatif(String texte) {
-		ui.setTexteExplicatif(texte);
-	}
-
-	public static List<Carte> getDeck() {
-		// En java, il n'existe pas de liste immutable, donc on retourne une liste
-		// non modifiable (qui lève une exception si on essaye de la modifier, au runtime)
-		// C'est une solution que nous trouvons plutôt mauvaise, mais qui est la seule que
-		// nous avons trouvé en java.
-		return Collections.unmodifiableList(toutesLesCartes.stream()
-				.filter(carte -> carte.getEtat() != EtatCarte.EXILEE).collect(Collectors.toList()));
-	}
-
-	public static List<Carte> getDefausse() {
-		// En java, il n'existe pas de liste immutable, donc on retourne une liste
-		// non modifiable (qui lève une exception si on essaye de la modifier, au runtime)
-		// C'est une solution que nous trouvons plutôt mauvaise, mais qui est la seule que
-		// nous avons trouvé en java.
-		return Collections.unmodifiableList(
-				toutesLesCartes.stream().filter(carte -> carte.getEtat() == EtatCarte.DEFAUSSEE)
-						.collect(Collectors.toList()));
-	}
-
-	public static List<Carte> getMain() {
-		// En java, il n'existe pas de liste immutable, donc on retourne une liste
-		// non modifiable (qui lève une exception si on essaye de la modifier, au runtime)
-		// C'est une solution que nous trouvons plutôt mauvaise, mais qui est la seule que
-		// nous avons trouvé en java.
-		return Collections.unmodifiableList(
-				toutesLesCartes.stream().filter(carte -> carte.getEtat() == EtatCarte.DANS_MAIN)
-						.collect(Collectors.toList()));
-	}
-
-	public static List<Carte> getPioche() {
-		// En java, il n'existe pas de liste immutable, donc on retourne une liste
-		// non modifiable (qui lève une exception si on essaye de la modifier, au runtime)
-		// C'est une solution que nous trouvons plutôt mauvaise, mais qui est la seule que
-		// nous avons trouvé en java.
-		return Collections.unmodifiableList(
-				toutesLesCartes.stream().filter(carte -> carte.getEtat() == EtatCarte.DANS_PIOCHE)
-						.collect(Collectors.toList()));
-	}
-
-	public static List<Carte> getExilees() {
-		// En java, il n'existe pas de liste immutable, donc on retourne une liste
-		// non modifiable (qui lève une exception si on essaye de la modifier, au runtime)
-		// C'est une solution que nous trouvons plutôt mauvaise, mais qui est la seule que
-		// nous avons trouvé en java.
-		return Collections.unmodifiableList(toutesLesCartes.stream()
-				.filter(carte -> carte.getEtat() == EtatCarte.EXILEE).collect(Collectors.toList()));
-	}
-
-	public static Heros getHeros() {
-		return heros;
-	}
-
-	public static Scanner getScanner() {
-		return scanner;
-	}
-
-	public static void ajouterCarte(Carte carte) {
-		toutesLesCartes.add(carte);
+		int randomIndex = (int) (Math.random() * cartePossibles.size());
+		return cartePossibles.get(randomIndex);
 	}
 }

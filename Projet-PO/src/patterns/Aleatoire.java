@@ -7,8 +7,7 @@ import main.Action;
 import main.Monstre;
 
 /**
- * Pattern de monstre qui joue une action aléatoire parmi une liste d'actions
- * possibles.
+ * Pattern de monstre qui joue une action aléatoire parmi une liste d'actions possibles.
  */
 public class Aleatoire implements Pattern {
 
@@ -20,21 +19,18 @@ public class Aleatoire implements Pattern {
         this.actionsPossible = new TreeMap<Double, Action>();
     }
 
+    @Override
     public Action actionActuelle() {
         for (Entry<Double, Action> entry : this.actionsPossible.entrySet()) {
             if (this.indice <= entry.getKey()) {
                 return entry.getValue();
             }
         }
-
-        throw new Error("Erreur dans le tirage aléatoire du pattern Aleatoire, aucune carte n'a été tirée");
+        
+        throw new Error(
+                "Erreur dans le tirage aléatoire du pattern Aleatoire, aucune carte n'a été tirée");
     }
 
-    @Override
-    public void jouerAction(Monstre lanceur) {
-        this.actionActuelle().jouerAction(lanceur);
-        this.actionSuivante();
-    }
 
     @Override
     public void actionSuivante() {

@@ -10,5 +10,6 @@
     }
   ],
   "description": "Inflige 8 dégâts à tous les ennemis",
-  "aExiler": false
+  "aExiler": false,
+  "positive": true
 }

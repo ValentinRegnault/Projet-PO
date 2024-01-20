@@ -12,24 +12,20 @@ import main.Salle.TexteExplicatif;
  * 
  * @see Effet
  */
-public class PerdrePV extends Effet {
-    public PerdrePV() {
+public class Saignee extends Effet {
+    public Saignee() {
         super(0, TypeCible.AUCUN);
     }
 
-    public PerdrePV(int pointEffet, TypeCible typeCible) {
+    public Saignee(int pointEffet, TypeCible typeCible) {
         super(pointEffet, typeCible);
     }
 
     @Override
     public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
             Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
-        for (Entite cible : cibles) {
-            // Inflige prends en compte les points de blocage et les statuts
-            cible.setPv(cible.getPv() - pointEffet);
-            System.out.println(lanceur.getNom() + " fait perdre " + this.pointEffet
-                    + " points de vie à " + cible.getNom());
-        }
+        herosRef.setPv(herosRef.getPv() - 3);
+        herosRef.setPointEnergie(herosRef.getPointEnergie() + 2);
     }
 
     @Override
