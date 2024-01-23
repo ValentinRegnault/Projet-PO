@@ -1,25 +1,24 @@
 package patterns;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import main.Action;
-import main.Monstre;
 
 /**
- * Pattern de monstre qui joue une liste d'action dans un ordre définie et
- * recommence eternellement.
+ * Pattern de monstre qui joue une liste d'action dans un ordre définie et recommence eternellement.
  */
 public class Cyclique implements Pattern {
 
-    private ArrayList<Action> listeAction;
+    private List<Action> listeAction;
     private int indice;
 
     public Cyclique() {
-        this.listeAction = new ArrayList<Action>();
+        this.listeAction = new ArrayList<>();
         this.indice = 0;
     }
 
-    public Cyclique(ArrayList<Action> listAction) {
+    public Cyclique(List<Action> listAction) {
         this.listeAction = listAction;
         this.indice = 0;
     }
@@ -35,20 +34,15 @@ public class Cyclique implements Pattern {
     }
 
     @Override
-    public Action intention() {
-        return this.actionActuelle();
-    }
-
-    @Override
     public String toString() {
         return "Cyclique [listeAction=" + listeAction + ", indice=" + indice + "]";
     }
 
-    public ArrayList<Action> getListeAction() {
+    public List<Action> getListeAction() {
         return listeAction;
     }
 
-    public void setListeAction(ArrayList<Action> listeAction) {
+    public void setListeAction(List<Action> listeAction) {
         this.listeAction = listeAction;
     }
 

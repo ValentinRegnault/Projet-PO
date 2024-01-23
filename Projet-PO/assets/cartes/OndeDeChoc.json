@@ -1,0 +1,20 @@
+{
+  "nom": "Onde de choc",
+  "rarete": "NON_COMMUN",
+  "cout": 2,
+  "effets": [
+    {
+      "type": "faiblesse",
+      "pointEffet": 3,
+      "typeCible": "TOUS_LES_MONSTRES"
+    },
+    {
+      "type": "vulnerable",
+      "pointEffet": 3,
+      "typeCible": "TOUS_LES_MONSTRES"
+    }
+  ],
+  "description": "Inflige 3 points de Faiblesse et de Vulnérables à tous les ennemis. Cette carte est mise en exil après avoir été jouée.",
+  "aExiler": true,
+  "positive": true
+}

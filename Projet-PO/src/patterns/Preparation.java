@@ -1,8 +1,8 @@
 package patterns;
 
 import java.util.ArrayList;
+import java.util.List;
 import main.Action;
-import main.Monstre;
 
 /**
  * Pattern de monstre qui a deux phases : une première phase qui effectue une liste d'action de
@@ -11,8 +11,8 @@ import main.Monstre;
  * @implNote la phase 1 est représentée par un pattern cyclique qui n'effectura qu'un seul cycle.
  */
 public class Preparation implements Pattern {
-    private ArrayList<Action> phase1;
-    private int indicePhase1;
+    private List<Action> phase1;
+    private int indicePhase1 = 0;
     private Pattern phase2;
 
     public Preparation() {
@@ -39,20 +39,11 @@ public class Preparation implements Pattern {
         }
     }
 
-    @Override
-    public Action intention() {
-        if (indicePhase1 < phase1.size()) {
-            return phase1.get(indicePhase1);
-        } else {
-            return phase2.intention();
-        }
-    }
-
-    public ArrayList<Action> getPhase1() {
+    public List<Action> getPhase1() {
         return phase1;
     }
 
-    public void setPhase1(ArrayList<Action> phase1) {
+    public void setPhase1(List<Action> phase1) {
         this.phase1 = phase1;
     }
 

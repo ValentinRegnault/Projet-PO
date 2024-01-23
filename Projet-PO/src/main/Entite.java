@@ -5,20 +5,22 @@ import ressources.Affichage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.Map;
+
 
 /**
  * Classe abstraite représentant une entité du jeu. Les monstres et le héro sont des entités.
  */
 public abstract class Entite extends Sprite {
     public enum Status {
-        Force, Faiblesse, Vulnérable, Fragile, Rituel
+        FORCE, FAIBLESSE, VULNERABLE, FRAGILE, RITUEL
     }
 
     protected String nom;
     protected int pvMax;
     protected int pv;
     protected int pointBlocage = 0;
-    protected TreeMap<Status, Integer> status;
+    protected Map<Status, Integer> status;
 
     protected Entite() {
         super("", 0.0, 0.0, 0.0, 0.0);
@@ -51,7 +53,8 @@ public abstract class Entite extends Sprite {
     @Override
     public void afficher() {
         super.afficher();
-        Affichage.texteCentre(getX() + getWidth() / 2, getY(), pv + "/" + pvMax + " PV" + " Blocage : " + pointBlocage);
+        Affichage.texteCentre(getX() + getWidth() / 2, getY(),
+                pv + "/" + pvMax + " PV" + " Blocage : " + pointBlocage);
 
         ArrayList<Status> statusAffiches = new ArrayList<>();
         for (Entry<Status, Integer> s : this.status.entrySet()) {
@@ -74,23 +77,26 @@ public abstract class Entite extends Sprite {
         return "nom=" + nom + ", pvMax=" + pvMax + ", pv=" + pv + ", pointBlocage=" + pointBlocage;
     }
 
+    /**
+     * Retourne le chemin vers l'image associé au statut.
+     * 
+     * @param status le statut
+     * @return le chemin vers l'image associé au statut
+     */
     private static String statusToImagePath(Status status) {
+        String debutChemin = "assets" + File.separator + "pictures" + File.separator + "statuts";
+
         switch (status) {
-            case Force:
-                return "assets" + File.separator + "pictures" + File.separator + "statuts"
-                        + File.separator + "Force.png";
-            case Faiblesse:
-                return "assets" + File.separator + "pictures" + File.separator + "statuts"
-                        + File.separator + "Faiblesse.png";
-            case Vulnérable:
-                return "assets" + File.separator + "pictures" + File.separator + "statuts"
-                        + File.separator + "Vulnérable.png";
-            case Fragile:
-                return "assets" + File.separator + "pictures" + File.separator + "statuts"
-                        + File.separator + "Fragile.png";
-            case Rituel:
-                return "assets" + File.separator + "pictures" + File.separator + "statuts"
-                        + File.separator + "Rituel.png";
+            case FORCE:
+                return debutChemin + File.separator + "Force.png";
+            case FAIBLESSE:
+                return debutChemin + File.separator + "Faiblesse.png";
+            case VULNERABLE:
+                return debutChemin + File.separator + "Vulnérable.png";
+            case FRAGILE:
+                return debutChemin + File.separator + "Fragile.png";
+            case RITUEL:
+                return debutChemin + File.separator + "Rituel.png";
             default:
                 throw new IllegalArgumentException(
                         "Un statuts n'a pas d'image associé : " + status);
@@ -161,11 +167,11 @@ public abstract class Entite extends Sprite {
         this.nom = nom;
     }
 
-    public TreeMap<Status, Integer> getStatus() {
+    public Map<Status, Integer> getStatus() {
         return status;
     }
 
-    public void setStatus(TreeMap<Status, Integer> status) {
+    public void setStatus(Map<Status, Integer> status) {
         this.status = status;
     }
 

@@ -1,0 +1,21 @@
+{
+    "nom": "Hémokinésie",
+    "rarete": "NON_COMMUN",
+    "cout": 1,
+    "effets": [
+      {
+        "type": "perdrePV",
+        "pointEffet": 2,
+        "typeCible": "LANCEUR"
+      },
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 15,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Perdez 2 points de vie, inflige 15 points de dégâts à un ennemi..",
+    "aExiler": false,
+    "positive": true
+  }
+  

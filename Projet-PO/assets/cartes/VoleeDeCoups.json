@@ -1,0 +1,31 @@
+{
+    "nom": "Volée de coups",
+    "rarete": "NON_COMMUN",
+    "cout": 1,  
+    "effets": [
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 2,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 2,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 2,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 2,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Inflige 2 dégâts 4 fois à un ennemi. Cette carte est mise en exil après avoir été jouée.",
+    "aExiler": true,
+    "positive": true
+  }
+  

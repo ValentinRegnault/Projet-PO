@@ -2,7 +2,6 @@ package effets;
 
 import java.io.IOException;
 import java.util.List;
-
 import main.Carte;
 import main.Deck;
 import main.Entite;
@@ -11,27 +10,22 @@ import main.Monstre;
 import main.Partie;
 import main.Salle.TexteExplicatif;
 
-/**
- * Effet qui ajoute une carte Brûlure dans la défausse.
- * 
- * @see Effet
- */
-public class CarteBrulureDansDefausse extends Effet {
-    public CarteBrulureDansDefausse() {
+public class CartePlaieDansDefausse extends Effet {
+    public CartePlaieDansDefausse() {
         super(0, TypeCible.AUCUN);
     }
 
-    public CarteBrulureDansDefausse(int pointEffet, TypeCible typeCible) {
+    public CartePlaieDansDefausse(int pointEffet, TypeCible typeCible) {
         super(pointEffet, typeCible);
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
-            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef, Heros herosRef,
+            List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         try {
             for (int i = 0; i < this.pointEffet; i++) {
                 Carte brulure = null;
-                brulure = Partie.instancierCarte("Brulure");
+                brulure = Partie.instancierCarte("Plaie");
                 deckRef.ajouterCarteDansDefausse(brulure);
             }
         } catch (IOException e) {
@@ -41,7 +35,6 @@ public class CarteBrulureDansDefausse extends Effet {
 
     @Override
     public String toString() {
-        return "Ajoute une Brûlure dans la défausse";
+        return "Ajoute Plaie " + this.pointEffet;
     }
-
 }

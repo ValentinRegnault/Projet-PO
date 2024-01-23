@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import main.Action;
-import main.Monstre;
 
 @JsonTypeInfo(use = NAME, include = PROPERTY, property = "type")
 @JsonSubTypes({
@@ -19,19 +18,14 @@ import main.Monstre;
 })
 public interface Pattern extends Serializable {
     /**
-     * Joue l'action préparée par le monstre
+     * Retourne l'action préparée par le monstre
      * 
      * @param lanceur le monstre qui joue l'action
      */
-    public Action actionActuelle();
+    public abstract Action actionActuelle();
 
     /**
      * Prépare une nouvelle action
      */
     public abstract void actionSuivante();
-
-    /**
-     * Retourne l'action préparée par le monstre sans la jouer.
-     */
-    public abstract Action intention();
 }

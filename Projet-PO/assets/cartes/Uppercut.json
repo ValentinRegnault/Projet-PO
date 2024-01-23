@@ -1,0 +1,26 @@
+{
+    "nom": "Uppercut",
+    "rarete": "NON_COMMUN",
+    "cout": 2,
+    "effets": [
+      {
+        "type": "appliqueDegat",
+        "pointEffet": 13,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "faiblesse",
+        "pointEffet": 1,
+        "typeCible": "SELECTION_JOUEUR"
+      },
+      {
+        "type": "vulnerable",
+        "pointEffet": 1,
+        "typeCible": "SELECTION_JOUEUR"
+      }
+    ],
+    "description": "Inflige 13 points de dégâts à un ennemi, puis inflige 1 points de Faiblesse et Vulnérable.",
+    "aExiler": false,
+    "positive": true
+  }
+  

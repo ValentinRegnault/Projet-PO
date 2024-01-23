@@ -8,10 +8,17 @@ import ressources.Config;
  * Affichable est la classe abstraite mère de tous ce qui peut être affiché dans le jeu.
  */
 public abstract class Affichable {
+	/** 
+	 * Position x par rapport au bord bas de la fenêtre.
+	 */
 	private double x = 0;
+
+	/**
+	 * Position y par rapport au bord gauche de la fenêtre.
+	 */
 	private double y = 0;
 
-	public Affichable(double x, double y) {
+	protected Affichable(double x, double y) {
 		setX(x);
 		setY(y);
 	}

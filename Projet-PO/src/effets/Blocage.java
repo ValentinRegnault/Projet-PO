@@ -1,6 +1,6 @@
 package effets;
 
-import java.util.ArrayList;
+import java.util.List;
 import main.Deck;
 import main.Entite;
 import main.Heros;
@@ -23,16 +23,16 @@ public class Blocage extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef, Heros herosRef,
+            List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
-            // Inflige prends en compte les points de blocage
             // Fragile : 75% des points de blocage
-            if (cible.getStatusPoint(Entite.Status.Fragile) > 0) {
-                this.pointEffet = (int) Math.floor(0.75 * pointEffet);
+            int blocage = this.pointEffet;
+            if (cible.getStatusPoint(Entite.Status.FRAGILE) > 0) {
+                blocage = (int) Math.floor(0.75 * pointEffet);
             }
 
-            cible.setPointBlocage(cible.getPointBlocage() + pointEffet);
+            cible.setPointBlocage(cible.getPointBlocage() + blocage);
             System.out.println(lanceur.getNom() + " gagne " + pointEffet + " points de blocage");
         }
     }

@@ -1,10 +1,7 @@
 package main;
 
-import java.io.File;
 import librairies.StdDraw;
-import ressources.Affichage;
 import ressources.AssociationTouches;
-import ressources.Config;
 
 public class SalleRepos extends Salle {
 

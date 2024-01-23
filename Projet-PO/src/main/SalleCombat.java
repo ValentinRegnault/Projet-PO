@@ -1,6 +1,5 @@
 package main;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +10,7 @@ import main.Carte.EtatCarte;
 import ressources.Affichage;
 import ressources.AssociationTouches;
 import ressources.Config;
+import main.Entite.Status;
 
 /**
  * Classe representant une salle de combat, c'est à dire une salle contenant des monstres ou un
@@ -50,11 +50,7 @@ public class SalleCombat extends Salle {
 	 */
 	@Override
 	public boolean jouerSalle() {
-		try {
-			jouerCombat();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		jouerCombat();
 
 		if (herosRef.getPv() <= 0) {
 			setTexteExplicatif("Vous avez perdu !");
@@ -71,12 +67,10 @@ public class SalleCombat extends Salle {
 	 * 
 	 * @throws InterruptedException
 	 */
-	public synchronized void jouerCombat() throws InterruptedException {
+	public synchronized void jouerCombat() {
 		setTexteExplicatif("Vous pénétrez dans une salle de combat !");
 
 		while (!combatTermine(herosRef)) {
-
-			equipeMonstre.stream().forEach(monstre -> monstre.actionSuivante());
 			// --- Tour du hero
 
 			// Régénération de l'énergie du hero
@@ -117,7 +111,6 @@ public class SalleCombat extends Salle {
 						+ 2 * nbCarteBrulureDansMain + " PV. ENTER pour continuer.");
 				herosRef.setPv(herosRef.getPv() - 2 * (int) nbCarteBrulureDansMain);
 				while (!AssociationTouches.trouveProchaineEntree().equals("Entree"));
-
 			}
 
 			deckRef.defausserTouteLesCartes();
@@ -134,16 +127,36 @@ public class SalleCombat extends Salle {
 
 			}
 
-			// --- Fin du tour
+			// --- Gestion des status :
 
 			// Transformation des points de rituel des monstres en point de force
+			int pointRituelHero = herosRef.getStatusPoint(Entite.Status.RITUEL);
+			if (pointRituelHero > 0)
+				herosRef.setStatusPoint(Entite.Status.FORCE,
+						herosRef.getStatusPoint(Status.FORCE) + 1);
 			for (Monstre monstre : equipeMonstre) {
-				int pointRituel = monstre.getStatusPoint(Entite.Status.Rituel);
+				int pointRituel = monstre.getStatusPoint(Entite.Status.RITUEL);
 				if (pointRituel > 0) {
-					monstre.setStatusPoint(Entite.Status.Force, pointRituel);
-					monstre.setStatusPoint(Entite.Status.Rituel, pointRituel - 1);
+					monstre.setStatusPoint(Entite.Status.FORCE,
+							monstre.getStatusPoint(Status.FORCE) + 1);
 				}
 			}
+
+			Status[] statusQuiBaisse =
+					{Status.FRAGILE, Status.VULNERABLE, Status.FAIBLESSE, Status.RITUEL};
+			for (Status s : statusQuiBaisse) {
+				int pointStatus = herosRef.getStatusPoint(s);
+				if (pointStatus > 0)
+					herosRef.setStatusPoint(s, pointStatus - 1);
+
+				for (Monstre monstre : equipeMonstre) {
+					pointStatus = monstre.getStatusPoint(s);
+					if (pointStatus > 0)
+						monstre.setStatusPoint(s, pointStatus - 1);
+				}
+			}
+
+			equipeMonstre.stream().forEach(Monstre::actionSuivante);
 		}
 	}
 
@@ -156,7 +169,7 @@ public class SalleCombat extends Salle {
 	 * @see {@link Effet#appliquerEffet()}
 	 * @param effets
 	 */
-	private void appliquerEffets(ArrayList<Effet> effets, Entite lanceur) {
+	private void appliquerEffets(List<Effet> effets, Entite lanceur) {
 		boolean doitOnSelectionnerUneCible =
 				effets.stream().anyMatch(e -> e.getTypeCible() == TypeCible.SELECTION_JOUEUR);
 		Monstre cibleSelectionee = null;
@@ -169,8 +182,11 @@ public class SalleCombat extends Salle {
 			switch (effet.getTypeCible()) {
 				case AUCUN:
 					break;
-				case HERO, LANCEUR:
+				case HERO:
 					cibles.add(herosRef);
+					break;
+				case LANCEUR:
+					cibles.add(lanceur);
 					break;
 				case TOUS_LES_MONSTRES:
 					cibles.addAll(equipeMonstre);
@@ -230,6 +246,9 @@ public class SalleCombat extends Salle {
 
 			for (int i = 0; i < main.size(); i++) {
 				Carte carte = main.get(i);
+
+				if (!carte.isJouable())
+					continue;
 
 				Affichage.selecteur(String.valueOf(caractereSelecteurCarte.get(i)),
 						carte.getX() + Carte.LARGEUR_CARTE / 2,
@@ -326,10 +345,15 @@ public class SalleCombat extends Salle {
 						"Touche invalide, veuillez choisir une touche associé à une carte de votre main. Les touches possibles s'affichent au dessus des cartes. Echap pour mettre fin à votre tour.");
 				continue;
 			}
-			if (deckRef.getMain().get(caractereSelecteurCarte.indexOf(touche.charAt(0)))
-					.getCout() > herosRef.getPointEnergie()) {
+			Carte c = deckRef.getMain().get(caractereSelecteurCarte.indexOf(touche.charAt(0)));
+			if (c.getCout() > herosRef.getPointEnergie()) {
 				setTexteExplicatif(
 						"Vous ne pouvez pas jouer cette carte, vous n'avez pas assez d'énergie. Echap pour mettre fin à votre tour.");
+				continue;
+			}
+			if (!c.isJouable()) {
+				setTexteExplicatif(
+						"Bien tenté mais non, cette carte n'est pas jouable. Echap pour mettre fin à votre tour.");
 				continue;
 			}
 

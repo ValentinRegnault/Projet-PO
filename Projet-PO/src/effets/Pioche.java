@@ -1,11 +1,10 @@
 package effets;
 
-import java.util.ArrayList;
+import java.util.List;
 import main.Deck;
 import main.Entite;
 import main.Heros;
 import main.Monstre;
-import main.Partie;
 import main.Salle.TexteExplicatif;
 
 /**
@@ -24,8 +23,8 @@ public class Pioche extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (int i = 0; i < this.pointEffet; i++) {
             deckRef.piocherCarte();
         }

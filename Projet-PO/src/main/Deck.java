@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +54,7 @@ public class Deck extends Affichable {
      * Change l'état de toutes les cartes pour les mettre dans la pioche, puis mélange la pioche.
      */
     public void genererPioche() {
-        toutesLesCartes.stream().forEach(c -> c.setEtat(EtatCarte.DANS_PIOCHE));
+        getDefausse().forEach(c -> c.setEtat(EtatCarte.DANS_PIOCHE));
         Collections.shuffle(toutesLesCartes);
     }
 
@@ -63,8 +62,7 @@ public class Deck extends Affichable {
      * Defausse toutes les cartes de la main du joueur.
      */
     public void defausserTouteLesCartes() {
-        List<Carte> main = getMain();
-        main.stream().forEach(carte -> carte.setEtat(EtatCarte.DEFAUSSEE));
+        getMain().stream().forEach(carte -> carte.setEtat(EtatCarte.DEFAUSSEE));
     }
 
     /**

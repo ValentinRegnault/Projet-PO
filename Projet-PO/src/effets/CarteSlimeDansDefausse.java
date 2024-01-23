@@ -1,7 +1,7 @@
 package effets;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import main.Carte;
 import main.Deck;
@@ -22,8 +22,8 @@ class CarteSlimeDansDefausse extends Effet {
 	}
 
 	@Override
-	public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-			Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+	public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+			Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
 		try {
 			for (int i = 0; i < this.pointEffet; i++) {
 				Carte slime = null;

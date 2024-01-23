@@ -23,7 +23,7 @@
       },
       "1.0": {
         "nom": "Lécher",
-        "effets": [{ "type": "fragile", "pointEffet": 1, "typeCible": "HERO" }]
+        "effets": [{ "type": "fragile", "pointEffet": 2, "typeCible": "HERO" }]
       }
     }
   }

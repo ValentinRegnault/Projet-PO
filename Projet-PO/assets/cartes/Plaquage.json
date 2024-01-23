@@ -1,11 +1,11 @@
 {
     "nom": "Plaquage",
-    "rarete": "Commun",
+    "rarete": "COMMUN",
     "cout": 1,
     "effets": [
       {
-        "type": "appliqueDegat",
-        "pointEffet": 12,
+        "type": "appliqueDegatParBlocage",
+        "pointEffet": 1,
         "typeCible": "SELECTION_JOUEUR"
       },
       {

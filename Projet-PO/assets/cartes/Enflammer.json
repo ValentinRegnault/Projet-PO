@@ -1,0 +1,16 @@
+{
+    "nom": "Enflammer",
+    "rarete": "NON_COMMUN",
+    "cout": 1,  
+    "effets": [
+      {
+        "type": "force",
+        "pointEffet": 2,
+        "typeCible": "LANCEUR"
+      }
+    ],
+    "description": "Gagne 2 de Force. Cette carte est mise en exil après avoir été joué.",
+    "aExiler": true,
+    "positive": true
+  }
+  

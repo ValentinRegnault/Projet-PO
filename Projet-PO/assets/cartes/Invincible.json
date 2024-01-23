@@ -1,0 +1,16 @@
+{
+    "nom": "Invincible",
+    "rarete": "RARE",
+    "cout": 2,
+    "effets": [
+      {
+        "type": "blocage",
+        "pointEffet": 30,
+        "typeCible": "LANCEUR"
+      }
+    ],
+    "description": "Gagne 30 points de blocage. Cette carte est mise en exil après avoir été jouée.",
+    "aExiler": true,
+    "positive": true
+  }
+  

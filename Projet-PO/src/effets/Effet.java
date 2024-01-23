@@ -2,9 +2,7 @@ package effets;
 
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.PROPERTY;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -31,7 +29,7 @@ import main.Salle.TexteExplicatif;
         @Type(value = CarteSlimeDansDefausse.class, name = "carteSlimeDansDefausse"),
         @Type(value = Rituel.class, name = "rituel"), @Type(value = Divise.class, name = "divise"),
         @Type(value = CarteBrulureDansDefausse.class, name = "ajoutCarteBrulureDansDefausse"),
-        @Type(value = Saignee.class, name = "saignee"),})
+        @Type(value = CartePlaieDansDefausse.class, name = "cartePlaieDansDefausse")})
 public abstract class Effet implements java.io.Serializable, Cloneable {
     protected int pointEffet;
 
@@ -57,8 +55,8 @@ public abstract class Effet implements java.io.Serializable, Cloneable {
      * @param cibles Les cibles de l'effet, qui doivent correspondre au type de cible
      *        {@link Effet#getTypeCible()} de l'effet.
      */
-    public abstract void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif);
+    public abstract void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif);
 
     public abstract String toString();
 
@@ -70,20 +68,11 @@ public abstract class Effet implements java.io.Serializable, Cloneable {
         this.pointEffet = pointEffet;
     }
 
-    /**
-     * Retourne le type de cible de l'effet. Lorsque l'on appel la méthode appliquerEffet, on lui
-     * passe en paramètre une liste de cibles, qui doivent correspondrent au type de cible.
-     */
     public TypeCible getTypeCible() {
         return typeCible;
     }
 
     public void setTypeCible(TypeCible typeCible) {
         this.typeCible = typeCible;
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }

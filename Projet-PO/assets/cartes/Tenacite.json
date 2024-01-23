@@ -1,0 +1,21 @@
+{
+    "nom": "Tenacité",
+    "rarete": "NON_COMMUN",
+    "cout": 2,
+    "effets": [
+      {
+        "type": "cartePlaieDansDefausse",
+        "pointEffet": 2,
+        "typeCible": "HERO"
+      },
+      {
+        "type": "blocage",
+        "pointEffet": 15,
+        "typeCible": "HERO"
+      }
+    ],
+    "description": "Ajoute 2 cartes Plaie à sa main, gagne 15 points de blocage.",
+    "aExiler": false,
+    "positive": true
+  }
+  

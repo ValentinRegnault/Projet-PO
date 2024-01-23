@@ -4,32 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-import javax.swing.text.html.Option;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import librairies.StdDraw;
-import main.Carte.EtatCarte;
 import main.Carte.RareteCarte;
 import ressources.AssociationTouches;
 import ressources.Config;
 
 /**
  * La classe la plus abstraite, qui gérent l'ensemble du jeu et coordonne les autres classes.
- * 
- * @apiNote Cette classe contient tout les élements du jeux, et donne l'accès à certains élements
- *          depuis à des instances qu'elle contient, notamment les effets. Les effets impact le jeu
- *          en passant par les méthodes statiques de cette classe prévues à cet usage.
- * @implNote Cette classe est "statique" : tous ses attributs et méthodes sont statiques, et donc
- *           accessibles globalement.
  */
 public class Partie {
 	private final ArrayList<Salle> salles = new ArrayList<>(15);
-	private int indiceSalle = 0;
 
 	/**
 	 * Ensembles des fichiers de monstres du jeu, indexés par le nom du monstre.
@@ -40,11 +26,9 @@ public class Partie {
 	 */
 	private static final TreeMap<String, File> cartesAssetParNom = new TreeMap<>();
 
-	private Scanner scanner = new Scanner(System.in);
+	private final Heros heros = new Heros("Bob");
 
-	private Heros heros = new Heros("Bob");
-
-	public Deck deck = new Deck();
+	private final Deck deck = new Deck();
 
 	/**
 	 * Initialise la partie, en chargeant les fichiers de monstres et de cartes.
@@ -96,8 +80,6 @@ public class Partie {
 				}
 			}
 		}
-
-		heros = new Heros("Bob");
 	}
 
 	/**
@@ -111,7 +93,6 @@ public class Partie {
 			if (!victoire) {
 				return;
 			}
-			indiceSalle++;
 		}
 	}
 
@@ -138,7 +119,10 @@ public class Partie {
 		salles.add(new SalleRepos(deck, heros));
 		ArrayList<Monstre> boss = new ArrayList<>();
 		try {
-			boss.add(instancierMonstre("Hexaghost"));
+			Monstre hexaghost = instancierMonstre("Hexaghost");
+			hexaghost.setX(Config.X_MAX - hexaghost.getWidth() - 50);
+			hexaghost.setY(Config.Y_MAX / 2.0 - hexaghost.getHeight() / 2.0);
+			boss.add(hexaghost);
 		} catch (IOException e) {
 			System.err.println("Erreur lors de la lecture du fichier de monstre Hexaghost");
 			e.printStackTrace();
@@ -251,20 +235,20 @@ public class Partie {
 	 *           les fichiers JSON des cartes et en choisir un aléatoirement.
 	 */
 	public static Carte carteAleatoire() {
-		RareteCarte rarete = RareteCarte.Commun;
-		double random = (double) (Math.random() * 1);
+		RareteCarte rarete = null;
+		double random = Math.random() * 1;
 
 		// Commun : 60%
 		if (random < 0.6) {
-			rarete = RareteCarte.Commun;
+			rarete = RareteCarte.COMMUN;
 		}
 		// Non Commun : 37%
 		else if (random < 0.97) {
-			rarete = RareteCarte.NonCommun;
+			rarete = RareteCarte.NON_COMMUN;
 		}
 		// Rare : 3%
 		else {
-			rarete = RareteCarte.Rare;
+			rarete = RareteCarte.RARE;
 		}
 
 
@@ -285,4 +269,13 @@ public class Partie {
 		int randomIndex = (int) (Math.random() * cartePossibles.size());
 		return cartePossibles.get(randomIndex);
 	}
+
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public Heros getHeros() {
+		return heros;
+	}
+
 }

@@ -1,0 +1,16 @@
+{
+    "nom": "Forme Démonique",
+    "rarete": "RARE",
+    "cout": 3,
+    "effets": [
+      {
+        "type": "rituel",
+        "pointEffet": 2,
+        "typeCible": "LANCEUR"
+      }
+    ],
+    "description": "Gagnez 1 points de force au début de chaque tour pendant 2 tours.",
+    "aExiler": true,
+    "positive": true
+  }
+  

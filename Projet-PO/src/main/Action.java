@@ -10,7 +10,13 @@ import effets.Effet;
  * @see Effet
  */
 public class Action implements java.io.Serializable {
+    /**
+     * nom de l'action
+     */
     private String nom;
+    /**
+     * effets de l'action
+     */
     private ArrayList<Effet> effets;
 
     public Action() {

@@ -1,7 +1,7 @@
 {
   "nom": "Gourdin",
-  "rarete": "Rare",
-  "cout": 1,
+  "rarete": "RARE",
+  "cout": 3,
   "effets": [
     {
       "type": "appliqueDegat",

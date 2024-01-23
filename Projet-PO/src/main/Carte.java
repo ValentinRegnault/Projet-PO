@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.ArrayList;
 import effets.Effet;
 import ressources.Affichage;
@@ -9,13 +10,13 @@ import ressources.Config;
 /**
  * Représente une carte du jeu.
  */
-public class Carte extends Affichable implements Cloneable {
+public class Carte extends Affichable {
 
     /**
      * Enumération des différentes raretés de carte possibles.
      */
     public enum RareteCarte {
-        Commun, NonCommun, Rare
+        COMMUN, NON_COMMUN, RARE
     }
 
     public enum EtatCarte {
@@ -25,15 +26,22 @@ public class Carte extends Affichable implements Cloneable {
     private String nom;
     private RareteCarte rarete;
     private int cout;
-    private ArrayList<Effet> effets;
+    private List<Effet> effets;
     private String description;
+    /**
+     * Si true, la carte est exilée après utilisation.
+     */
     private boolean aExiler;
+    /**
+     * Dans quel tas se trouve la carte (pioche, main, défausse, exil)
+     */
     private EtatCarte etat;
     /**
      * Si true, l'effet est positif, sinon il est négatif. Cela permet de savoir si la carte peut
      * etre donnée en récompense.
      */
     private boolean positive;
+    private boolean jouable = true;
 
     public static final double LARGEUR_CARTE = 130.0;
     public static final double HAUTEUR_CARTE = 200.0;
@@ -41,7 +49,7 @@ public class Carte extends Affichable implements Cloneable {
     public Carte() {
         super(0.0, 0.0);
         this.nom = "";
-        this.rarete = RareteCarte.Commun;
+        this.rarete = RareteCarte.COMMUN;
         this.cout = 0;
         this.effets = new ArrayList<>();
         this.aExiler = false;
@@ -49,7 +57,7 @@ public class Carte extends Affichable implements Cloneable {
         this.etat = EtatCarte.DANS_PIOCHE;
     }
 
-    public Carte(String nom, RareteCarte rarete, int cout, ArrayList<Effet> effets, boolean exile,
+    public Carte(String nom, RareteCarte rarete, int cout, List<Effet> effets, boolean exile,
             String description, EtatCarte etat) {
         super(0.0, 0.0);
         this.nom = nom;
@@ -88,17 +96,6 @@ public class Carte extends Affichable implements Cloneable {
 
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        Carte cloned = (Carte) super.clone();
-
-        cloned.effets = new ArrayList<Effet>();
-        for (Effet effet : this.effets) {
-            cloned.effets.add((Effet) effet.clone());
-        }
-
-        return cloned;
-    }
 
     public String getNom() {
         return nom;
@@ -112,7 +109,7 @@ public class Carte extends Affichable implements Cloneable {
         return cout;
     }
 
-    public ArrayList<Effet> getEffets() {
+    public List<Effet> getEffets() {
         return effets;
     }
 
@@ -144,7 +141,7 @@ public class Carte extends Affichable implements Cloneable {
         this.aExiler = exile;
     }
 
-    public void setEffets(ArrayList<Effet> effets) {
+    public void setEffets(List<Effet> effets) {
         this.effets = effets;
     }
 
@@ -162,6 +159,14 @@ public class Carte extends Affichable implements Cloneable {
 
     public void setPositive(boolean positif) {
         this.positive = positif;
+    }
+
+    public void setJouable(boolean jouable) {
+        this.jouable = jouable;
+    }
+
+    public boolean isJouable() {
+        return jouable;
     }
 
     @Override

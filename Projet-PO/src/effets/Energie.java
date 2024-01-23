@@ -1,6 +1,6 @@
 package effets;
 
-import java.util.ArrayList;
+import java.util.List;
 import main.Deck;
 import main.Entite;
 import main.Heros;
@@ -23,13 +23,11 @@ public class Energie extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
-        // Inflige prends en compte les points de blocage
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
             if (cible instanceof Heros hero) {
                 hero.setPointEnergie(hero.getPointEnergie() + pointEffet);
-                System.out.println(hero.getNom() + " gagne " + pointEffet + " points d'énergie");
             } else {
                 throw new IllegalArgumentException("La cible de l'effet Energie doit être un Hero");
             }

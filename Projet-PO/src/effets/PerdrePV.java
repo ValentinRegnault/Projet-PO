@@ -1,6 +1,6 @@
 package effets;
 
-import java.util.ArrayList;
+import java.util.List;
 import main.Deck;
 import main.Entite;
 import main.Heros;
@@ -22,13 +22,10 @@ public class PerdrePV extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
-            // Inflige prends en compte les points de blocage et les statuts
             cible.setPv(cible.getPv() - pointEffet);
-            System.out.println(lanceur.getNom() + " fait perdre " + this.pointEffet
-                    + " points de vie à " + cible.getNom());
         }
     }
 

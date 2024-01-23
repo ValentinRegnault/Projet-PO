@@ -1,6 +1,6 @@
 package effets;
 
-import java.util.ArrayList;
+import java.util.List;
 import main.Deck;
 import main.Entite;
 import main.Heros;
@@ -23,30 +23,30 @@ public class AppliqueDegat extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
-
-            int pointBlocageCible = cible.getPointBlocage();
-
             // Force -> Point de force ajoutés aux dégats
-            this.pointEffet += cible.getStatusPoint(Entite.Status.Force);
+            int degats = this.pointEffet;
+            degats += lanceur.getStatusPoint(Entite.Status.FORCE);
 
             // Faiblesse -> dégat à 75%
-            if (cible.getStatusPoint(Entite.Status.Faiblesse) > 0) {
-                this.pointEffet = (int) Math.floor(this.pointEffet * 0.75);
+            if (lanceur.getStatusPoint(Entite.Status.FAIBLESSE) > 0) {
+                degats = (int) Math.floor(degats * 0.75);
             }
 
             // Cible vulnérable - 50% de dégat en plus
-            if (cible.getStatusPoint(Entite.Status.Vulnérable) > 0) {
-                this.pointEffet = (int) Math.floor(pointEffet * 1.5);
+            if (cible.getStatusPoint(Entite.Status.VULNERABLE) > 0) {
+                degats = (int) Math.floor(pointEffet * 1.5);
             }
 
-            cible.setPointBlocage(pointBlocageCible - this.pointEffet);
-            int degatInflige = Math.abs(pointBlocageCible - this.pointEffet);
-            cible.setPv(cible.getPv() - degatInflige);
-            System.out.println(
-                    lanceur.getNom() + " inflige " + degatInflige + " dégats à " + cible.getNom());
+            int pointBlocageCible = cible.getPointBlocage();
+            cible.setPointBlocage(pointBlocageCible - degats);
+            if (pointBlocageCible - degats < 0) {
+                cible.setPointBlocage(0);
+                int degatsRestants = Math.abs(pointBlocageCible - degats);
+                cible.setPv(cible.getPv() - degatsRestants);
+            }
         }
     }
 

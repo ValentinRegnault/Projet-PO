@@ -3,7 +3,6 @@ package main;
 import java.io.File;
 import patterns.Pattern;
 import ressources.Affichage;
-import ressources.Config;
 
 /**
  * Représente un monstre du jeu. Cette classe se sérialise et se désérialise. Typiquement, on créera
@@ -30,10 +29,19 @@ public class Monstre extends Entite {
         this.pattern = pattern;
     }
 
+    /**
+     * Prépare la prochaine action du monstre
+     * @see Pattern#actionSuivante()
+     */
     public void actionSuivante() {
         this.pattern.actionSuivante();
     }
 
+    /**
+     * Retourne l'action que le monstre a préparé
+     * @see Pattern#actionActuelle()
+     * @return l'action que le monstre a préparé
+     */
     public Action actionActuelle() {
         return this.pattern.actionActuelle();
     }
@@ -41,7 +49,7 @@ public class Monstre extends Entite {
     @Override
     public void afficher() {
         super.afficher();
-        Affichage.texteCentre(getX() + getWidth() / 2, getY() + getHeight(), "Intention : " + this.pattern.intention().getNom());
+        Affichage.texteCentre(getX() + getWidth() / 2, getY() + getHeight(), "Intention : " + this.pattern.actionActuelle().getNom());
     }
 
     public Pattern getPattern() {

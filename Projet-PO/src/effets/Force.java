@@ -1,6 +1,6 @@
 package effets;
 
-import java.util.ArrayList;
+import java.util.List;
 import main.Deck;
 import main.Entite;
 import main.Heros;
@@ -23,14 +23,11 @@ public class Force extends Effet {
     }
 
     @Override
-    public void appliquerEffet(Entite lanceur, ArrayList<Entite> cibles, Deck deckRef,
-            Heros herosRef, ArrayList<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
+    public void appliquerEffet(Entite lanceur, List<Entite> cibles, Deck deckRef,
+            Heros herosRef, List<Monstre> equipeMonstres, TexteExplicatif texteExplicatif) {
         for (Entite cible : cibles) {
-            // Inflige prends en compte les points de blocage
-            cible.setStatusPoint(Entite.Status.Force,
-                    cible.getStatusPoint(Entite.Status.Force) + this.pointEffet);
-            System.out.println(lanceur.getNom() + " donne " + this.pointEffet
-                    + " points de force à " + cible.getNom());
+            cible.setStatusPoint(Entite.Status.FORCE,
+                    cible.getStatusPoint(Entite.Status.FORCE) + this.pointEffet);
         }
     }
 

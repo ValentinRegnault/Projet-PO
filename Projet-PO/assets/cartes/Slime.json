@@ -1,6 +1,6 @@
 {
   "nom": "Slime",
-  "rarete": "NonCommun",
+  "rarete": "NON_COMMUN",
   "cout": 1,
   "effets": [],
   "description": "Slurp slurp :-)",

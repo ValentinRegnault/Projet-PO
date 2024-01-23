@@ -1,22 +1,22 @@
 package patterns;
 
 import java.util.Map.Entry;
+import java.util.Map;
 import java.util.TreeMap;
 
 import main.Action;
-import main.Monstre;
 
 /**
  * Pattern de monstre qui joue une action aléatoire parmi une liste d'actions possibles.
  */
 public class Aleatoire implements Pattern {
 
-    private TreeMap<Double, Action> actionsPossible = new TreeMap<Double, Action>();
+    private Map<Double, Action> actionsPossible = new TreeMap<>();
 
     private Double indice = Math.random();
 
     public Aleatoire() {
-        this.actionsPossible = new TreeMap<Double, Action>();
+        this.actionsPossible = new TreeMap<>();
     }
 
     @Override
@@ -37,16 +37,12 @@ public class Aleatoire implements Pattern {
         this.indice = Math.random();
     }
 
-    @Override
-    public Action intention() {
-        return this.actionActuelle();
-    }
 
-    public TreeMap<Double, Action> getActionsPossible() {
+    public Map<Double, Action> getActionsPossible() {
         return actionsPossible;
     }
 
-    public void setActionsPossible(TreeMap<Double, Action> actionsPossible) {
+    public void setActionsPossible(Map<Double, Action> actionsPossible) {
         this.actionsPossible = actionsPossible;
     }
 
