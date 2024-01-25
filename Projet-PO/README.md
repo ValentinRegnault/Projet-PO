@@ -9,7 +9,8 @@ G4 L2 Portail ISTN - année 2023-2024
 
 
 # Lancement du projet : 
-lancer le fichier Projet-PO/src/main/App.java
+lancer le fichier Projet-PO/src/main/App.java.
+Des librairies sont présentes dans le dossier lib, et sont nécessaires au bon fonctionnement du projet. Vous pouvez utilisez VSCode pour lancer le projet (le dossier .vscode avec la configuration json est inclu dans le projet).
 
 # Diagramme de classe
 Ce diagramme (qui n'est pas exact pour des questions de lisibilité) relate toutes les classes du projet et leurs relations.\
