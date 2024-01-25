@@ -1,10 +1,15 @@
-# Clone de Slay the Spire
+Lien vers le repositorie (qui fait 22.4Mo, soit 12.4Mo de plus que la limite sur Moodle) : https://github.com/ValentinRegnault/Projet-PO/tree/main
 
+
+# Clone de Slay the Spire
 
 Valentin Regnault\
 Nathan Corneloup\
 G4 L2 Portail ISTN - année 2023-2024
 
+
+# Lancement du projet : 
+lancer le fichier Projet-PO/src/main/App.java
 
 # Diagramme de classe
 Ce diagramme (qui n'est pas exact pour des questions de lisibilité) relate toutes les classes du projet et leurs relations.\
